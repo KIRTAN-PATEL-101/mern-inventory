@@ -1,6 +1,6 @@
 import React from 'react';
-import 'boxicons/css/boxicons.min.css';
-
+import profile1 from '../assets/Images/hardik.jpg';
+import profile2 from '../assets/Images/natsha.jpg';
 const Order = () => {
   return (
     <div className="order flex-grow bg-white p-6 rounded-2xl">
@@ -12,27 +12,27 @@ const Order = () => {
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-gray-200">
-            <th className="py-4 text-gray-800">User</th>
-            <th className="py-4 text-gray-800">Date Order</th>
-            <th className="py-4 text-gray-800">Status</th>
+            <th className="py-4 px-2 text-left" style={{background:"#3C91E6",color:"white"}}>User</th>
+            <th className="py-4 px-2 text-left" style={{background:"#3C91E6",color:"white"}}>Status</th>
+            <th className="py-4 px-2 text-left" style={{background:"#3C91E6",color:"white"}}>Date Order</th>
           </tr>
         </thead>
         <tbody>
           <tr className="hover:bg-gray-200">
-            <td className="py-4 flex items-center gap-3 pl-1.5">
-              <img src="img/pic2.png" alt="user" className="w-9 h-9 rounded-full object-cover" />
-              <p className="text-gray-800">Amit Shah</p>
+            <td className="py-4 px-2 flex items-center gap-3">
+              <img src={profile1} alt="user" className="w-9 h-9 rounded-full object-cover" />
+              <p className="text-gray-800">Hardik Pandaya</p>
             </td>
-            <td className="py-4">02-10-2021</td>
-            <td className="py-4"><span className="status-process">In Process</span></td>
+            <td className="py-4 px-2">02-10-2021</td>
+            <td className="py-4 px-2"><span className="status-process bg-yellow-500 text-white px-3 py-1 rounded-full text-xs">In Process</span></td>
           </tr>
           <tr className="hover:bg-gray-200">
-            <td className="py-4 flex items-center gap-3 pl-1.5">
-              <img src="img/pic3.png" alt="user" className="w-9 h-9 rounded-full object-cover" />
-              <p className="text-gray-800">Rahul Gupta</p>
+            <td className="py-4 px-2 flex items-center gap-3">
+              <img src={profile2} alt="user" className="w-9 h-9 rounded-full object-cover" />
+              <p className="text-gray-800">Nataša Stanković</p>
             </td>
-            <td className="py-4">03-10-2021</td>
-            <td className="py-4"><span className="status-pending">Pending</span></td>
+            <td className="py-4 px-2">03-10-2021</td>
+            <td className="py-4 px-2"><span className="status-pending bg-orange-500 text-white px-3 py-1 rounded-full text-xs">Pending</span></td>
           </tr>
         </tbody>
       </table>

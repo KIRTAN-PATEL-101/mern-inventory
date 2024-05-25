@@ -4,7 +4,7 @@ import 'boxicons/css/boxicons.min.css';
 
 const Header = () => {
   return (
-    <nav className="h-14 bg-white px-6 flex items-center gap-6 sticky top-0 z-10">
+    <nav className="h-14 bg-white px-6 flex items-center gap-6 sticky top-0 z-10" style={{background:"#F9F9F9"}}>
       <i className='bx bx-menu cursor-pointer text-2xl'></i>
       <a href="#" className="nav-link text-lg text-gray-800">Categories</a>
       <form action="#" className="max-w-md w-full mr-auto">
