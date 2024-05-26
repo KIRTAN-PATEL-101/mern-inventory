@@ -21,14 +21,13 @@ function ItemList() {
   ]);
 
   const [newItem, setNewItem] = useState({
-    id: '',
-    name: '',
-    owner: '',
-    createdDate: '',
-    inventoryName: '',
-    quantityLeft: '',
-    inStock: '',
-    description: ''
+    itemName: '',
+    itemld: '',
+    pricePerUnit: '',
+    stock: '',
+    inventoryld: '',
+    category: '',
+    itemimage: null
   });
 
   const handleAddClick = () => {
@@ -75,7 +74,7 @@ function ItemList() {
       stock: '',
       inventoryld: '',
       category: '',
-      itemimage: ''
+      itemimage: null
     });
     setShowForm(false);
   };
