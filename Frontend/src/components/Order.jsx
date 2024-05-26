@@ -1,43 +1,48 @@
 import React from 'react';
-import 'boxicons/css/boxicons.min.css';
 
-const Order = () => {
+const OrdersTable = () => {
+  const orders = [
+    { user: 'Amit Shah', dateOrder: '02-10-2021', status: 'In Process' },
+    { user: 'Rahul Gupta', dateOrder: '03-10-2021', status: 'Pending' },
+  ];
+
   return (
-    <div className="order flex-grow bg-white p-6 rounded-2xl">
-      <div className="head flex items-center gap-4 mb-6">
-        <h3 className="text-2xl font-semibold text-gray-800">Recent Orders</h3>
-        <i className='bx bx-search cursor-pointer text-gray-800'></i>
-        <i className='bx bx-filter cursor-pointer text-gray-800'></i>
-      </div>
-      <table className="w-full border-collapse">
+    <div className="overflow-x-auto w-full">
+      <table className="min-w-full bg-white border">
         <thead>
-          <tr className="bg-gray-200">
-            <th className="py-4 text-gray-800">User</th>
-            <th className="py-4 text-gray-800">Date Order</th>
-            <th className="py-4 text-gray-800">Status</th>
+          <tr>
+            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">User</th>
+            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Date Order</th>
+            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr className="hover:bg-gray-200">
-            <td className="py-4 flex items-center gap-3 pl-1.5">
-              <img src="img/pic2.png" alt="user" className="w-9 h-9 rounded-full object-cover" />
-              <p className="text-gray-800">Amit Shah</p>
-            </td>
-            <td className="py-4">02-10-2021</td>
-            <td className="py-4"><span className="status-process">In Process</span></td>
-          </tr>
-          <tr className="hover:bg-gray-200">
-            <td className="py-4 flex items-center gap-3 pl-1.5">
-              <img src="img/pic3.png" alt="user" className="w-9 h-9 rounded-full object-cover" />
-              <p className="text-gray-800">Rahul Gupta</p>
-            </td>
-            <td className="py-4">03-10-2021</td>
-            <td className="py-4"><span className="status-pending">Pending</span></td>
-          </tr>
+          {orders.map((order, index) => (
+            <tr key={index}>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 h-10 w-10">
+                    <img className="h-10 w-10 rounded-full" src="path_to_user_avatar" alt="" />
+                  </div>
+                  <div className="ml-4">
+                    <div className="text-sm leading-5 font-medium text-gray-900">{order.user}</div>
+                  </div>
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <div className="text-sm leading-5 text-gray-900">{order.dateOrder}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800'>
+                  {order.status}
+                </span>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default Order;
+export default OrdersTable;

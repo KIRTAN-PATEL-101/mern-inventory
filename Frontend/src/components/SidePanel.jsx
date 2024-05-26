@@ -1,5 +1,6 @@
 import React from 'react';
 import 'boxicons/css/boxicons.min.css';
+import { Link } from 'react-router-dom';
 
 
 const SidePanel = () => {
@@ -10,34 +11,35 @@ const SidePanel = () => {
       </a>
       <ul className="side-menu mt-12">
         <li className="active relative">
-          <a href="#" className="flex items-center h-12 px-4 text-lg text-gray-800 bg-gray-200 rounded-r-full transition-all">
+          <Link to="/" className="flex items-center h-12 px-4 text-lg text-gray-800 bg-gray-200 rounded-r-full transition-all">
             <i className='bx bxs-dashboard flex-shrink-0 text-2xl'></i>
             <span className="ml-4">Dashboard</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="items.html" className="flex items-center h-12 px-4 text-lg text-gray-800 hover:bg-gray-100 rounded-r-full transition-all">
+          <Link to="/items" className="flex items-center h-12 px-4 text-lg text-gray-800 hover:bg-gray-100 rounded-r-full transition-all">
             <i className='bx bxs-receipt flex-shrink-0 text-2xl'></i>
             <span className="ml-4">Items</span>
-          </a>
+
+          </Link>
         </li>
         <li>
-          <a href="comming soon.html" className="flex items-center h-12 px-4 text-lg text-gray-800 hover:bg-gray-100 rounded-r-full transition-all">
+          <Link to="/mystore" className="flex items-center h-12 px-4 text-lg text-gray-800 hover:bg-gray-100 rounded-r-full transition-all">
             <i className='bx bxs-shopping-bag-alt flex-shrink-0 text-2xl'></i>
             <span className="ml-4">My Store</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="comming soon.html" className="flex items-center h-12 px-4 text-lg text-gray-800 hover:bg-gray-100 rounded-r-full transition-all">
+          <Link to="/settings" className="flex items-center h-12 px-4 text-lg text-gray-800 hover:bg-gray-100 rounded-r-full transition-all">
             <i className='bx bxs-cog flex-shrink-0 text-2xl'></i>
             <span className="ml-4">Settings</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="flex items-center h-12 px-4 text-lg text-red-500 hover:bg-gray-100 rounded-r-full transition-all">
+          <Link to="/logut" className="flex items-center h-12 px-4 text-lg text-red-500 hover:bg-gray-100 rounded-r-full transition-all">
             <i className='bx bxs-log-out-circle flex-shrink-0 text-2xl'></i>
             <span className="ml-4">Logout</span>
-          </a>
+          </Link>
         </li>
       </ul>
     </section>
