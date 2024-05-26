@@ -43,7 +43,7 @@ const Login = () => {
                 if (response.ok) {
                     const result = await response.json();
                     setMessage('Login successful!');
-                    navigate("/");
+                    navigate("/dashboard");
                 } else {
                     const errorResult = await response.json();
                     setMessage(`Login failed: ${errorResult.message}`);
