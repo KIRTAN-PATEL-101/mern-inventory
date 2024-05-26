@@ -10,7 +10,7 @@ const Dashboard = () => {
       <SidePanel />
       <section id="content" className="relative w-full ml-72 transition-all">
         <Header />
-        <main className="p-9 font-poppins max-h-[calc(100vh-3.5rem)] overflow-y-auto">
+        <main className="p-9 font-poppins max-h-[calc(100vh-3.5rem)] overflow-y-auto bg-gray-200 w-full" >
           <div className="head-title flex items-center justify-between gap-4 flex-wrap">
             <div className="left">
               <h1 className="text-3xl font-semibold text-gray-800">Dashboard</h1>
@@ -51,7 +51,6 @@ const Dashboard = () => {
               </div>
             </li>
           </ul>
-
           <div className="flex flex-wrap gap-6 mt-9">
             <Order />
           </div>
