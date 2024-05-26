@@ -69,14 +69,13 @@ function ItemList() {
     e.preventDefault();
     setItems([...items, newItem]);
     setNewItem({
-      id: '',
-      name: '',
-      owner: '',
-      createdDate: '',
-      inventoryName: '',
-      quantityLeft: '',
-      inStock: '',
-      description: ''
+      itemName: '',
+      itemld: '',
+      pricePerUnit: '',
+      stock: '',
+      inventoryld: '',
+      category: '',
+      itemimage: ''
     });
     setShowForm(false);
   };
@@ -129,90 +128,98 @@ function ItemList() {
                 <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: '30% 0 0 0' }}>
                   <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                      <label htmlFor="id" className="block font-bold text-gray-700 mb-2">ID:</label>
+                      <label htmlFor="id" className="block font-bold text-gray-700 mb-2">Item Name</label>
                       <input
                         type="text"
-                        id="id"
-                        name="id"
-                        value={newItem.id}
+                        id="itemName"
+                        placeholder='Item Name...'
+                        name="itemName"
+                        value={newItem.itemName}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         required
                       />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="name" className="block font-bold text-gray-700 mb-2">Name:</label>
+                      <label htmlFor="name" className="block font-bold text-gray-700 mb-2">Item Id</label>
                       <input
                         type="text"
-                        id="name"
-                        name="name"
-                        value={newItem.name}
+                        id="itemld"
+                        placeholder='Item Id...'
+                        name="itemld"
+                        value={newItem.itemld}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         required
                       />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="owner" className="block font-bold text-gray-700 mb-2">Owner:</label>
+                      <label htmlFor="owner" className="block font-bold text-gray-700 mb-2">Price per Unit</label>
                       <input
                         type="text"
-                        id="owner"
-                        name="owner"
-                        value={newItem.owner}
+                        id="pricePerUnit"
+                        name="pricePerUnit"
+                        placeholder='Price per Unit...'
+                        value={newItem.pricePerUnit}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         required
                       />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="createdDate" className="block font-bold text-gray-700 mb-2">Created date:</label>
-                      <input
-                        type="date"
-                        id="createdDate"
-                        name="createdDate"
-                        value={newItem.createdDate}
-                        onChange={handleInputChange}
-                        className="w-full p-2 border border-gray-300 rounded"
-                        required
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="inventoryName" className="block font-bold text-gray-700 mb-2">Inventory Name:</label>
+                      <label htmlFor="createdDate" className="block font-bold text-gray-700 mb-2">Stock Avaliable</label>
                       <input
                         type="text"
-                        id="inventoryName"
-                        name="inventoryName"
-                        value={newItem.inventoryName}
+                        id="stock"
+                        name="stock"
+                        placeholder='Stock Avalaible'
+                        value={newItem.stock}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         required
                       />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="quantityLeft" className="block font-bold text-gray-700 mb-2">Quantity left:</label>
-                      <input
-                        type="number"
-                        id="quantityLeft"
-                        name="quantityLeft"
-                        value={newItem.quantityLeft}
-                        onChange={handleInputChange}
-                        className="w-full p-2 border border-gray-300 rounded"
-                        required
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="inStock" className="block font-bold text-gray-700 mb-2">In stock:</label>
+                      <label htmlFor="inventoryName" className="block font-bold text-gray-700 mb-2">Inventory ID</label>
                       <input
                         type="text"
-                        id="inStock"
-                        name="inStock"
-                        value={newItem.inStock}
+                        id="inventoryld"
+                        name="inventoryld"
+                        placeholder='text'
+                        value={newItem.inventoryld}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         required
                       />
                     </div>
                     <div className="mb-4">
+                      <label htmlFor="quantityLeft" className="block font-bold text-gray-700 mb-2">Category</label>
+                      <input
+                        type="text"
+                        id="category"
+                        name="category"
+                        placeholder='Category'
+                        value={newItem.category}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border border-gray-300 rounded"
+                        required
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label >Upload Item Image</label>
+                        <input
+                            type="file"
+                            placeholder="Image of Item"
+                            id='itemimage'
+                            name="itemimage"
+                            required
+                            value={newItem.itemimage}
+                            onChange={handleInputChange}
+                            className="w-full p-2 border border-gray-300 rounded"
+                            style={{ width: "370px", backgroundColor: "#edf5f3" }}
+                        /> 
+                    </div>
+                    {/* <div className="mb-4">
                       <label htmlFor="description" className="block font-bold text-gray-700 mb-2">Description:</label>
                       <textarea
                         id="description"
@@ -222,7 +229,7 @@ function ItemList() {
                         className="w-full p-2 border border-gray-300 rounded h-24"
                         required
                       ></textarea>
-                    </div>
+                    </div> */}
                     <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded font-bold hover:bg-blue-700">Submit</button>
                   </form>
                 </div>
