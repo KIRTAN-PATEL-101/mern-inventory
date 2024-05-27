@@ -2,6 +2,8 @@ import { asyncHandler } from "../Utils/asyncHandler.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { Item } from "../models/item.models.js";
 import { uploadOnCloudinary } from "../Utils/cloudinary.js";
+import { ApiResponse } from "../Utils/ApiResponse.js";
+import {Inventory} from '../models/inventory.models.js'
 
 const addItem = asyncHandler(async (req, res) => {
   try {
@@ -137,4 +139,43 @@ const adjustQuantity=asyncHandler(async(req,res,next)=>{
   }
 })
 
-export { addItem, inventoryItems,itemDetails,addTriggeramount,adjustQuantity};
+const showallItems = asyncHandler(async (req, res) => {
+  try {
+    const id = req.user._id;
+
+    // Fetch items for the user
+    const items = await Item.find({ userId: id });
+    if (!items.length) {
+      return res.status(400).json(new ApiResponse(400, "No items available"));
+    }
+
+    const inventoryIds = items.map(item => item.inventoryId);
+
+    // Fetch inventory details based on inventoryId
+    const inventories = await Inventory.find({ inventoryId: { $in: inventoryIds } });
+
+    // Create a map of inventoryId to inventory details for quick lookup
+    const inventoryMap = {};
+    inventories.forEach(inventory => {
+      inventoryMap[inventory.inventoryId] = inventory;
+    });
+
+    // Map items to their corresponding inventory details
+    const itemsWithInventoryDetails = items.map(item => ({
+      ...item.toObject(), // Convert Mongoose document to plain JavaScript object
+      inventoryDetails: inventoryMap[item.inventoryId] || null
+    }));
+
+    // Send response back to the client
+    res.status(200).json({
+      status: 200,
+      message: "Items fetched successfully",
+      data: itemsWithInventoryDetails
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(new ApiResponse(500, "Internal Server Error"));
+  }
+});
+
+export { addItem, inventoryItems,itemDetails,addTriggeramount,adjustQuantity,showallItems};
