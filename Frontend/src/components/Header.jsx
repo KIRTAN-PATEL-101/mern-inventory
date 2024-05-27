@@ -16,7 +16,7 @@ const Header = () => {
         </div>
       </form>
       <a href="#" className="profile">
-        <img src="img/pic1.png" alt="profile" className="w-9 h-9 rounded-full object-cover" />
+        <img src="img/hardik.png" alt="profile" className="w-9 h-9 rounded-full object-cover" />
       </a>
     </nav>
   );
