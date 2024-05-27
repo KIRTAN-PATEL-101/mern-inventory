@@ -13,9 +13,12 @@ import MyStore from './components/MyStore';
 import ItemDetailPage from './components/ItemDetailPage';
 import Login from "./components/Login";
 import Register from "./components/Register";
+import ItemViewBox from './components/ItemViewBox';
 
 
 const App = () => {
+
+
   return (
     <BrowserRouter>
     
