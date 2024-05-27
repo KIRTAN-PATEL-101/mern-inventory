@@ -35,15 +35,15 @@ const SidePanel = () => {
           </Link>
 
         </li>
-        <li>
+        {/* <li>
           <Link to="/settings" className="flex items-center h-12 px-4 text-lg text-gray-800 hover:bg-gray-100 rounded-r-full transition-all">
             <i className='bx bxs-cog flex-shrink-0 text-2xl'></i>
             <span className="ml-4">Settings</span>
           </Link>
 
-        </li>
+        </li> */}
         <li>
-          <Link to="/logut" className="flex items-center h-12 px-4 text-lg text-red-500 hover:bg-gray-100 rounded-r-full transition-all">
+          <Link to="/login" className="flex items-center h-12 px-4 text-lg text-red-500 hover:bg-gray-100 rounded-r-full transition-all">
             <i className='bx bxs-log-out-circle flex-shrink-0 text-2xl'></i>
             <span className="ml-4">Logout</span>
           </Link>
