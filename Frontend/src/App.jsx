@@ -26,6 +26,7 @@ const App = () => {
         <Route path="/items" element={<ItemList />} />
         <Route path='/mystore' element={<MyStore />} />
         <Route path="/item/:id" element={<ItemDetailPage />} />
+        <Route path="/item/detail/:id" element={<Dashboard />} />
       </Routes>
       </BrowserRouter>
   )
