@@ -16,82 +16,81 @@ function ItemList() {
   });
 
   const [items, setItems] = useState([
-    { id: '01', name: 'Laptop', owner: 'John Doe', createdDate: '2024-05-01', inventoryName: 'Office Supplies', quantityLeft: 10, inStock: 'Yes', description: 'A powerful laptop' },
-    { id: '02', name: 'Desk', owner: 'Jane Smith', createdDate: '2024-05-02', inventoryName: 'Office Furniture', quantityLeft: 0, inStock: 'No', description: 'A sturdy desk' }
+    { itemld: '01', itemName: 'Laptop', owner: 'John Doe', createdDate: '2024-05-01', inventoryName: 'Office Supplies', quantityLeft: 10, inStock: 'Yes', description: 'A powerful laptop' },
+    { itemld: '02', itemName: 'Desk', owner: 'Jane Smith', createdDate: '2024-05-02', inventoryName: 'Office Furniture', quantityLeft: 0, inStock: 'No', description: 'A sturdy desk' }
   ]);
 
   const [newItem, setNewItem] = useState({
-    id: '',
-    name: '',
-    owner: '',
-    createdDate: '',
-    inventoryName: '',
-    quantityLeft: '',
-    inStock: '',
-    description: ''
+    itemName: '',
+    itemld: '',
+    pricePerUnit: '',
+    stock: '',
+    inventoryld: '',
+    category: '',
+    itemimage: null
   });
 
-  const handleAddClick = () => {
-    setShowForm(!showForm);
-    setShowRemoveOptions(false);
-    setShowNotifyForm(false);
-  };
+  // const handleAddClick = () => {
+  //   setShowForm(!showForm);
+  //   setShowRemoveOptions(false);
+  //   setShowNotifyForm(false);
+  // };
 
-  const handleRemoveClick = () => {
-    setShowRemoveOptions(!showRemoveOptions);
-    setShowForm(false);
-    setShowNotifyForm(false);
-  };
+  // const handleRemoveClick = () => {
+  //   setShowRemoveOptions(!showRemoveOptions);
+  //   setShowForm(false);
+  //   setShowNotifyForm(false);
+  // };
 
-  const handleNotifyClick = () => {
-    setShowNotifyForm(!showNotifyForm);
-    setShowForm(false);
-    setShowRemoveOptions(false);
-  };
+  // const handleNotifyClick = () => {
+  //   setShowNotifyForm(!showNotifyForm);
+  //   setShowForm(false);
+  //   setShowRemoveOptions(false);
+  // };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewItem({
-      ...newItem,
-      [name]: value
-    });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setNewItem({
+  //     ...newItem,
+  //     [name]: value
+  //   });
+  // };
 
-  const handleNotificationChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setNotificationInfo({
-      ...notificationInfo,
-      [name]: type === 'checkbox' ? checked : value
-    });
-  };
+  // const handleNotificationChange = (e) => {
+  //   const { name, value, type, checked } = e.target;
+  //   setNotificationInfo({
+  //     ...notificationInfo,
+  //     [name]: type === 'checkbox' ? checked : value
+  //   });
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setItems([...items, newItem]);
-    setNewItem({
-      itemName: '',
-      itemld: '',
-      pricePerUnit: '',
-      stock: '',
-      inventoryld: '',
-      category: '',
-      itemimage: ''
-    });
-    setShowForm(false);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setItems([...items, newItem]);
+  //   setNewItem({
+  //     itemName: '',
+  //     itemld: '',
+  //     pricePerUnit: '',
+  //     stock: '',
+  //     inventoryld: '',
+  //     category: '',
+  //     itemimage: null
+  //   });
+  //   setShowForm(false);
+  // };
 
-  const handleNotificationSubmit = (e) => {
-    e.preventDefault();
-    // Implement notification logic here
-    alert(`Notification set for ${notificationInfo.name}`);
-    setShowNotifyForm(false);
-  };
+  // const handleNotificationSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Implement notification logic here
+  //   alert(`Notification set for ${notificationInfo.name}`);
+  //   setShowNotifyForm(false);
+  // };
 
-  const handleRemoveItem = () => {
-    setItems(items.filter(item => item.id !== selectedItemId));
-    setSelectedItemId('');
-    setShowRemoveOptions(false);
-  };
+  // const handleRemoveItem = () => {
+  //   setItems(items.filter(item => item.id !== selectedItemId));
+  //   setSelectedItemId('');
+  //   setShowRemoveOptions(false);
+  // };
 
   return (
     <div className="flex">
@@ -103,7 +102,7 @@ function ItemList() {
             <div id="item-box-1" className="item-view-box hidden"></div>
             <div id="Item-list" className="text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4">
               <h1 className="text-2xl font-bold mb-4">Items</h1>
-              <div className="flex justify-end mb-4">
+              {/* <div className="flex justify-end mb-4">
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-700"
                   onClick={handleAddClick}
@@ -123,8 +122,8 @@ function ItemList() {
                 >
                   Notify Me
                 </button>
-              </div>
-              {showForm && (
+              </div> */}
+              {/* {showForm && (
                 <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: '30% 0 0 0' }}>
                   <form onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -219,7 +218,7 @@ function ItemList() {
                             style={{ width: "370px", backgroundColor: "#edf5f3" }}
                         /> 
                     </div>
-                    {/* <div className="mb-4">
+                    <div className="mb-4">
                       <label htmlFor="description" className="block font-bold text-gray-700 mb-2">Description:</label>
                       <textarea
                         id="description"
@@ -229,12 +228,12 @@ function ItemList() {
                         className="w-full p-2 border border-gray-300 rounded h-24"
                         required
                       ></textarea>
-                    </div> */}
+                    </div>
                     <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded font-bold hover:bg-blue-700">Submit</button>
                   </form>
                 </div>
-              )}
-              {showNotifyForm && (
+              )} */}
+              {/* {showNotifyForm && (
                 <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: '30% 0 0 0' }}>
                   <form onSubmit={handleNotificationSubmit}>
                     <div className="mb-4">
@@ -288,7 +287,7 @@ function ItemList() {
                     <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded font-bold hover:bg-blue-700">Submit</button>
                   </form>
                 </div>
-              )}
+              )} */}
               <table className="w-full table-auto">
                 <thead>
                   <tr>
@@ -299,22 +298,22 @@ function ItemList() {
                     <th className="px-4 py-2 bg-blue-500 text-white">Inventory Name</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">Quantity left</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">In stock</th>
-                    <th className="px-4 py-2 bg-blue-500 text-white">Description</th>
-                    {showRemoveOptions && <th className="px-4 py-2 bg-blue-500 text-white">Select</th>}
+                    {/* <th className="px-4 py-2 bg-blue-500 text-white">Description</th> */}
+                    {/* {showRemoveOptions && <th className="px-4 py-2 bg-blue-500 text-white">Select</th>} */}
                   </tr>
                 </thead>
                 <tbody>
                   {items.map((item, index) => (
                     <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.id}>
-                      <td className="px-4 py-2">{item.id}</td>
-                      <td className="px-4 py-2">{item.name}</td>
+                      <td className="px-4 py-2">{item.itemld}</td>
+                      <td className="px-4 py-2">{item.itemName}</td>
                       <td className="px-4 py-2">{item.owner}</td>
                       <td className="px-4 py-2">{item.createdDate}</td>
                       <td className="px-4 py-2">{item.inventoryName}</td>
                       <td className="px-4 py-2">{item.quantityLeft}</td>
                       <td className={`px-4 py-2 ${item.inStock === 'Yes' ? 'text-green-500' : 'text-red-500'}`}>{item.inStock}</td>
-                      <td className="px-4 py-2">{item.description}</td>
-                      {showRemoveOptions && (
+                      {/* <td className="px-4 py-2">{item.description}</td> */}
+                      {/* {showRemoveOptions && (
                         <td className="px-4 py-2">
                           <input
                             type="radio"
@@ -323,20 +322,20 @@ function ItemList() {
                             onChange={() => setSelectedItemId(item.id)}
                           />
                         </td>
-                      )}
+                      )} */}
                     </tr>
                   ))}
                 </tbody>
               </table>
               {showRemoveOptions && (
                 <div className="flex justify-end mt-4">
-                  <button
+                  {/* <button
                     className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
                     onClick={handleRemoveItem}
                     disabled={!selectedItemId}
                   >
                     Confirm Remove
-                  </button>
+                  </button> */}
                 </div>
               )}
             </div>
