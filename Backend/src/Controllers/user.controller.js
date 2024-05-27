@@ -26,62 +26,61 @@ const generateAccessandRefreshToken = async (userId) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { userName, email, password, mobileNo } = req.body;
 
-  if (!userName) {
-    throw new ApiError(400, "User Name is required");
-  }
-  if (!email) {
-    throw new ApiError(400, "Email is required");
-  }
-  if (!password) {
-    throw new ApiError(400, "Password is required");
-  }
-  if (!mobileNo) {
-    throw new ApiError(400, "Mobile no is required");
+  // Basic field validation
+  if (!userName || !email || !password || !mobileNo) {
+    throw new ApiError(400, "All fields are required (userName, email, password, mobileNo)");
   }
 
   // Validate email
   if (!validator.isEmail(email)) {
-    throw new ApiError(400,"Invalid email format" );
+    throw new ApiError(400, "Invalid email format");
   }
 
   // Validate mobile number
   if (!validator.isMobilePhone(mobileNo, "any")) {
-    throw new ApiError(400,"Invalid mobile number format");
+    throw new ApiError(400, "Invalid mobile number format");
   }
 
-  const profilePicLocalpath = req.files && req.files.profilepic && req.files.profilepic[0] ? req.files.profilepic[0].path : null;
-
-
-  let profileUrl=null;
-  try {
-    profileUrl = await uploadOnCloudinary(profilePicLocalpath);
-    console.log("profileUrl:", profileUrl);
-  } catch (error) {
-    console.error("Error uploading image to Cloudinary:", error);
+  // Check for existing user by username or email
+  const existingUser = await User.findOne({
+    $or: [{ userName: userName.toLowerCase() }, { email: email }]
+  });
+  if (existingUser) {
+    const field = existingUser.userName === userName.toLowerCase() ? "username" : "email";
+    throw new ApiError(409, `User with this ${field} already exists.`);
   }
-  console.log("Profile Local Path: ", profilePicLocalpath);
-  // console.log("Profile Url: ",profileUrl);
 
+  // Handle profile picture upload
+  const profilePicLocalPath = req.files?.profilepic?.[0]?.path || null;
+  let profileUrl = null;
+  if (profilePicLocalPath) {
+    try {
+      profileUrl = await uploadOnCloudinary(profilePicLocalPath);
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+      throw new ApiError(500, "Failed to upload profile picture.");
+    }
+  }
+
+  // Create user
   const user = await User.create({
     userName: userName.toLowerCase(),
-    email,
-    password,
-    mobileNo,
+    email: email,
+    password: password,
+    mobileNo: mobileNo,
     Imageurl: profileUrl,
   });
 
-  const createdUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
-
+  // Fetch the created user excluding sensitive data
+  const createdUser = await User.findById(user._id).select("-password -refreshToken");
   if (!createdUser) {
     throw new ApiError(500, "Something went wrong while creating the user.");
   }
 
-  return res
-    .status(201)
-    .json(new ApiResponse(201, createdUser, "User Registered Successfully."));
+  // Successful response
+  res.status(201).json(new ApiResponse(201, createdUser, "User Registered Successfully."));
 });
+
 
 const validateuser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;

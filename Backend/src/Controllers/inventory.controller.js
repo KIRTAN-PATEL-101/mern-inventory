@@ -3,6 +3,7 @@ import { asyncHandler } from "../Utils/asyncHandler.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import { Inventory } from "../models/inventory.models.js";
+import { Item } from "../models/item.models.js";
 import validator from "validator";
 
 const addInventory = asyncHandler(async (req, res) => {
@@ -106,4 +107,26 @@ const showallInventories = asyncHandler(async (req, res) => {
           .status(200)
           .json(new ApiResponse(200, inventories, "Inventory list retrieved."));
       });
-export  { addInventory, updateInventory, showallInventories }
+
+      const deleteInventory = asyncHandler(async (req,res) => {
+        const { inventoryId } = req.body;
+        const UserID = req.user._id;
+        const existingInventory = await Inventory.findOne({ inventoryId: inventoryId, UserID: UserID });
+      try {
+          if (!existingInventory) {
+            throw new ApiResponse(404, "Inventory not found or does not belong to you.");
+          }
+        
+          // Delete Items
+          await Item.deleteMany({ inventoryId: inventoryId });
+        
+          // Delete inventory
+          await Inventory.deleteOne({ _id: inventoryId });
+        
+          return res.status(200).json(new ApiResponse(200, null, "Inventory deleted successfully."));
+      } catch (error) {
+        console.error("Error deleting the existing Inventory:", error);
+      }
+      });
+      
+export  { addInventory, updateInventory, showallInventories,deleteInventory }

@@ -24,7 +24,7 @@ const Register = () => {
         if (!/^\d+$/.test(formData.mobileNo)) newErrors.mobileNo = 'Contact number is invalid';
         //  if (!formData.profilepic) newErrors.profilepic = 'profilepic is required';
         return newErrors;
-    };  
+    };
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -74,7 +74,7 @@ const Register = () => {
     };
 
     return (
-        <div className="flex w-full min-h-screen items-center justify-center" style={{ backgroundColor: "#f5f5f5", backgroundImage: `url(https://res.cloudinary.com/dnmxwrqvb/image/upload/v1716367992/lfrebmwhtyour2uctsuv.jpg)`, backgroundSize: "cover", backgroundPosition: 'center' }}>
+        <div className="flex w-full min-h-screen items-center justify-center" style={{ backgroundColor: "#f5f5f5", backgroundImage:`url(https://res.cloudinary.com/dnmxwrqvb/image/upload/v1716367992/lfrebmwhtyour2uctsuv.jpg)`, backgroundSize: "cover", backgroundPosition: 'center' }}>
             <div className="flex rounded-xl bg-black opacity-75" style={{ width: "900px", height: "500px", boxShadow: "0px 3px 3px -2px rgb(0 0 0 / 20%),0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)" }}>
                 <div className="flex flex-col items-center justify-center bg-[#3bb19b] rounded-tl-xl rounded-bl-xl" style={{ flex: "1" }}>
                     <h1 className="mt-0 text-4xl self-center m-5" style={{ color: 'white' }}>Welcome Back</h1>
