@@ -25,7 +25,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/items" element={<ItemList />} />
         <Route path='/mystore' element={<MyStore />} />
-        <Route path="/item/:id" component={<ItemDetailPage/>} />
+        <Route path="/item/:id" element={<ItemDetailPage />} />
       </Routes>
       </BrowserRouter>
   )

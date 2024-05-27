@@ -92,7 +92,7 @@ const Login = () => {
                 </div>
                 <div className="flex flex-col items-center justify-center rounded-tr-lg rounded-br-lg" style={{ flex: 1, backgroundColor: "#3bb19b" }}>
                     <h1 className="mt-0 text-4xl self-center m-5" style={{ color: 'white' }}>New Here ?</h1>
-                    <Link to="/register">
+                    <Link to="/">
                         <button type="button" className="bg-white rounded-3xl font-bold text-sm cursor-pointer" style={{ border: "none", outline: "none", padding: "12px 0", width: "180px" }}>
                             Register
                         </button>

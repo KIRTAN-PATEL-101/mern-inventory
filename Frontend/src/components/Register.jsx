@@ -24,7 +24,7 @@ const Register = () => {
         if (!/^\d+$/.test(formData.mobileNo)) newErrors.mobileNo = 'Contact number is invalid';
         //  if (!formData.profilepic) newErrors.profilepic = 'profilepic is required';
         return newErrors;
-    };
+    };  
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
