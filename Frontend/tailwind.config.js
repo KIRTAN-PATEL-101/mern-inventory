@@ -6,10 +6,8 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        
-      },
-     
+      transform: ['responsive', 'hover', 'focus'],
+      translate: ['responsive', 'hover', 'focus'],
     },
   },
   plugins: [],
