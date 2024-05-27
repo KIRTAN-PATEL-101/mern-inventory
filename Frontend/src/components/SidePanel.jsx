@@ -13,7 +13,7 @@ const SidePanel = () => {
       <ul className="side-menu mt-12">
         <li className="active relative">
             
-          <Link to="/" className="flex items-center h-12 px-4 text-lg text-gray-800 bg-gray-200 rounded-r-full transition-all">
+          <Link to="/dashboard" className="flex items-center h-12 px-4 text-lg text-gray-800 bg-gray-200 rounded-r-full transition-all">
             <i className='bx bxs-dashboard flex-shrink-0 text-2xl'></i>
             <span className="ml-4">Dashboard</span>
           </Link>

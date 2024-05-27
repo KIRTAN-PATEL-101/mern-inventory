@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 const InventoryComponent = () => {
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([
-        { name: 'Laptop', id: '01', createdOn: '2024-05-03' },
-        { name: 'Coffee Table', id: '02', createdOn: '2024-05-03' }
+        { name: 'Ganpat Store', id: '01', createdOn: '2024-05-03' },
+        { name: 'Mahesh Groceery', id: '02', createdOn: '2024-05-03' }
     ]);
     const [newItem, setNewItem] = useState({
         name: '',
@@ -194,7 +194,7 @@ const InventoryComponent = () => {
                                     <td className="p-2">{item.id}</td>
                                     <td className="p-2">{item.createdOn}</td>
                                     <td className="p-2">
-                                        <Link to={`/item/${item.id}`}    className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
+                                        <Link to={`/item/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                             View
                                         </Link>
                                     </td>
