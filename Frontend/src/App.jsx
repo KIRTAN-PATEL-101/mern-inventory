@@ -29,7 +29,7 @@ const App = () => {
         <Route path="/items" element={<ItemList />} />
         <Route path='/mystore' element={<MyStore />} />
         <Route path="/item/:id" element={<ItemDetailPage />} />
-        <Route path="/item/detail/:id" element={<Dashboard />} />
+        <Route path="/item/detail/:id" element={<ItemViewBox />} />
       </Routes>
       </BrowserRouter>
   )
