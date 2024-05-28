@@ -137,7 +137,7 @@ const ItemDetailPage = () => {
                                 </button>
                             </div>
                             {showForm && (
-                                <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: "100px 0 0 0" }}>
+                                <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: "250px 0 0 0" }}>
                                     <form onSubmit={handleSubmit}>
                                         <div className="mb-4">
                                             <label htmlFor="itemName" className="block font-bold text-gray-700 mb-2">Item Name</label>
