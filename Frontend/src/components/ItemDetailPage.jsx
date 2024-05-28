@@ -18,8 +18,8 @@ const ItemDetailPage = () => {
     });
 
     const [items, setItems] = useState([
-        { itemld: '01', itemName: '', createdDate: '2024-05-01', stock: 10, inStock: 'Yes' },
-        { itemld: '02', itemName: 'Desk', createdDate: '2024-05-02', stock: 0, inStock: 'No' }
+        { itemld: '01', itemName: 'Cheese', createdDate: '2024-05-01', stock: 10, inStock: 'Yes' },
+        { itemld: '02', itemName: 'Bread', createdDate: '2024-05-02', stock: 0, inStock: 'No' }
     ]);
 
     const [newItem, setNewItem] = useState({
@@ -317,9 +317,9 @@ const ItemDetailPage = () => {
                                         {item.stock > 0 ? 'Yes' : 'No'}
                                     </td>
                                     <td className="px-4 py-2">
-                                        <Link to={`/item/detail/${item.itemld}`}  state={{ item }} className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
-                                            View
-                                        </Link>
+                                            <Link to={`/item/detail/${item.itemld}`}  state={{ item }} className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
+                                                View
+                                            </Link>
                                     </td>
                                     {showRemoveOptions && (
                                         <td className="px-4 py-2">

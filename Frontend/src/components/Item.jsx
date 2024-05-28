@@ -16,8 +16,8 @@ function ItemList() {
   });
 
   const [items, setItems] = useState([
-    { itemld: '01', itemName: 'Laptop', owner: 'John Doe', createdDate: '2024-05-01', inventoryName: 'Office Supplies', quantityLeft: 10, inStock: 'Yes', description: 'A powerful laptop' },
-    { itemld: '02', itemName: 'Desk', owner: 'Jane Smith', createdDate: '2024-05-02', inventoryName: 'Office Furniture', quantityLeft: 0, inStock: 'No', description: 'A sturdy desk' }
+    { itemld: '01', itemName: 'Cheese', owner: 'John Doe', createdDate: '2024-05-01', inventoryName: 'Ganpat Store', quantityLeft: 10, inStock: 'Yes', description: 'A powerful laptop' },
+    { itemld: '02', itemName: 'Bread', owner: 'Jane Smith', createdDate: '2024-05-02', inventoryName: 'Mahesh Groceery', quantityLeft: 0, inStock: 'No', description: 'A sturdy desk' }
   ]);
 
   const [newItem, setNewItem] = useState({
