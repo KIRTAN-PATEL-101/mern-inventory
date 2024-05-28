@@ -270,6 +270,18 @@ const ItemDetailPage = () => {
                       />
                     </div>
                     <div className="mb-4">
+                      <label htmlFor="name" className="block font-bold text-gray-700 mb-2">Trigger Amount</label>
+                      <input
+                        type="number"
+                        id="name"
+                        name="name"
+                        value={notificationInfo.triggerAmount}
+                        onChange={handleNotificationChange}
+                        className="w-full p-2 border border-gray-300 rounded"
+                        required
+                      />
+                    </div>
+                    <div className="mb-4">
                       <label className="block font-bold text-gray-700 mb-2">Notify me by</label>
                       <div className="flex items-center">
                         <input

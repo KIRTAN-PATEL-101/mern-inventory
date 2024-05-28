@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import SidePanel from './SidePanel';
+import axios from 'axios';
 
 function ItemList() {
   const [showForm, setShowForm] = useState(false);
@@ -91,6 +92,19 @@ function ItemList() {
   //   setSelectedItemId('');
   //   setShowRemoveOptions(false);
   // };
+
+  const [itemList, setitemList] = useState([]);
+  useEffect(() => {
+    const response = axios.get('http://localhost:8000/items/showall', {withCredentials: true});
+    if(response.status === 200){
+      setitemList(response.data);
+      console.log(response.data);
+    }
+    else
+    {
+      console.log("Error in fetching data");
+    }
+  },[])
 
   return (
     <div className="flex">
