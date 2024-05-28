@@ -29,7 +29,7 @@ const App = () => {
     
       <Routes>
         <Route element={<PrivateRoutes />}>
-          <Route path="/superAdmin" element={<Dashboard />} />
+          <Route path="/superAdmin/dashboard" element={<Dashboard />} />
           <Route path="/items" element={<ItemList />} />
           <Route path='/mystore' element={<MyStore />} />
           <Route path="/item/:id" element={<ItemDetailPage />} />

@@ -3,6 +3,7 @@ import SidePanel from './SidePanel'
 import Header from './Header'
 import { useState } from 'react';
 import ItemViewBox from './ItemViewBox';
+import axios from 'axios';
 
 const InventoryItems = () => {
 
@@ -67,11 +68,12 @@ const InventoryItems = () => {
                       </td>
                       <td className="px-4 py-2">
                         <button
-                          onClick={() => handleViewItem(item)}
+                          onClick={() => axios.post("http://localhost:8000/whatsapp/send")}
                           className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
                         >
                           Notify Me
                         </button>
+                        
                       </td>
                     </tr>
                   ))}

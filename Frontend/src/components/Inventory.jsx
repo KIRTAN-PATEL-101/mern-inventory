@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 const Inventory = () => {
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([
-        { name: 'Ganpat Store', id: '01', createdOn: '2024-05-03' },
-        { name: 'Mahesh Groceery', id: '02', createdOn: '2024-05-03' }
+        { name: 'Ganpat Store', id: '01',location:"Vadodara",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Mahesh Groceery', id: '02',location:"Vadodara",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Radhe Krishna', id: '03',location:"Vadodara",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Jay Mataji', id: '04',location:"Vadodara",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' }
     ]);
     const [newItem, setNewItem] = useState({
         name: '',
@@ -74,6 +76,9 @@ const Inventory = () => {
                             <tr className="text-center">
                                 <th className="p-2">Name</th>
                                 <th className="p-2">ID</th>
+                                <th className="p-2">Owner Name</th>
+                                <th className="p-2">Category</th>
+                                <th className="p-2">Loaction</th>
                                 <th className="p-2">Created</th>
                                 <th className="p-2">View</th>
                                 {showRemoveOptions && <th className="p-2">Select</th>}
@@ -84,6 +89,9 @@ const Inventory = () => {
                                 <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.id}>
                                     <td className="p-2">{item.name}</td>
                                     <td className="p-2">{item.id}</td>
+                                    <td className="p-2">{item.ownerName}</td>
+                                    <td className="p-2">{item.category}</td>
+                                    <td className="p-2">{item.location}</td>
                                     <td className="p-2">{item.createdOn}</td>
                                     <td className="p-2">
                                         <Link to={`/superAdmin/users/01/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
