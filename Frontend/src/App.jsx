@@ -14,6 +14,7 @@ import ItemDetailPage from './components/ItemDetailPage';
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ItemViewBox from './components/ItemViewBox';
+import PrivateRoutes from './components/PrivateRoutes';
 
 
 const App = () => {
@@ -23,13 +24,15 @@ const App = () => {
     <BrowserRouter>
     
       <Routes>
-        <Route path="/" element={<Register/>} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/items" element={<ItemList />} />
+          <Route path='/mystore' element={<MyStore />} />
+          <Route path="/item/:id" element={<ItemDetailPage />} />
+          <Route path="/item/detail/:id" element={<ItemViewBox />} />
+        </Route>
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/items" element={<ItemList />} />
-        <Route path='/mystore' element={<MyStore />} />
-        <Route path="/item/:id" element={<ItemDetailPage />} />
-        <Route path="/item/detail/:id" element={<ItemViewBox />} />
       </Routes>
       </BrowserRouter>
   )

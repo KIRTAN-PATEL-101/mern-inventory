@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from "js-cookie";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -37,13 +38,17 @@ const Login = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
+                    credentials: 'include',
                     body: JSON.stringify(formData),
                 });
 
                 if (response.ok) {
                     const result = await response.json();
                     setMessage('Login successful!');
-                    navigate("/dashboard");
+                    console.log(result);
+                    // console.log(Cookies.get("RefreshToken"));
+                    navigate("/");
+
                 } else {
                     const errorResult = await response.json();
                     setMessage(`Login failed: ${errorResult.message}`);
@@ -92,7 +97,7 @@ const Login = () => {
                 </div>
                 <div className="flex flex-col items-center justify-center rounded-tr-lg rounded-br-lg" style={{ flex: 1, backgroundColor: "#3bb19b" }}>
                     <h1 className="mt-0 text-4xl self-center m-5" style={{ color: 'white' }}>New Here ?</h1>
-                    <Link to="/">
+                    <Link to="/register">
                         <button type="button" className="bg-white rounded-3xl font-bold text-sm cursor-pointer" style={{ border: "none", outline: "none", padding: "12px 0", width: "180px" }}>
                             Register
                         </button>
