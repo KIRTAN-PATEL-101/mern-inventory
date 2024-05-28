@@ -14,11 +14,11 @@ const addItem = asyncHandler(async (req, res) => {
       pricePerUnit,
       stock,
       expiryDate,
-      inventoryId,
+      inventoyrId,
       category,
     } = req.body;
     const id = req.user._id;
-
+    console.log(req.body)
     const itemPicLocalPath =
       req.files && req.files.itemimage && req.files.itemimage[0]
         ? req.files.itemimage[0].path
@@ -36,13 +36,12 @@ const addItem = asyncHandler(async (req, res) => {
     // Create a new item
     const newItem = new Item({
       userId: id,
-      itemName,
-      itemId,
-      pricePerUnit,
-      stock,
-      expiryDate,
-      inventoryId,
-      category,
+      itemName:itemName,
+      itemId:itemId,
+      pricePerUnit:pricePerUnit,
+      stock:stock,
+      inventoryId:inventoyrId,
+      category:category,
       itemImageurl: itemUrl,
     });
 
@@ -172,6 +171,7 @@ const showallItems = asyncHandler(async (req, res) => {
       message: "Items fetched successfully",
       data: itemsWithInventoryDetails
     });
+    // return res.status(200).data(itemsWithInventoryDetails)
   } catch (error) {
     console.error(error);
     res.status(500).json(new ApiResponse(500, "Internal Server Error"));
