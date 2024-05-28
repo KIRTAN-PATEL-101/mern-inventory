@@ -6,7 +6,7 @@ const router=Router();
 
 router.route('/add').post(verifyJWT,addInventory);
 router.route('/update').post(verifyJWT,updateInventory);
-router.route('/show').post(verifyJWT,showallInventories);
-router.route('/delete').post(verifyJWT,deleteInventory);
+router.route('/show').get(verifyJWT,showallInventories);
+router.route('/delete').delete(verifyJWT,deleteInventory);
 
 export default router;

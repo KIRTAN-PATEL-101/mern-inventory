@@ -15,9 +15,9 @@ router.route('/add').post(verifyJWT,
   ]),addItem);
 
   router.route('/inventoryItems').post(verifyJWT,inventoryItems)
-  router.route('/itemdetails').post(verifyJWT,itemDetails)
+  router.route('/itemdetails').get(verifyJWT,itemDetails)
   router.route('/settrigger').post(verifyJWT,addTriggeramount,checkStockLevels)
   router.route('/adjustqty').post(verifyJWT,adjustQuantity,checkStockLevels)
-  router.route('/showall').post(verifyJWT,showallItems)
+  router.route('/showall').get(verifyJWT,showallItems)
 
 export default router;
