@@ -15,7 +15,11 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ItemViewBox from './components/ItemViewBox';
 import PrivateRoutes from './components/PrivateRoutes';
-
+import Geolocation from './components/Geolocation';
+import AllInventory from './components/AllInventory';
+import Users from './components/Users';
+import Inventory from './components/Inventory';
+import InventoryItems from './components/InventoryItems';
 
 const App = () => {
 
@@ -25,11 +29,17 @@ const App = () => {
     
       <Routes>
         <Route element={<PrivateRoutes />}>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/superAdmin" element={<Dashboard />} />
           <Route path="/items" element={<ItemList />} />
           <Route path='/mystore' element={<MyStore />} />
           <Route path="/item/:id" element={<ItemDetailPage />} />
           <Route path="/item/detail/:id" element={<ItemViewBox />} />
+          <Route path="/superAdmin/users" element={<Users />} />
+          <Route path="/superAdmin/inventory" element={<AllInventory />} />
+          <Route path="/superAdmin/geolocation" element={<Geolocation />} />
+          <Route path="/superAdmin/users/:id/inventory" element={<Inventory />} />
+          <Route path="/superAdmin/users/:id/inventory/:di" element={<InventoryItems />} />
+
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

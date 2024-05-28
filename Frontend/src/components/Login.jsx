@@ -47,7 +47,7 @@ const Login = () => {
                     setMessage('Login successful!');
                     console.log(result);
                     // console.log(Cookies.get("RefreshToken"));
-                    navigate("/");
+                    navigate("/superAdmin");
 
                 } else {
                     const errorResult = await response.json();
