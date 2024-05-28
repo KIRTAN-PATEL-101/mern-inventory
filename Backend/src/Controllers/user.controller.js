@@ -104,7 +104,8 @@ const validateuser = asyncHandler(async (req, res) => {
 
   const options={
     httpOnly: true,
-    secured: true
+    secure: false,
+    sameSite:'strict'
   }
 
   return res

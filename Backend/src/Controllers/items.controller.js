@@ -167,11 +167,7 @@ const showallItems = asyncHandler(async (req, res) => {
     }));
 
     // Send response back to the client
-    res.status(200).json({
-      status: 200,
-      message: "Items fetched successfully",
-      data: itemsWithInventoryDetails
-    });
+    res.status(200).json(new ApiResponse(200, itemsWithInventoryDetails, "Items fetched successfully"));
   } catch (error) {
     console.error(error);
     res.status(500).json(new ApiResponse(500, "Internal Server Error"));
