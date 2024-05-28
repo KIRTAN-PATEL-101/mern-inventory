@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const Register = () => {
 
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const validate = () => {
         const newErrors = {};
@@ -59,13 +61,17 @@ const Register = () => {
                 });
 
                 if (response.ok) {
+                    console.log(response);
                     const result = await response.json();
                     setMessage('Registration successful!');
+                    navigate("/login");
                 } else {
+                    console.log(response);
                     const errorResult = await response.json();
                     setMessage(`Registration failed: ${errorResult.message}`);
                 }
             } catch (error) {
+                console.log(error);
                 setMessage(`An error occurred: ${error.message}`);
             }
         } else {

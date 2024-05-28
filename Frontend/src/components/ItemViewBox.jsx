@@ -3,8 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Header from './Header';
 import SidePanel from './SidePanel';
+import { useLocation } from 'react-router-dom';
 
 const ItemViewBox = () => {
+  const location = useLocation();
+    const item = location.state?.item;
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
@@ -24,7 +27,7 @@ const ItemViewBox = () => {
           {isVisible && (
             <div className="fixed top-16 left-1/2 transform -translate-x-1/2 text-dark w-auto h-auto max-h-[calc(100vh-64px)] z-[99999999] rounded-lg p-4 m-4 bg-white shadow-lg overflow-auto">
               <div className="flex justify-between">
-                <h1 className="text-xl font-bold">Coffee Table</h1>
+                <h1 className="text-xl font-bold">Item name</h1>
                 <button onClick={toggleVisibility} className="w-8 h-8">
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
@@ -44,13 +47,13 @@ const ItemViewBox = () => {
                     <span>Name:</span>
                     <span>Quantity Left:</span>
                     <span>Category:</span>
-                    <span>Trigger amount:</span>
+                    <span>Stock</span>
                   </div>
                   <div className="flex flex-col justify-between ml-4">
-                    <span>{item.name}</span>
-                    <span>{}</span>
-                    <span>{}</span>
-                    <span>{}</span>
+                    <span>{item.itemName}</span>
+                    <span>quantity</span>
+                    <span>category</span>
+                    <span>{item.stock}</span>
                   </div>
                 </div>
               </div>

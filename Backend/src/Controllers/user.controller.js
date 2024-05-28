@@ -47,7 +47,8 @@ const registerUser = asyncHandler(async (req, res) => {
   });
   if (existingUser) {
     const field = existingUser.userName === userName.toLowerCase() ? "username" : "email";
-    throw new ApiError(409, `User with this ${field} already exists.`);
+    // throw new ApiError(409, `User with this ${field} already exists.`);
+    return res.status(409).json(new ApiResponse(409, null, `User with this ${field} already exists.`));
   }
 
   // Handle profile picture upload
@@ -90,12 +91,11 @@ const validateuser = asyncHandler(async (req, res) => {
   }
   const user = await User.findOne({ email }).select("password");
   if (!user) {
-    throw new ApiError(400, "Invalid email or password");
+    return res.status(409).json(new ApiResponse(409, null, `Email not Register .`));
   }
   const isPasswordMatch = await user.isPasswordCorrect(password);
   if (!isPasswordMatch) {
-    throw new ApiError(400, "Invalid password.");
-  }
+    return res.status(409).json(new ApiResponse(409, null, `Invalid password.`));  }
 
   const {accesstoken,refreshtoken}=await generateAccessandRefreshToken(user._id)
 
