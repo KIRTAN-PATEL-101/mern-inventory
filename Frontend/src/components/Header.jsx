@@ -17,7 +17,7 @@ const Header = () => {
         </div> }
       </form> */}
       <a href="#" className="profile">
-        <img src="img/hardik.png" alt="profile" className="w-9 h-9 rounded-full object-cover" />
+        <img src="https://res.cloudinary.com/deyfwd4ge/image/upload/v1716897237/download_11_hldmcp.png" alt="profile" className="w-9 h-9 rounded-full object-cover" />
       </a>
     </nav>
   );

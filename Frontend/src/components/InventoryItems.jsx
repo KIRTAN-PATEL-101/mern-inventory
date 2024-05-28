@@ -7,8 +7,8 @@ import ItemViewBox from './ItemViewBox';
 const InventoryItems = () => {
 
    const [items, setItems] = useState([
-      { itemld: '01', itemName: 'Cheese', createdDate: '2024-05-01', stock: 10, inStock: 'Yes' },
-      { itemld: '02', itemName: 'Bread', createdDate: '2024-05-02', stock: 0, inStock: 'No' }
+      { itemld: '01', itemName: 'Cheese', createdDate: '2024-05-01', stock: 10, inStock: 'Yes',img: 'https://res.cloudinary.com/deyfwd4ge/image/upload/v1716898875/download_3_lcvwbu.jpg' },
+      { itemld: '02', itemName: 'Bread', createdDate: '2024-05-02', stock: 0, inStock: 'No', img: 'https://res.cloudinary.com/deyfwd4ge/image/upload/v1716898706/download_2_mhlll7.jpg' }
     ]);
 
     const [viewItem, setViewItem] = useState(null);
@@ -43,6 +43,7 @@ const InventoryItems = () => {
                     <th className="px-4 py-2 bg-blue-500 text-white">Quantity left</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">In stock</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">View</th>
+                    <th className="px-4 py-2 bg-blue-500 text-white">Notify me</th>
 
                   </tr>
                 </thead>
@@ -62,6 +63,14 @@ const InventoryItems = () => {
                           className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
                         >
                           View
+                        </button>
+                      </td>
+                      <td className="px-4 py-2">
+                        <button
+                          onClick={() => handleViewItem(item)}
+                          className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
+                        >
+                          Notify Me
                         </button>
                       </td>
                     </tr>
