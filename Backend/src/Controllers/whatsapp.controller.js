@@ -6,10 +6,10 @@ import { ApiResponse } from "../Utils/ApiResponse.js";
 
 const sendWp = asyncHandler((req, res) => {
   console.log(req.body);
-  const amount=req.body;
+  const amount = req.body;
   try {
-    const accountSid = 'AC09585b781f76496b65605b7b02c0c3e9';
-    const authToken = '13cb44ce2f633a4821ecb319c05f1274';
+    const accountSid = "AC09585b781f76496b65605b7b02c0c3e9";
+    const authToken = "af6c4947bdd5877f94788a6d14f1eba1";
     const client = twilio(accountSid, authToken);
     // const client = require('twilio')(accountSid, authToken);
 
