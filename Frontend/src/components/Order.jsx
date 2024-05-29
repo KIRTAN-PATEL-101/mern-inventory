@@ -19,14 +19,14 @@ const Order = () => {
         <tbody>
           <tr className="hover:bg-gray-200">
             <td className="py-4 px-2 flex items-center gap-3">
-              <p className="text-gray-800">Amit Shah</p>
+              <p className="text-gray-800">Jessica</p>
             </td>
             <td className="py-4 px-2">02-10-2021</td>
             <td className="py-4 px-2"><span className="status-process bg-yellow-500 text-white px-3 py-1 rounded-full text-xs">In Process</span></td>
           </tr>
           <tr className="hover:bg-gray-200">
             <td className="py-4 px-2 flex items-center gap-3">
-              <p className="text-gray-800">Rahul Gupta</p>
+              <p className="text-gray-800">Adriana</p>
             </td>
             <td className="py-4 px-2">03-10-2021</td>
             <td className="py-4 px-2"><span className="status-pending bg-orange-500 text-white px-3 py-1 rounded-full text-xs">Pending</span></td>
