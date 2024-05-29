@@ -24,7 +24,7 @@ const generateAccessandRefreshToken = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { userName, email, password, mobileNo,superAdmin } = req.body;
+  const { userName, email, password, mobileNo, superAdmin } = req.body;
 
   // Basic field validation
   if (!userName || !email || !password || !mobileNo) {
@@ -70,16 +70,13 @@ const registerUser = asyncHandler(async (req, res) => {
     password: password,
     mobileNo: mobileNo,
     Imageurl: profileUrl,
-    superAdmin:superAdmin,
+    superAdmin: superAdmin,
   });
 
-  // Fetch the created user excluding sensitive data
   const createdUser = await User.findById(user._id).select("-password -refreshToken");
   if (!createdUser) {
     throw new ApiError(500, "Something went wrong while creating the user.");
   }
-
-  // Successful response
   res.status(201).json(new ApiResponse(201, createdUser, "User Registered Successfully."));
 });
 
@@ -192,4 +189,11 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 })
 
-export { registerUser, validateuser, logoutUser, refreshAccessToken };
+const userDetail = asyncHandler(async (req, res) => {
+  const id = req.user._id;
+  const user = await User.findById(id).select("-password")
+  if (!user) throw new ApiError(404, "User not found")
+  res.status(200).json(new ApiResponse(200, user, "User found"))
+})
+
+export { registerUser, validateuser, logoutUser, refreshAccessToken, userDetail };
