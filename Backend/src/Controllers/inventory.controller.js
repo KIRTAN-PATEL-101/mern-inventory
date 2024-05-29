@@ -135,4 +135,4 @@ const deleteInventory = asyncHandler(async (req, res) => {
   }
 });
 
-export { addInventory, updateInventory, showallInventories, deleteInventory };
+export { addInventory, updateInventory, showallInventories, deleteInventory};

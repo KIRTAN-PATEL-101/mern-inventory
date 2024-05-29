@@ -19,12 +19,14 @@ import userRouter from './Routes/user.routes.js';
 import useInventory from './Routes/inventory.route.js';
 import useItems from './Routes/items.route.js';
 import sendtrigger from './Routes/sendWp.route.js';
+import adminrouter from './Routes/superAdmin.route.js'
 
 //routes declaration
 app.use('/users', userRouter);
 app.use('/inventory', useInventory);
 app.use('/items', useItems);
 app.use('/whatsapp', sendtrigger);
+app.use('/superadmin', adminrouter);
 
 
 export default app;
