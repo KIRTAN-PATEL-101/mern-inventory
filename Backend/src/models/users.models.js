@@ -28,6 +28,11 @@ const UserSchema = new mongoose.Schema({
     },
     refreshToken: {
         type: 'String',
+    },
+    role:{
+        type :'String',
+        enum : ['Yes','No'],
+        default: 'No'
     }
 }, {
     timestamps: true,

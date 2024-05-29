@@ -3,8 +3,11 @@ import React, { useState } from 'react';
   import Header from './Header';
   import ItemViewBox from './ItemViewBox';
   import axios from 'axios';
+  import { useLocation } from 'react-router-dom';
 
   const InventoryItems = () => {
+    const location = useLocation();
+  const item = location.state?.item;
     const [showNotifyForm, setShowNotifyForm] = useState(null);
     const [notificationInfo, setNotificationInfo] = useState({
       triggerAmount: '',
@@ -65,7 +68,7 @@ import React, { useState } from 'react';
               <section className="Item">
                 <div id="item-box-1" className="item-view-box hidden"></div>
                 <div id="Item-list" className="text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4">
-                  <h1 className="text-2xl font-bold mb-4">Ganpat Store</h1>
+                  <h1 className="text-2xl font-bold mb-4">{item.name}</h1>
                   <table className="w-full table-auto">
                     <thead>
                       <tr>

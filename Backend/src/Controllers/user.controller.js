@@ -24,7 +24,7 @@ const generateAccessandRefreshToken = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { userName, email, password, mobileNo } = req.body;
+  const { userName, email, password, mobileNo,superAdmin } = req.body;
 
   // Basic field validation
   if (!userName || !email || !password || !mobileNo) {
@@ -70,6 +70,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password: password,
     mobileNo: mobileNo,
     Imageurl: profileUrl,
+    superAdmin:superAdmin,
   });
 
   // Fetch the created user excluding sensitive data
