@@ -6,14 +6,12 @@ import { Link } from 'react-router-dom';
 const InventoryComponent = () => {
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([
-        { name: 'Ganpat Store', id: '01',location:"Vadodara,390021",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Mahesh Groceery', id: '02',location:"Vadodara,390024",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Radhe Krishna', id: '03',location:"Vadodara,390016",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Jay Mataji', id: '04',location:"Vadodara,390024",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Jay Mahakali', id: '05',location:"Vadodara,390025",ownerName:"Jay Shah",category:"Grocery", createdOn: '2022-05-03' },
-        { name: 'Jay Ambe', id: '06',location:"Vadodara,390002",ownerName:"Jay Shah",category:"Grocery", createdOn: '2023-09-03' },
-        { name: 'Gajanand General Store', id: '07',location:"Vadodara,390007",ownerName:"Smita Kothari",category:"Grocery", createdOn: '2024-05-08' },
-        { name: 'Ansh Retail Store', id: '08',location:"Vadodara,390026",ownerName:"Hardik Jaiswal",category:"Grocery", createdOn: '2024-04-03' },
+        { name: 'Supermaxi Cuenca', id: '01',location:"Cuenca,010150",ownerName:"Adriana",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Don angel Super Market', id: '02',location:"Don angel,040301",ownerName:"Adriana",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Supermarket Tia', id: '03',location:"Tia,090401",ownerName:"Carolina",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Supermarket Santa Maria', id: '04',location:"Santa Maria,220302",ownerName:"Carolina",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Supermaxi Riboamba', id: '05',location:"Riboamba,060104",ownerName:"Jessica",category:"Grocery", createdOn: '2022-05-03' },
+        { name: 'San Juan Supermarket', id: '06',location:"San Juan,010405",ownerName:"Alejandro",category:"Grocery", createdOn: '2023-09-03' },
     ]);
     const [newItem, setNewItem] = useState({
         name: '',
@@ -206,7 +204,7 @@ const InventoryComponent = () => {
                                     <td className="p-2">{item.location}</td>
                                     <td className="p-2">{item.createdOn}</td>
                                     <td className="p-2">
-                                        <Link to={`/superAdmin/${item.id}/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
+                                        <Link to={`/superAdmin/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                             View
                                         </Link>
                                     </td>

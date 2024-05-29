@@ -1,30 +1,62 @@
 import React, { useEffect } from 'react';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import SidePanel from './SidePanel';
 import Header from './Header';
+import { Fragment, useState } from "react";
+import {
+  GoogleMap,
+  InfoWindowF,
+  MarkerF,
+  useLoadScript,
+} from "@react-google-maps/api";
+
+const markers = [
+  {
+    id: 1,
+    name: "Supermaxi Cuenca",
+    position: { lat: -2.7365242789079964, lng: -78.98378709785905 },
+  },
+  {
+    id: 2,
+    name: "Don angel Super Market",
+    position: { lat: -2.4944813725124737, lng: -79.64236990153547 },
+  },
+  {
+    id: 3,
+    name: "Supermarket Tia",
+    position: { lat: -1.550256390538846, lng: -79.86209645541977 }, 
+  },
+  {
+    id: 4,
+    name: "Supermarket Santa Maria",
+    position: { lat: -1.1459977902023128, lng: -78.60225731084184 },  
+  },
+  {
+    id: 5,
+    name: "Supermaxi Riboamba",
+    position: { lat: -1.5221124942235291, lng: -78.35757981816752 }, 
+  },
+  {
+    id: 6,
+    name: "SAN JUAN SUPERMARKET",
+    position: { lat: -0.4399100204653157, lng: -78.4978879570266 }, 
+  },
+];
+
+
 
 const Geolocation = () => {
-  useEffect(() => {
-    const map = L.map('map').setView([23.0225, 72.5714], 7); // Initial map view (latitude, longitude, zoom level)
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_MAP_API_KEY,
+  });
 
-    L.tileLayer(
-      'https://apis.mappls.com/advancedmaps/v1/4cac37b1b0b5045af133bc58ef9eb1b7/bhuvan_imagery/{z}/{x}/{y}.png'
-    ).addTo(map);
+  const [activeMarker, setActiveMarker] = useState(null);
 
-    // Example markers data
-    const markers = [
-      { position: [22.3072, 73.1812], label: 'Vadodara' },
-      { position: [22.6916, 72.8634], label: 'Nadiad' },
-      { position: [21.1702, 72.8311], label: 'Surat' },
-      { position: [22.3039, 70.8022], label: 'Rajkot' },
-      // Add more markers as needed
-    ];
-
-    markers.forEach((marker) => {
-      L.marker(marker.position).addTo(map).bindPopup(marker.label);
-    });
-  }, []);
+  const handleActiveMarker = (marker) => {
+    if (marker === activeMarker) {
+      return;
+    }
+    setActiveMarker(marker);
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -33,7 +65,42 @@ const Geolocation = () => {
         <div style={{ width: '288px', overflow: 'auto' }}>
           <SidePanel />
         </div>
-        <div id="map" style={{ flex: 1, height: '100%' }}></div>
+        <Fragment>
+      <div className="container">
+        
+        <div style={{ height: "100vh", width: "100%" }}>
+          {isLoaded ? (
+            <GoogleMap
+              center={{ lat: -1.8312, lng: -78.1834 }}
+              zoom={7}
+              onClick={() => setActiveMarker(null)}
+              mapContainerStyle={{ width: "100%", height: "100vh" }}
+            >
+              {markers.map(({ id, name, position }) => (
+                <MarkerF
+                  key={id}
+                  position={position}
+                  onClick={() => handleActiveMarker(id)}
+                  icon={{
+                    url:"https://res.cloudinary.com/deyfwd4ge/image/upload/v1716969589/final_marker_image_etqkm4.png",
+                    scaledSize: { width: 100, height: 100 }
+                  }}
+                >
+                  {activeMarker === id ? (
+                    <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                      <div>
+                        <p>{name}</p>
+                      </div>
+                    </InfoWindowF>
+                  ) : null}
+                </MarkerF>
+              ))}
+            </GoogleMap>
+          ) : null}
+        </div>
+      </div>
+    </Fragment>
+
       </div>
     </div>
   );

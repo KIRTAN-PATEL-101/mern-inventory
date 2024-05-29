@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
 
-   const [users, setUsers] = useState([
-      { id: '01', name: 'Kishan Patel', email: 'kishan427@gmail.com', phoneno: '9825357891', createdAt: '24-05-2024' },
-      { id: '02', name: 'Jay Shah', email: 'jay127@gmail.com', phoneno: '9878357432', createdAt: '25-05-2024' },
-      { id: '03', name: 'Smita Kothari', email: 'smita627@gmail.com', phoneno: '9856684690', createdAt: '26-05-2024' },
-      { id: '04', name: 'Hardik Jaiswal', email: 'hardik496@gmail.com', phoneno: '9867895670', createdAt: '27-05-2024' },
+  const [users, setUsers] = useState([
+    { id: '01', name: 'Jessica', email: 'Jessica427@gmail.com', phoneno: '9825357891', createdAt: '24-05-2024' },
+    { id: '02', name: 'Adriana', email: 'Adriana127@gmail.com', phoneno: '9878357432', createdAt: '25-05-2024' },
+    { id: '03', name: 'Carolina ', email: 'Carolina627@gmail.com', phoneno: '9856684690', createdAt: '26-05-2024' },
+    { id: '04', name: 'Alejandro ', email: 'Alejandro496@gmail.com', phoneno: '9867895670', createdAt: '27-05-2024' },
 
-   ]);
+ ]);
 
    const navigate = useNavigate();
 

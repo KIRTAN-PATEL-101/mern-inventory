@@ -37,8 +37,9 @@ const App = () => {
           <Route path="/superAdmin/users" element={<Users />} />
           <Route path="/superAdmin/inventory" element={<AllInventory />} />
           <Route path="/superAdmin/geolocation" element={<Geolocation />} />
-          <Route path="/superAdmin/users/:id/inventory" element={<Inventory />} />
-          <Route path="/superAdmin/users/:id/inventory/:di" element={<InventoryItems />} />
+          <Route path="/superAdmin/users/:id/inventory/" element={<Inventory />} />
+          <Route path="/superAdmin/inventory/:di" element={<InventoryItems />} />
+          <Route path="superAdmin/users/:id/inventory/:di" element={<InventoryItems />} />
 
         </Route>
         <Route path="/register" element={<Register />} />
