@@ -206,7 +206,7 @@ const InventoryComponent = () => {
                                     <td className="p-2">{item.location}</td>
                                     <td className="p-2">{item.createdOn}</td>
                                     <td className="p-2">
-                                        <Link to={`/superAdmin/users/01/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
+                                        <Link to={`/superAdmin/${item.id}/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                             View
                                         </Link>
                                     </td>
