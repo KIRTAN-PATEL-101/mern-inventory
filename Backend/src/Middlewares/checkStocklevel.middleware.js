@@ -8,7 +8,7 @@ async function checkStockLevels(req, res, next) {
         const items = await Item.find({});
         console.log(items);
         const now = new Date();
-        const userMail=req.user.email;
+        const userMail = req.user.email;
         const user = await User.findOne({ email: userMail });
         console.log(user);
 
@@ -21,7 +21,7 @@ async function checkStockLevels(req, res, next) {
                 await sendEmail(userMail, 'Stock Alert', message); // Assuming userId is the email or use an appropriate field
 
                 console.log(`Notification sent for ${item.itemName}`);
-                
+
                 // Update the last notification time
                 item.lastNotification = now;
                 await item.save();

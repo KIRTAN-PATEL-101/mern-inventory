@@ -6,8 +6,14 @@ import { Link } from 'react-router-dom';
 const InventoryComponent = () => {
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([
-        { name: 'Ganpat Store', id: '01', createdOn: '2024-05-03' },
-        { name: 'Mahesh Groceery', id: '02', createdOn: '2024-05-03' }
+        { name: 'Ganpat Store', id: '01',location:"Vadodara,390021",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Mahesh Groceery', id: '02',location:"Vadodara,390024",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Radhe Krishna', id: '03',location:"Vadodara,390016",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Jay Mataji', id: '04',location:"Vadodara,390024",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Jay Mahakali', id: '05',location:"Vadodara,390025",ownerName:"Jay Shah",category:"Grocery", createdOn: '2022-05-03' },
+        { name: 'Jay Ambe', id: '06',location:"Vadodara,390002",ownerName:"Jay Shah",category:"Grocery", createdOn: '2023-09-03' },
+        { name: 'Gajanand General Store', id: '07',location:"Vadodara,390007",ownerName:"Smita Kothari",category:"Grocery", createdOn: '2024-05-08' },
+        { name: 'Ansh Retail Store', id: '08',location:"Vadodara,390026",ownerName:"Hardik Jaiswal",category:"Grocery", createdOn: '2024-04-03' },
     ]);
     const [newItem, setNewItem] = useState({
         name: '',
@@ -180,8 +186,11 @@ const InventoryComponent = () => {
                     <table className="table-auto w-full mt-4">
                         <thead className="bg-blue-500 text-white">
                             <tr className="text-center">
-                                <th className="p-2">Name</th>
+                            <th className="p-2">Name</th>
                                 <th className="p-2">ID</th>
+                                <th className="p-2">Owner Name</th>
+                                <th className="p-2">Category</th>
+                                <th className="p-2">Loaction</th>
                                 <th className="p-2">Created</th>
                                 <th className="p-2">View</th>
                                 {showRemoveOptions && <th className="p-2">Select</th>}
@@ -192,6 +201,9 @@ const InventoryComponent = () => {
                                 <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.id}>
                                     <td className="p-2">{item.name}</td>
                                     <td className="p-2">{item.id}</td>
+                                    <td className="p-2">{item.ownerName}</td>
+                                    <td className="p-2">{item.category}</td>
+                                    <td className="p-2">{item.location}</td>
                                     <td className="p-2">{item.createdOn}</td>
                                     <td className="p-2">
                                         <Link to={`/superAdmin/users/01/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">

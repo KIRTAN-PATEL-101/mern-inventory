@@ -34,10 +34,6 @@ const InventorySchema = new mongoose.Schema(
       required: true,
       maxlength: 10,
       minlength: 10,
-      validate: {
-        validator: (value) => /^\d{10}$/.test(value), // Basic 10-digit phone number format
-        message: "Invalid mobile number format (must be 10 digits)",
-      },
     },
     ManagerName: {
       type: "String",

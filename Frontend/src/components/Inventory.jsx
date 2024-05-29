@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 const Inventory = () => {
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([
-        { name: 'Ganpat Store', id: '01',location:"Vadodara",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Mahesh Groceery', id: '02',location:"Vadodara",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Radhe Krishna', id: '03',location:"Vadodara",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Jay Mataji', id: '04',location:"Vadodara",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' }
-    ]);
+        { name: 'Ganpat Store', id: '01',location:"Vadodara,390021",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Mahesh Groceery', id: '02',location:"Vadodara,390024",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Radhe Krishna', id: '03',location:"Vadodara,390016",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' },
+        { name: 'Jay Mataji', id: '04',location:"Vadodara,390024",ownerName:"Kishan Patel",category:"Grocery", createdOn: '2024-05-03' }
+        ]);
     const [newItem, setNewItem] = useState({
         name: '',
         ownerName: '',

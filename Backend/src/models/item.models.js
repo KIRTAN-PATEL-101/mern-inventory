@@ -31,7 +31,7 @@ const itemSchema = new mongoose.Schema({
   },
   inventoryId: {
     type: String,
-    required:true,
+    required: true,
   },
   category: {
     type: String,
