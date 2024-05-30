@@ -9,10 +9,10 @@ const SidePanel = ({ children }) => {
   };
 
   const menuItems = [
-    { path: '/superAdmin/dashboard', name: 'Dashboard', icon: 'bx bxs-dashboard' },
-    { path: '/superAdmin/users', name: 'Users', icon: 'bx bxs-receipt' },
-    { path: '/superAdmin/inventory', name: 'All Inventory', icon: 'bx bxs-store' },
-    { path: '/superAdmin/geolocation', name: 'Geolocation', icon: 'bx bxs-map'},
+    { path: '/dashboard', name: 'Dashboard', icon: 'bx bxs-dashboard' },
+    { path: '/items', name: 'All Items', icon: 'bx bxs-box' },
+    { path: '/inventory', name: 'My Inventories', icon: 'bx bxs-store' },
+    { path: '/geolocation', name: 'Geolocation', icon: 'bx bxs-map'},
     // Add more menu items as needed
     {path: '/payment', name: 'Payment', icon: 'bx bx-credit-card'},
     { path: '/login', name: 'Logout', icon: 'bx bxs-log-out-circle' }

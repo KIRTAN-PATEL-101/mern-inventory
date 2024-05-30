@@ -45,13 +45,16 @@ const Login = () => {
                 if (response.ok) {
                     const result = await response.json();
                     setMessage('Login successful!');
-                    console.log(result);
-                    // console.log(Cookies.get("RefreshToken"));
-                    navigate("/superAdmin/dashboard");
+                    console.log(result.data.user);
+                    if(result.data.user.role === 'admin'){
+                        navigate("/superAdmin/dashboard");
+                    }
+                    else{
+                        navigate("/dashboard");
+                    }
 
                 } else {
                     const errorResult = await response.json();
-                    setMessage(`Login failed: ${errorResult.message}`);
                 }
             } catch (error) {
                 setMessage(`An error occurred: ${error.message}`);

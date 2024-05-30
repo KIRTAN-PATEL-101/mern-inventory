@@ -22,6 +22,7 @@ import Users from "./components/Users";
 import Inventory from "./components/Inventory";
 import InventoryItems from "./components/InventoryItems";
 import Payment from "./components/Payment";
+import Test from "./components/Test";
 
 const App = () => {
   return (
@@ -53,6 +54,9 @@ const App = () => {
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<h1>user dashboard</h1>} />
+        <Route path="/test" element={<Test />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </BrowserRouter>
   );

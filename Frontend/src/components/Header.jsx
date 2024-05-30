@@ -3,6 +3,7 @@ import 'boxicons/css/boxicons.min.css';
 
 
 const Header = () => {
+
   return (
     <nav className="h-14 bg-gray-300 px-6 flex items-center gap-6 sticky top-0 z-10 justify-between" >
       {/* <i className='bx bx-menu cursor-pointer text-2xl'></i> */}
