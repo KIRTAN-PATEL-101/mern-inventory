@@ -5,11 +5,7 @@ import Header from './Header';
 import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
-  const [users, setUsers] = useState([
-  { id: '01', name: 'Jessica', email: 'Jessica427@gmail.com', phoneno: '9825357891', createdAt: '24-05-2024' },
-  { id: '02', name: 'Adriana', email: 'Adriana127@gmail.com', phoneno: '9878357432', createdAt: '25-05-2024' },
-  { id: '03', name: 'Carolina ', email: 'Carolina627@gmail.com', phoneno: '9856684690', createdAt: '26-05-2024' },
-  { id: '04', name: 'Alejandro ', email: 'Alejandro496@gmail.com', phoneno: '9867895670', createdAt: '27-05-2024' },]);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
 
@@ -17,6 +13,21 @@ const Users = () => {
     const id = item.id;
     navigate(`/superAdmin/users/${id}/inventory`);
   }
+  useEffect(() => {
+    // Fetch user data from the backend
+    axios.get('http://localhost:8000/superAdmin/users', { withCredentials: true })
+      .then(response => {
+        console.log(response.data);  // Debug the response
+        if (Array.isArray(response.data.data)) {
+          setUsers(response.data.data);
+        } else {
+          console.error('Expected an array of users, but got:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('There was an error fetching the users!', error);
+      });
+  }, []);
 
   return (
     <div>
@@ -43,10 +54,10 @@ const Users = () => {
                   <tbody>
                     {users.map((item, index) => (
                       <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.id}>
-                        <td className="px-4 py-2">{item.id}</td>
-                        <td className="px-4 py-2">{item.name}</td>
+                        <td className="px-4 py-2">1</td>
+                        <td className="px-4 py-2">{item.userName}</td>
                         <td className="px-4 py-2">{item.email}</td>
-                        <td className="px-4 py-2">{item.phoneno}</td>
+                        <td className="px-4 py-2">{item.mobileNo}</td>
                         <td className="px-4 py-2">{item.createdAt}</td>
                         <td className="px-4 py-2">
                           <button

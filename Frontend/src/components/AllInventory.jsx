@@ -5,14 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 const InventoryComponent = () => {
     const [showForm, setShowForm] = useState(false);
-    const [inventoryItems, setInventoryItems] = useState([
-        { name: 'Supermaxi Cuenca', id: '01',location:"Cuenca,010150",ownerName:"Adriana",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Don angel Super Market', id: '02',location:"Don angel,040301",ownerName:"Adriana",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Supermarket Tia', id: '03',location:"Tia,090401",ownerName:"Carolina",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Supermarket Santa Maria', id: '04',location:"Santa Maria,220302",ownerName:"Carolina",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Supermaxi Riboamba', id: '05',location:"Riboamba,060104",ownerName:"Jessica",category:"Grocery", createdOn: '2022-05-03' },
-        { name: 'San Juan Supermarket', id: '06',location:"San Juan,010405",ownerName:"Alejandro",category:"Grocery", createdOn: '2023-09-03' },
-    ]);
+    const [inventoryItems, setInventoryItems] = useState([]);
     const [newItem, setNewItem] = useState({
         name: '',
         ownerName: '',
@@ -21,6 +14,21 @@ const InventoryComponent = () => {
         category: '',
         description: ''
     });
+    useEffect(() => {
+        // Fetch user data from the backend
+        axios.get('http://localhost:8000/superAdmin/inventory',{ withCredentials: true })
+          .then(response => {
+            console.log(response.data);  // Debug the response
+            if (Array.isArray(response.data.data)) {
+                setInventoryItems(response.data.data);
+            } else {
+              console.error('Expected an array of users, but got:', response.data);
+            }
+          })
+          .catch(error => {
+            console.error('There was an error fetching the users!', error);
+          });
+      }, []);
     const [showRemoveOptions, setShowRemoveOptions] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState('');
 
@@ -197,12 +205,12 @@ const InventoryComponent = () => {
                         <tbody>
                             {inventoryItems.map((item, index) => (
                                 <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.id}>
-                                    <td className="p-2">{item.name}</td>
-                                    <td className="p-2">{item.id}</td>
-                                    <td className="p-2">{item.ownerName}</td>
+                                    <td className="p-2">{item.inventoryName}</td>
+                                    <td className="p-2">{item.inventoryId}</td>
+                                    <td className="p-2">{item.ManagerName}</td>
                                     <td className="p-2">{item.category}</td>
-                                    <td className="p-2">{item.location}</td>
-                                    <td className="p-2">{item.createdOn}</td>
+                                    <td className="p-2">{item.address}</td>
+                                    <td className="p-2">{item.createdAt}</td>
                                     <td className="p-2">
                                         <Link to={`/superAdmin/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                             View
