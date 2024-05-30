@@ -18,44 +18,44 @@ import React, { useState } from 'react';
     ]);
     const [viewItem, setViewItem] = useState(null);
 
-    const handleViewItem = (item) => {
-      setViewItem(item);
-    };
+  const handleViewItem = (item) => {
+    setViewItem(item);
+  };
 
-    const handleCloseView = () => {
-      setViewItem(null);
-    };
+  const handleCloseView = () => {
+    setViewItem(null);
+  };
 
-    const handleNotifyClick = (itemId) => {
-      setShowNotifyForm(itemId);
-    };
+  const handleNotifyClick = (itemId) => {
+    setShowNotifyForm(itemId);
+  };
 
-    const handleNotificationChange = (e) => {
-      const { name, value } = e.target;
-      setNotificationInfo((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    };
+  const handleNotificationChange = (e) => {
+    const { name, value } = e.target;
+    setNotificationInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-    const handleSubmitButton = (e) => {
-      e.preventDefault();
-      // Handle form submission, for example, by making an API call
-      e.preventDefault();
+  const handleSubmitButton = (e) => {
+    e.preventDefault();
+    // Handle form submission, for example, by making an API call
+    e.preventDefault();
     axios.post('http://localhost:8000/whatsapp/send', {
       itemId: showNotifyForm,
       triggerAmount: notificationInfo.triggerAmount,
     })
-    .then((response) => {
-      console.log('Notification set successfully', response.data);
-      setShowNotifyForm(null);
-      alert('Message sent on Whatapp Successfully')
-    })
-    .catch(error => {
-      console.error('Error setting notification', error);
-      alert('Message has not been sent on Whatapp')
-      setShowNotifyForm(null);
-    });
+      .then((response) => {
+        console.log('Notification set successfully', response.data);
+        setShowNotifyForm(null);
+        alert('Message sent on Whatapp Successfully')
+      })
+      .catch(error => {
+        console.error('Error setting notification', error);
+        alert('Message has not been sent on Whatapp')
+        setShowNotifyForm(null);
+      });
   };
 
     return (
@@ -131,19 +131,19 @@ import React, { useState } from 'react';
                               </form>
                             </div>
                           )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-            </main>
-          </section>
-          {viewItem && <ItemViewBox item={viewItem} onClose={handleCloseView} />}
-        </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </main>
+        </section>
+        {viewItem && <ItemViewBox item={viewItem} onClose={handleCloseView} />}
       </div>
-    );
-  }
+    </div>
+  );
+}
 
-  export default InventoryItems;
+export default InventoryItems;
