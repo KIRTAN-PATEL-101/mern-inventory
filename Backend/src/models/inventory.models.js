@@ -45,6 +45,10 @@ const InventorySchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    category:{
+      type: String,
+      required: true,
+    }
   },
   {
     timestamps: true,

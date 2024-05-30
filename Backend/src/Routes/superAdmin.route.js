@@ -8,7 +8,7 @@ const router=Router();
 
 router.route('/inventory').get(verifyJWT,checkAdmin, showAllInventories);
 router.route('/users').get(verifyJWT,checkAdmin, showAllUsers);
-router.route('/users/fetchinventory').get(verifyJWT,checkAdmin, showAllUsers, fetchInventoryByUserId);
-router.route('/users/fetchinventory/fetchitems').get(verifyJWT,checkAdmin, showAllUsers, fetchInventoryByUserId,fetchItemsByInventoryId);
+router.route('/fetchinventory').get(verifyJWT,checkAdmin, fetchInventoryByUserId);
+router.route('/fetchinventory/fetchitems').get(verifyJWT,checkAdmin, fetchInventoryByUserId,fetchItemsByInventoryId);
 
 export default router;
