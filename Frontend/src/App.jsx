@@ -9,13 +9,13 @@ import {
 } from "react-router-dom";
 
 import Dashboard from "./components/Dashboard";
-import ItemList from "./components/Item";
+import Item from "./components/Item";
 import MyStore from "./components/MyStore";
 import ItemDetailPage from "./components/ItemDetailPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ItemViewBox from "./components/ItemViewBox";
-import PrivateRoutes from "./components/PrivateRoutes";
+import PrivateRoutes from "./components/PrivateRoutes"; 
 import Geolocation from "./components/Geolocation";
 import AllInventory from "./components/AllInventory";
 import Users from "./components/Users";
@@ -24,6 +24,7 @@ import InventoryItems from "./components/InventoryItems";
 import Payment from "./components/Payment";
 import Test from "./components/Test";
 import UserDashboard from "./components/UserDashboard";
+import InventoryUser from "./components/InventoryUser";
 
 const App = () => {
   return (
@@ -31,7 +32,7 @@ const App = () => {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path="/superAdmin/dashboard" element={<Dashboard />} />
-          <Route path="/items" element={<ItemList />} />
+          <Route path="/items" element={<Item />} />
           <Route path="/mystore" element={<MyStore />} />
           <Route path="/item/:id" element={<ItemDetailPage />} />
           <Route path="/item/detail/:id" element={<ItemViewBox />} />
@@ -56,6 +57,8 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/inventory" element={<InventoryUser />} />
+        
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
