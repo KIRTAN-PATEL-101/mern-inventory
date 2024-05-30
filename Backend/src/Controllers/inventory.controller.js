@@ -6,12 +6,12 @@ import { Item } from "../models/item.models.js";
 import validator from "validator";
 
 const addInventory = asyncHandler(async (req, res) => {
-  const {inventoryId,
+  const { inventoryId,
     inventoryName,
     address,
     country,
     mobileNo,
-    managerName} = req.body;
+    managerName } = req.body;
   const id = req.user._id;
   console.log(id);
   console.log(req.body);
@@ -135,4 +135,4 @@ const deleteInventory = asyncHandler(async (req, res) => {
   }
 });
 
-export { addInventory, updateInventory, showallInventories, deleteInventory};
+export { addInventory, updateInventory, showallInventories, deleteInventory };

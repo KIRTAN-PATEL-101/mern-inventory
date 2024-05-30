@@ -44,6 +44,8 @@ const itemSchema = new mongoose.Schema({
   lastNotification: {
     type: Date,
   },
+},{
+  timestamps: true,
 });
 
 export const Item = mongoose.model('Item', itemSchema);
