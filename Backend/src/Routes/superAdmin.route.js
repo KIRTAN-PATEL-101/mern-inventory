@@ -6,8 +6,8 @@ import { fetchInventoryByUserId, fetchItemsByInventoryId, showAllInventories, sh
 const router=Router();
 
 
-router.route('/inventory').get(verifyJWT, showAllInventories);
-router.route('/users').get(verifyJWT, showAllUsers);
+router.route('/inventory').get(verifyJWT,checkAdmin, showAllInventories);
+router.route('/users').get(verifyJWT,checkAdmin, showAllUsers);
 router.route('/users/fetchinventory').get(verifyJWT,checkAdmin, showAllUsers, fetchInventoryByUserId);
 router.route('/users/fetchinventory/fetchitems').get(verifyJWT,checkAdmin, showAllUsers, fetchInventoryByUserId,fetchItemsByInventoryId);
 
