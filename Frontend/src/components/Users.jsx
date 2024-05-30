@@ -28,6 +28,13 @@ const Users = () => {
         console.error('There was an error fetching the users!', error);
       });
   }, []);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <div>
@@ -54,11 +61,11 @@ const Users = () => {
                   <tbody>
                     {users.map((item, index) => (
                       <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.id}>
-                        <td className="px-4 py-2">1</td>
+                        <td className="px-4 py-2">{index+1}</td>
                         <td className="px-4 py-2">{item.userName}</td>
                         <td className="px-4 py-2">{item.email}</td>
                         <td className="px-4 py-2">{item.mobileNo}</td>
-                        <td className="px-4 py-2">{item.createdAt}</td>
+                        <td className="px-4 py-2">{formatDate(item.createdAt)}</td>
                         <td className="px-4 py-2">
                           <button
                             onClick={() => handleViewItem(item)}
