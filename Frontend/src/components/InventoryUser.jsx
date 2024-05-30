@@ -91,10 +91,10 @@ const Inventory = () => {
         const handleRemoveItem = async () => {
             try {
 
-                const response = await axios.delete(`http://localhost:8000/inventory/delete`,selectedItemId, { withCredentials: true });
+                const response = await axios.delete(`http://localhost:8000/inventory/delete`, selectedItemId, { withCredentials: true });
                 console.log('Response from backend:', response.data);
         
-                setInventoryItems(inventoryItems.filter(item => newItem.inventoryId !== selectedItemId));
+                setInventoryItems(inventoryItems.filter(item => item.inventoryId !== selectedItemId));
         
                 // Clear the selected item ID and hide remove options
                 setSelectedItemId('');
