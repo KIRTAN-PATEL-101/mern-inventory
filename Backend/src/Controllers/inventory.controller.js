@@ -11,7 +11,10 @@ const addInventory = asyncHandler(async (req, res) => {
     address,
     country,
     mobileNo,
-    managerName } = req.body;
+    managerName,
+    category,
+    latCoordinates,
+    longCoordinates } = req.body;
   const id = req.user._id;
   console.log(id);
   console.log(req.body);
