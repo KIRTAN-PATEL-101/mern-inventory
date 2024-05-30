@@ -42,7 +42,7 @@ const App = () => {
             element={<Inventory />}
           />
           <Route
-            path="/superAdmin/inventory/:di"
+            path="/superAdmin/inventory/:di"  
             element={<InventoryItems />}
           />
           <Route
