@@ -11,7 +11,11 @@ const addInventory = asyncHandler(async (req, res) => {
     address,
     country,
     mobileNo,
-    managerName} = req.body;
+    managerName,
+    category,
+    latCoordinates,
+    longCoordinates,
+} = req.body;
   const id = req.user._id;
   console.log(id);
   console.log(req.body);
@@ -36,6 +40,9 @@ const addInventory = asyncHandler(async (req, res) => {
     mobileNo: mobileNo,
     ManagerName: managerName,
     UserID: id,
+    category: category,
+    latCoordinates: latCoordinates,
+    longCoordinates: longCoordinates,  
   });
 
   const createdInventory = await Inventory.findById(inventory._id);
@@ -62,6 +69,9 @@ const updateInventory = asyncHandler(async (req, res) => {
     country,
     mobileNo,
     managerName,
+    category,
+    latCoordinates,
+    longCoordinates,
   } = req.body;
   const id = req.user._id;
 
@@ -83,6 +93,9 @@ const updateInventory = asyncHandler(async (req, res) => {
       mobileNo: mobileNo,
       managerName: managerName,
       UserID: id,
+      category: category,
+      latCoordinates: latCoordinates,
+      longCoordinates: longCoordinates, 
     }
   );
   if (!inventory) {

@@ -93,4 +93,15 @@ const showItemDetailsById = asyncHandler (async (req, res) => {
     throw new ApiError(500, "Bad Request.");
     }
 });
-export {showAllInventories,  showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById}
+const fetchCoordinatesofInventories = asyncHandler (async (req, res) => {
+    try {
+      const inventories = await Inventory.find().select("inventoryName latCoordinates longCoordinates")
+      if (!inventories) {
+        return res.status(404).json({ message: "Error while fetching the Inventory Coordinates" });
+      }
+      res.status(200).json(inventories);
+    } catch(error) {
+      throw new ApiError(500, "Bad Request.");
+    }
+});
+export {showAllInventories,  showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories}
