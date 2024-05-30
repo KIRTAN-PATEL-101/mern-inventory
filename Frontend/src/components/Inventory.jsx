@@ -4,6 +4,8 @@ import Header from './Header';
 import { Link } from 'react-router-dom';
 
 const Inventory = () => {
+
+    
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([
         { name: 'Supermaxi Cuenca', id: '01',location:"Cuenca,010150",ownerName:"Adriana",category:"Grocery", createdOn: '2024-05-03' },

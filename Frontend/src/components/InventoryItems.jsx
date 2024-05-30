@@ -115,7 +115,7 @@ import React, { useState } from 'react';
                               </button>
                               <form onSubmit={handleSubmitButton}>
                                 <div className="mb-4">
-                                  <label htmlFor="triggerAmount" className="block font-bold text-gray-700 mb-2">Notify via WhatsApp</label>
+                                  <label htmlFor="triggerAmount" className="block font-bold text-gray-700 mb-2 inline pr-2">Notify via WhatsApp</label><img src="https://res.cloudinary.com/dgvslio7u/image/upload/v1716985215/jsafdt2rcafx6sl4xsdn.svg" className='mb-2' style={{height: "50px", width: "50px", display: "inline"}}/>
                                   <input
                                     type="number"
                                     id="triggerAmount"
