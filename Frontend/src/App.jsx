@@ -22,7 +22,6 @@ import Inventory from './components/Inventory';
 import InventoryItems from './components/InventoryItems';
 import Payment from './components/Payment';
 
-
 const App = () => {
 
 
@@ -41,8 +40,7 @@ const App = () => {
           <Route path="/superAdmin/geolocation" element={<Geolocation />} />
           <Route path="/superAdmin/users/:id/inventory/" element={<Inventory />} />
           <Route path="/superAdmin/inventory/:di" element={<InventoryItems />} />
-          <Route path="/superAdmin/users/:id/inventory/:di" element={<InventoryItems />} />
-          <Route path="/superAdmin/payment" element={<Payment />} />
+          <Route path="superAdmin/users/:id/inventory/:di" element={<InventoryItems />} />
           <Route path="/payment" element={<Payment />} />
 
         </Route>

@@ -17,7 +17,7 @@ const PaymentForm = () => {
       return;
     }
     // Further validation can be added here
-    alert(`Payment of €59.99 submitted!`);
+    alert('Payment of €59.99 submitted!');
   };
 
   return (
@@ -84,6 +84,7 @@ const PaymentForm = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="India">India</option>
+            <option value="Ecudor">Ecudor</option>
             {/* Add more options here */}
           </select>
         </div>
