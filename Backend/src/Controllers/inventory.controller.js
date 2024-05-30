@@ -11,9 +11,11 @@ const addInventory = asyncHandler(async (req, res) => {
     address,
     country,
     mobileNo,
-    managerName } = req.body;
+    ManagerName,
+    category
+  } = req.body;
   const id = req.user._id;
-  console.log(id);
+  // console.log(id);
   console.log(req.body);
   //Checking for existing Inventory by Inventory Id
   const existingInventory = await Inventory.findOne({
@@ -34,11 +36,11 @@ const addInventory = asyncHandler(async (req, res) => {
     address: address,
     country: country,
     mobileNo: mobileNo,
-    ManagerName: managerName,
+    ManagerName: ManagerName,
     UserID: id,
     category: category,
-    latCoordinates: latCoordinates,
-    longCoordinates: longCoordinates,  
+    // latCoordinates: latCoordinates,
+    // longCoordinates: longCoordinates,
   });
 
   const createdInventory = await Inventory.findById(inventory._id);
@@ -91,7 +93,7 @@ const updateInventory = asyncHandler(async (req, res) => {
       UserID: id,
       category: category,
       latCoordinates: latCoordinates,
-      longCoordinates: longCoordinates, 
+      longCoordinates: longCoordinates,
     }
   );
   if (!inventory) {
@@ -122,6 +124,8 @@ const deleteInventory = asyncHandler(async (req, res) => {
     inventoryId: inventoryId,
     UserID: UserID,
   });
+  console.log(inventoryId, UserID);
+  console.log(existingInventory);
   try {
     if (!existingInventory) {
       throw new ApiResponse(

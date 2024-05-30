@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from './Header';
-import SidePanel from './SidePanel';
+import HeaderUser from './HeaderUser';
+import SidePanelUser from './SidePanelUser';
 import axios from 'axios';
 
-function ItemList() {
+function Item() {
   const [showForm, setShowForm] = useState(false);
   const [showRemoveOptions, setShowRemoveOptions] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState('');
@@ -21,15 +21,15 @@ function ItemList() {
     { itemld: '02', itemName: 'Bread', owner: 'Jane Smith', createdDate: '2024-05-02', inventoryName: 'Mahesh Groceery', quantityLeft: 0, inStock: 'No', description: 'A sturdy desk' }
   ]);
 
-  const [newItem, setNewItem] = useState({
-    itemName: '',
-    itemld: '',
-    pricePerUnit: '',
-    stock: '',
-    inventoryld: '',
-    category: '',
-    itemimage: null
-  });
+  // const [newItem, setNewItem] = useState({
+  //   itemName: '',
+  //   itemld: '',
+  //   pricePerUnit: '',
+  //   stock: '',
+  //   inventoryld: '',
+  //   category: '',
+  //   itemimage: null
+  // });
 
   // const handleAddClick = () => {
   //   setShowForm(!showForm);
@@ -95,22 +95,33 @@ function ItemList() {
 
   const [itemList, setitemList] = useState([]);
   useEffect(() => {
-    const response = axios.get('http://localhost:8000/items/showall', {withCredentials: true});
-    if(response.status === 200){
-      setitemList(response.data);
-      console.log(response.data);
-    }
-    else
-    {
-      console.log("Error in fetching data");
-    }
-  },[])
+
+    axios.get('http://localhost:8000/items/showall', { withCredentials: true })
+      .then(response => {
+        console.log(response.data);  // Debug the response
+        if (Array.isArray(response.data.data)) {
+          setItems(response.data.data);
+        } else {
+          console.error('Expected an array of users, but got:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('There was an error fetching the users!', error);
+      });
+  }, []);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <div className="flex">
-      <SidePanel />
+      <SidePanelUser />
       <section id="content" className="relative w-full ml-72 transition-all">
-        <Header />
+        <HeaderUser />
         <main>
           <section className="Item">
             <div id="item-box-1" className="item-view-box hidden"></div>
@@ -305,11 +316,12 @@ function ItemList() {
               <table className="w-full table-auto">
                 <thead>
                   <tr>
-                    <th className="px-4 py-2 bg-blue-500 text-white">ID</th>
+                    <th className="px-4 py-2 bg-blue-500 text-white">Sr No</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">Name</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">Owner</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">Created date</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">Inventory Name</th>
+                    <th className="px-4 py-2 bg-blue-500 text-white">Price</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">Quantity left</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">In stock</th>
                     {/* <th className="px-4 py-2 bg-blue-500 text-white">Description</th> */}
@@ -318,25 +330,17 @@ function ItemList() {
                 </thead>
                 <tbody>
                   {items.map((item, index) => (
-                    <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.id}>
-                      <td className="px-4 py-2">{item.itemld}</td>
+                    <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item._id}>
+                      <td className="px-4 py-2">{index + 1}</td>
                       <td className="px-4 py-2">{item.itemName}</td>
-                      <td className="px-4 py-2">{item.owner}</td>
-                      <td className="px-4 py-2">{item.createdDate}</td>
-                      <td className="px-4 py-2">{item.inventoryName}</td>
-                      <td className="px-4 py-2">{item.quantityLeft}</td>
-                      <td className={`px-4 py-2 ${item.inStock === 'Yes' ? 'text-green-500' : 'text-red-500'}`}>{item.inStock}</td>
-                      {/* <td className="px-4 py-2">{item.description}</td> */}
-                      {/* {showRemoveOptions && (
-                        <td className="px-4 py-2">
-                          <input
-                            type="radio"
-                            name="removeItem"
-                            value={item.id}
-                            onChange={() => setSelectedItemId(item.id)}
-                          />
-                        </td>
-                      )} */}
+                      <td className="px-4 py-2">{item.inventoryDetails ? item.inventoryDetails.ManagerName : 'N/A'}</td>
+                      <td className="px-4 py-2">{formatDate(item.createdAt)}</td>
+                      <td className="px-4 py-2">{item.inventoryDetails ? item.inventoryDetails.inventoryName : 'N/A'}</td>
+                      <td className="px-4 py-2">{item.pricePerUnit}</td>
+                      <td className="px-4 py-2">{item.stock}</td>
+                      <td className={`px-4 py-2 ${item.stock > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                        {item.stock > 0 ? 'Yes' : 'No'}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -360,4 +364,4 @@ function ItemList() {
   );
 }
 
-export default ItemList;
+export default Item;
