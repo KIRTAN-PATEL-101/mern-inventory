@@ -14,6 +14,7 @@ const SidePanel = ({ children }) => {
     { path: '/superAdmin/inventory', name: 'All Inventory', icon: 'bx bxs-store' },
     { path: '/superAdmin/geolocation', name: 'Geolocation', icon: 'bx bxs-map'},
     // Add more menu items as needed
+    {path: '/payment', name: 'Payment', icon: 'bx bx-credit-card'},
     { path: '/login', name: 'Logout', icon: 'bx bxs-log-out-circle' }
   ];
 
