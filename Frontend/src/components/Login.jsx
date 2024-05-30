@@ -56,6 +56,7 @@ const Login = () => {
 
                 } else {
                     const errorResult = await response.json();
+                    setMessage(`An error occurred: ${errorResult.message}`)
                 }
             } catch (error) {
                 setMessage(`An error occurred: ${error.message}`);
