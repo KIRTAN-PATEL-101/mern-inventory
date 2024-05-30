@@ -5,12 +5,14 @@ import { User } from "../models/users.models.js";
 import { Inventory } from "../models/inventory.models.js";
 
 const showAllUsers = asyncHandler(async(req, res) =>{
-    const users = await User.find().select("-password");
+    const users = await User.find({role:'user'}).select("-password");
     if(!users.length){
       console.error("No User Found");
         throw new ApiError(404, "No User Found")
     };
-    return res.status(200).json(new ApiResponse(200, users, "User list retrieved."));
+    return res
+    .status(200)
+    .json(new ApiResponse(200, users, "users list retrieved."));
 });
 const showAllInventories = asyncHandler(async (req, res) => {
     const inventories = await Inventory.find().select("inventoryId managerName inventoryName address createdAt")
