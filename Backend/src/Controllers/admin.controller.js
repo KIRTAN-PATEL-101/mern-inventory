@@ -24,9 +24,15 @@ const showAllInventories = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, inventories, "Inventory list retrieved."));
 });
 const fetchInventoryByUserId = asyncHandler(async(req, res) =>{
-  const UserID = req.user._id;
+  const { email } = req.body;
   try {
-    const inventory = await Inventory.find({ UserID: UserID });
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+    const users = req.params._id;
+    
+    const inventory = await Inventory.find({ userId: users });
     if (!inventory.length) {
       throw new ApiResponse(404, "Inventory not found");
     }
