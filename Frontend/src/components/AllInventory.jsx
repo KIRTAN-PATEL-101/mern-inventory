@@ -217,7 +217,7 @@ const InventoryComponent = () => {
                                     <td className="p-2">{item.ManagerName}</td>
                                     <td className="p-2">{item.category}</td>
                                     <td className="p-2">{item.address}</td>
-                                    <td className="p-2">    </td>
+                                    <td className="p-2">{formatDate(item.createdAt)}</td>
                                     <td className="p-2">
                                         <Link to={`/superAdmin/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                             View

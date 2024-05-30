@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
+import axios from 'axios';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -63,6 +64,26 @@ const Login = () => {
             setErrors(newErrors);
         }
     };
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/users/details', { withCredentials: true })
+        .then((response) => {
+            const data = response.data;
+            console.log(data);
+            if(data.status === 'success'){
+                if(data.data.user.role === 'admin'){
+                    navigate("/superAdmin/dashboard");
+                }
+                else{
+                    navigate("/dashboard");
+                }
+            }
+        
+        })
+        .catch((error) => {
+
+        })
+    })
 
     return (
         <div className="flex w-full min-h-screen items-center justify-center" style={{ backgroundColor: "#f5f5f5", backgroundImage: `url(https://res.cloudinary.com/dnmxwrqvb/image/upload/v1716367992/lfrebmwhtyour2uctsuv.jpg)`, backgroundSize: "cover", backgroundPosition: 'center' }}>
