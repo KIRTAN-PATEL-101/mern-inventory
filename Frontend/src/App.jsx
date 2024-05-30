@@ -20,6 +20,7 @@ import AllInventory from './components/AllInventory';
 import Users from './components/Users';
 import Inventory from './components/Inventory';
 import InventoryItems from './components/InventoryItems';
+import Payment from './components/Payment';
 
 const App = () => {
 
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/superAdmin/users/:id/inventory/" element={<Inventory />} />
           <Route path="/superAdmin/inventory/:di" element={<InventoryItems />} />
           <Route path="superAdmin/users/:id/inventory/:di" element={<InventoryItems />} />
+          <Route path="/payment" element={<Payment />} />
 
         </Route>
         <Route path="/register" element={<Register />} />
