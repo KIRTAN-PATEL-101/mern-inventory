@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import 'react-credit-cards/es/styles-compiled.css';
 import Cards from 'react-credit-cards';
 import InputMask from 'react-input-mask';
+import SidePanel from './SidePanel';
+import Header from './Header';
 
 const PaymentForm = () => {
   const [cardNumber, setCardNumber] = useState('');
@@ -21,7 +23,13 @@ const PaymentForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+   <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+   <Header />
+   <div style={{ display: 'flex', flex: 1 }}>
+     <div style={{ width: '288px', overflow: 'auto' }}>
+       <SidePanel />
+     </div>
+     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
       <Cards
         number={cardNumber}
         name=" "
@@ -93,6 +101,9 @@ const PaymentForm = () => {
         </button>
       </form>
     </div>
+
+   </div>
+ </div>
   );
 };
 

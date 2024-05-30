@@ -8,6 +8,7 @@ import { Item } from "../models/item.models.js";
 const showAllUsers = asyncHandler(async(req, res) =>{
     const users = await User.find({role:'user'}).select("-password");
     if(!users.length){
+      console.error("No User Found");
         throw new ApiError(404, "No User Found")
     };
     return res
@@ -15,7 +16,7 @@ const showAllUsers = asyncHandler(async(req, res) =>{
     .json(new ApiResponse(200, users, "users list retrieved."));
 });
 const showAllInventories = asyncHandler(async (req, res) => {
-    const inventories = await Inventory.find().select("inventoryId managerName inventoryName address createdAt")
+    const inventories = await Inventory.find().select()
     if (!inventories.length) {
       throw new ApiResponse(404, "Inventory not found");
     }

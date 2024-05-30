@@ -4,6 +4,8 @@ import Header from './Header';
 import { Link } from 'react-router-dom';
 
 const Inventory = () => {
+
+    
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([
         { name: 'Supermaxi Cuenca', id: '01',location:"Cuenca,010150",ownerName:"Adriana",category:"Grocery", createdOn: '2024-05-03' },
@@ -92,7 +94,7 @@ const Inventory = () => {
                                     <td className="p-2">{item.location}</td>
                                     <td className="p-2">{item.createdOn}</td>
                                     <td className="p-2">
-                                        <Link to={`/superAdmin/users/01/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
+                                        <Link to={`/superAdmin/users/${item.id}/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                             View
                                         </Link>
                                     </td>
