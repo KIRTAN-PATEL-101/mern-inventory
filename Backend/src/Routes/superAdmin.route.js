@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { verifyJWT } from '../Middlewares/auth.middleware.js'
 import { checkAdmin } from '../Middlewares/checkAdmin.middleware.js';
-import { fetchInventoryByUserId, fetchItemsByInventoryId, showAllInventories, showAllUsers } from '../Controllers/admin.controller.js';
+import { fetchCoordinatesofInventories, fetchInventoryByUserId, fetchItemsByInventoryId, showAllInventories, showAllUsers, showItemDetailsById } from '../Controllers/admin.controller.js';
 
 const router = Router();
 
