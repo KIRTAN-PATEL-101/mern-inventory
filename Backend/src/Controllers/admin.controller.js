@@ -3,12 +3,14 @@ import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js"
 import { User } from "../models/users.models.js";
 import { Inventory } from "../models/inventory.models.js";
+import { Item } from "../models/item.models.js";
 
 const showAllUsers = asyncHandler(async(req, res) =>{
     const users = await User.find(role = 'user').select("-password");
     if(!users.length){
         throw new ApiError(404, "No User Found")
     };
+    return res .status(200).json(new ApiResponse(200, users, "User list retrieved."));
     
 });
 const showAllInventories = asyncHandler(async (req, res) => {
@@ -27,6 +29,9 @@ const fetchInventoryByUserId = asyncHandler(async(req, res) =>{
     if (!inventory.length) {
       throw new ApiResponse(404, "Inventory not found");
     }
+    return res
+    .status(200)
+    .json(new ApiResponse(200, inventory, "Inventories retrieved."));
   } catch (error) {
     console.error("Error fetching the existing Inventory:", error);
 
@@ -57,4 +62,14 @@ const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Bad Request.");
   }
 });
+// const showItemDetailsById = asyncHandler (async (req, res) => {
+//   try{
+//     const itemId = req.params.itemId;
+//     const item = await Item.findById(itemId).select("itemName itemDescription quantity unitPrice");
+//   }catch(error){
+
+//   }
+  
+// });
+
 export {showAllInventories,  showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId}
