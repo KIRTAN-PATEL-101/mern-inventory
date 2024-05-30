@@ -130,10 +130,8 @@ const deleteInventory = asyncHandler(async (req, res) => {
       );
     }
 
-    // Delete Items
     await Item.deleteMany({ inventoryId: inventoryId });
 
-    // Delete inventory
     await Inventory.deleteOne({ _id: inventoryId });
 
     return res
