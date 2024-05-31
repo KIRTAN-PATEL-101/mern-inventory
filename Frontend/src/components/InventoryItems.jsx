@@ -13,8 +13,8 @@ import React, { useState } from 'react';
       triggerAmount: '',
     });
     const [items, setItems] = useState([
-      { itemld: '01', itemName: 'Cheese', createdDate: '2024-05-01', stock: 10, inStock: 'Yes', img: 'https://res.cloudinary.com/deyfwd4ge/image/upload/v1716898875/download_3_lcvwbu.jpg' },
-      { itemld: '02', itemName: 'Bread', createdDate: '2024-05-02', stock: 0, inStock: 'No', img: 'https://res.cloudinary.com/deyfwd4ge/image/upload/v1716898706/download_2_mhlll7.jpg' }
+      { itemld: '01', itemName: 'Cheese',category: 'Grocery', createdDate: '2024-05-01', stock: 10, inStock: 'Yes', img: 'https://res.cloudinary.com/deyfwd4ge/image/upload/v1716898875/download_3_lcvwbu.jpg' },
+      { itemld: '02', itemName: 'Bread',category: 'Grocery', createdDate: '2024-05-02', stock: 0, inStock: 'No', img: 'https://res.cloudinary.com/deyfwd4ge/image/upload/v1716898706/download_2_mhlll7.jpg' }
     ]);
     const [viewItem, setViewItem] = useState(null);
 
