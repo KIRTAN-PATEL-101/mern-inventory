@@ -17,7 +17,7 @@ const ItemViewBox = ({ item, onClose }) => {
         <div className="flex justify-between mt-4">
           <div className="p-4 m-3 h-[350px] w-[350px] bg-gray-300 shadow-lg">
             <img
-              src={item.img}
+              src={item.itemImageurl}
               alt={item.itemName}
               className="object-cover h-full w-full"
             />
