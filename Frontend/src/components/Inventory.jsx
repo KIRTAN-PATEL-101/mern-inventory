@@ -66,6 +66,14 @@ const Inventory = ({user}) => {
 
     const [userEmail, setUserEmail] = useState(data.email);
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
     useEffect(() => {
         
         axios
@@ -103,12 +111,12 @@ const Inventory = ({user}) => {
                         <tbody>
                             {inventoryItems.map((item, index) => (
                                 <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.id}>
-                                    <td className="p-2">{item.name}</td>
-                                    <td className="p-2">{item.id}</td>
-                                    <td className="p-2">{item.ownerName}</td>
+                                    <td className="p-2">{item.inventoryName}</td>
+                                    <td className="p-2">{item._id}</td>
+                                    <td className="p-2">{item.ManagerName}</td>
                                     <td className="p-2">{item.category}</td>
-                                    <td className="p-2">{item.location}</td>
-                                    <td className="p-2">{item.createdOn}</td>
+                                    <td className="p-2">{item.address}</td>
+                                    <td className="p-2">{formatDate(item.createdAt)}</td>
                                     <td className="p-2">
                                         <Link to={`/superAdmin/users/${item.id}/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                             View
