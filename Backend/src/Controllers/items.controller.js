@@ -18,11 +18,8 @@ const addItem = asyncHandler(async (req, res) => {
       category,
     } = req.body;
     const id = req.user._id;
-    console.log("Request Body: ", req.body);
-    const itemPicLocalPath =
-      req.files && req.files.itemimage && req.files.itemimage[0]
-        ? req.files.itemimage[0].path
-        : null;
+
+    const itemPicLocalPath =req.files?.itemimage?.[0]?.path || null;
 
     let itemUrl = null;
     try {
@@ -60,7 +57,7 @@ const inventoryItems = asyncHandler(async (req, res) => {
   try {
     const { inventoryId } = req.body; // Assuming inventoryId is passed as a URL parameter
     const id = req.user._id;
-
+    console.log("Inventory Id:",inventoryId);
     try {
       // Fetch items from the database by inventoryId
       const items = await Item.find({ inventoryId: inventoryId, userId: id });

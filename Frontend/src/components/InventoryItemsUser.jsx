@@ -163,6 +163,7 @@ const handleSubmit = async (e) => {
 };
 
   return (
+    
     <div className="flex">
       <SidePanel />
       <section id="content" className="relative w-full ml-72 transition-all">

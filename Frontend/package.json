@@ -26,6 +26,7 @@
     "react-credit-cards": "^0.8.3",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
+    "react-geolocated": "^4.1.2",
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^6.23.1"
   },
