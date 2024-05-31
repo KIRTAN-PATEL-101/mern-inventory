@@ -3,9 +3,12 @@ import SidePanel from './SidePanel';
 import Header from './Header';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {useLocation} from 'react-router-dom';
 
 const Inventory = ({user}) => {
 
+    const location = useLocation();
+    const data = location.state;
     
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([]);
@@ -61,19 +64,20 @@ const Inventory = ({user}) => {
         setShowRemoveOptions(false);
     };
 
-    const [userEmail, setUserEmail] = useState(user.email);
+    const [userEmail, setUserEmail] = useState(data.email);
 
-    // useEffect(() => {
+    useEffect(() => {
         
-    //     axios
-    //         .get('http://localhost:8000/superadmin/inventory')
-    //         .then((response) => {
-    //             setInventoryItems(response.data.data);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // });
+        axios
+            .post('http://localhost:8000/superadmin/fetchinventory', {email: userEmail}, { withCredentials: true })
+            .then((response) => {
+                setInventoryItems(response.data.data);
+                console.log(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    });
 
     return (
         <div className="flex">

@@ -3,15 +3,19 @@ import axios from 'axios';
 import SidePanel from './SidePanel';
 import Header from './Header';
 import { useNavigate } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
 
+
+
+
   const handleViewItem = (item) => {
-    const id = item.id;
-    navigate(`/superAdmin/users/${id}/inventory`, { state: {item} });
+    const id = item._id;
+    navigate(`/superAdmin/users/${id}/inventory`, { state: item });
   }
   useEffect(() => {
     // Fetch user data from the backend
@@ -19,6 +23,7 @@ const Users = () => {
       .then(response => {
         console.log(response.data);  // Debug the response
         if (Array.isArray(response.data.data)) {
+          console.log(response.data.data);  // Debug the users array  
           setUsers(response.data.data);
         } else {
           console.error('Expected an array of users, but got:', response.data);
