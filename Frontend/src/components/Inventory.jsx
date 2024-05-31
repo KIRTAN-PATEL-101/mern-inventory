@@ -7,10 +7,7 @@ const Inventory = () => {
 
     
     const [showForm, setShowForm] = useState(false);
-    const [inventoryItems, setInventoryItems] = useState([
-        { name: 'Supermaxi Cuenca', id: '01',location:"Cuenca,010150",ownerName:"Adriana",category:"Grocery", createdOn: '2024-05-03' },
-        { name: 'Don angel Super Market', id: '02',location:"Don angel,040301",ownerName:"Adriana",category:"Grocery", createdOn: '2024-05-03' },
-    ]);
+    const [inventoryItems, setInventoryItems] = useState([]);
     const [newItem, setNewItem] = useState({
         name: '',
         ownerName: '',

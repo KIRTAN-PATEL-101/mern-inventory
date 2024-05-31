@@ -91,7 +91,7 @@ const Inventory = () => {
         const handleRemoveItem = async () => {
             try {
 
-                const response = await axios.delete(`http://localhost:8000/inventory/delete`, selectedItemId, { withCredentials: true });
+                const response = await axios.delete(`http://localhost:8000/inventory/delete/${selectedItemId}`, { withCredentials: true });
                 console.log('Response from backend:', response.data);
         
                 setInventoryItems(inventoryItems.filter(item => item.inventoryId !== selectedItemId));
@@ -135,7 +135,7 @@ const Inventory = () => {
                         </button>
                     </div>
                     {showForm && (
-                        <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: '20% 0 0 0' }}>
+                        <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: '25% 0 0 0' }}>
                             <button onClick={() => setShowForm(false)} className="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-900">
                                 <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -260,7 +260,7 @@ const Inventory = () => {
                                     <td className="p-2">{item.address}</td>
                                     <td className="p-2">{formatDate(item.createdAt)}</td>
                                     <td className="p-2">
-                                        <Link to={`/superAdmin/users/${item.inventoryId}/inventory/${item.inventoryId}`} state={{ item }} className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
+                                        <Link to={`/inventory/${item.inventoryId}`} state={{ item }} className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                             View
                                         </Link>
                                     </td>

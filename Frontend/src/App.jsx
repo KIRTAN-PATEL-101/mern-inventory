@@ -25,6 +25,7 @@ import Payment from "./components/Payment";
 import Test from "./components/Test";
 import UserDashboard from "./components/UserDashboard";
 import InventoryUser from "./components/InventoryUser";
+import InventoryItemsUser from "./components/InventoryItemsUser";
 
 const App = () => {
   return (
@@ -58,6 +59,10 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/inventory" element={<InventoryUser />} />
+        <Route
+            path="inventory/:id"
+            element={<InventoryItemsUser />}
+          />
         
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<h1>Not Found</h1>} />

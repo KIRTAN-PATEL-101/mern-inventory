@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
   const InventoryItems = () => {
     const location = useLocation();
-  const item = location.state?.item;
+    const item = location.state?.item;
     const [showNotifyForm, setShowNotifyForm] = useState(null);
     const [notificationInfo, setNotificationInfo] = useState({
       triggerAmount: '',
