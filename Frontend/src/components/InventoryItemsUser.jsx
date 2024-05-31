@@ -5,31 +5,26 @@ import Header from './HeaderUser';
 import ItemViewBox from './ItemViewBox';
 import axios from 'axios';
 
-const ItemDetailPage = () => {
+const InventoryItemsUser = () => {
 
   const location = useLocation();
   const item = location.state?.item;
+
 
   const [showForm, setShowForm] = useState(false);
   const [showRemoveOptions, setShowRemoveOptions] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState('');
   const [showNotifyForm, setShowNotifyForm] = useState(false);
   const [notificationInfo, setNotificationInfo] = useState({
-    name: '',
-    notifyByEmail: false,
-    notifyBySms: false,
-    notifyByWhatsApp: false
+    triggerAmount: '',
   });
   const [viewItem, setViewItem] = useState(null);
 
-  const [items, setItems] = useState([
-    { itemld: '01', itemName: 'Cheese', createdDate: '2024-05-01', stock: 10, inStock: 'Yes' },
-    { itemld: '02', itemName: 'Bread', createdDate: '2024-05-02', stock: 0, inStock: 'No' }
-  ]);
+  const [items, setItems] = useState([]);
 
   const [newItem, setNewItem] = useState({
     itemName: '',
-    itemld: '',
+    itemId: '',
     pricePerUnit: '',
     stock: '',
     inventoryld: '',
@@ -70,55 +65,56 @@ const ItemDetailPage = () => {
     }));
   };
 
-  useEffect(() => {
-    // Fetch user data from the backend
-    axios.get('http://localhost:8000/items/showall',{ withCredentials: true })
-      .then(response => {
-        console.log(response.data);  // Debug the response
-        if (Array.isArray(response.data.data)) {
-            setItems(response.data.data);
-        } else {
-          console.error('Expected an array of users, but got:', response.data);
-        }
-      })
-      .catch(error => {
-        console.error('There was an error fetching the users!', error);
-      });
-  }, []);
+useEffect(() => {
+    axios.post('http://localhost:8000/items/inventoryItems',{ inventoryId: item.inventoryId }, { withCredentials: true })
+        .then(response => {
+            console.log(response.data);  // Debug the response
+            if (Array.isArray(response.data)) {
+                setItems(response.data);
+            } else {
+                console.error('Expected an array of Items, but got:', response.data);
+            }
+        })
+        .catch(error => {
+            console.error('There was an error fetching the items!', error);
+        });
+}, [item.inventoryId]);
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
-    const itemData ={
+    const itemData = {
         itemName: newItem.itemName,
-        itemld: newItem.itemld,
+        itemId: newItem.itemId,
         pricePerUnit: newItem.pricePerUnit,
         stock: newItem.stock,
-        inventoryld: newItem.inventoryld,
+        inventoryId: item.inventoryId,
         category: newItem.category,
         itemimage: newItem.itemimage,
-    }
-        try {
-            // Post the new item data to the backend
-            //const response = await axios.post('http://localhost:8000/inventory/add', itemData, { withCredentials: true });
-            console.log('Response from backend:', response.data);
-    
-            // Update the local state with the new item
-            setItems([...itemItems, itemData]);
-
-            setNewItem({
-                itemName: '',
-                itemld: '',
-                pricePerUnit: '',
-                stock: '',
-                inventoryld: '',
-                category: '',
-                itemimage: null,
-            });
-            setShowForm(false);
-        } catch (error) {
-            console.error('Error posting data to backend:', error);
-        }
     };
+    try {
+        // Post the new item data to the backend
+        console.log('Item Data:', itemData);
+        const response = await axios.post('http://localhost:8000/items/add', itemData, { withCredentials: true });
+        //  console.log('done');
+        console.log('Response from backend:', response.data);
+
+        // Update the local state with the new item
+        setItems([...items, response.data]);
+
+        setNewItem({
+            itemName: '',
+            itemId: '',
+            pricePerUnit: '',
+            stock: '',
+            inventoryId: '',
+            category: '',
+            itemimage: null,
+        });
+        setShowForm(false);
+    } catch (error) {
+        console.error('Error posting data to backend:', error);
+    }
+};
 
 //   const handleNotificationSubmit = (e) => {
 //     e.preventDefault();
@@ -158,6 +154,13 @@ const ItemDetailPage = () => {
         setShowNotifyForm(null);
       });
   };
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+};
 
   return (
     <div className="flex">
@@ -168,7 +171,7 @@ const ItemDetailPage = () => {
           <section className="Item">
             <div id="item-box-1" className="item-view-box hidden"></div>
             <div id="Item-list" className="text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4">
-              <h1 className="text-2xl font-bold mb-4">{item.inventoryName}</h1>
+              <h1 className="text-2xl font-bold mb-4">{item.inventoryName }</h1>
               <div className="flex justify-end mb-4">
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-700"
@@ -204,10 +207,10 @@ const ItemDetailPage = () => {
                       <label htmlFor="itemld" className="block font-bold text-gray-700 mb-2">Item Id</label>
                       <input
                         type="text"
-                        id="itemld"
+                        id="itemId"
                         placeholder="Item Id..."
-                        name="itemld"
-                        value={newItem.itemld}
+                        name="itemId"
+                        value={newItem.itemId}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         required
@@ -239,19 +242,19 @@ const ItemDetailPage = () => {
                         required
                       />
                     </div>
-                    <div className="mb-4">
+                    {/* <div className="mb-4">
                       <label htmlFor="inventoryld" className="block font-bold text-gray-700 mb-2">Inventory ID</label>
                       <input
                         type="text"
                         id="inventoryld"
                         name="inventoryld"
                         placeholder="Inventory ID..."
-                        value={newItem.inventoryld}
+                        value={newItem.inventoryId}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         required
                       />
-                    </div>
+                    </div> */}
                     <div className="mb-4">
                       <label htmlFor="category" className="block font-bold text-gray-700 mb-2">Category</label>
                       <input
@@ -296,7 +299,7 @@ const ItemDetailPage = () => {
               <table className="w-full table-auto">
                 <thead>
                   <tr>
-                    <th className="px-4 py-2 bg-blue-500 text-white">ID</th>
+                    <th className="px-4 py-2 bg-blue-500 text-white">Sr No</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">Name</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">Created date</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">Quantity left</th>
@@ -309,9 +312,9 @@ const ItemDetailPage = () => {
                 <tbody>
                   {items.map((item, index) => (
                     <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.itemld}>
-                      <td className="px-4 py-2">{item.itemld}</td>
+                      <td className="px-4 py-2">{index + 1}</td>
                       <td className="px-4 py-2">{item.itemName}</td>
-                      <td className="px-4 py-2">{item.createdDate}</td>
+                      <td className="px-4 py-2">{formatDate(item.createdAt)}</td>
                       <td className="px-4 py-2">{item.stock}</td>
                       <td className={` px-4 py-2 ${item.stock > 0 ? 'text-green-500' : 'text-red-500'}`}>
                         {item.stock > 0 ? 'Yes' : 'No'}
@@ -391,4 +394,4 @@ const ItemDetailPage = () => {
   );
 };
 
-export default ItemDetailPage;
+export default InventoryItemsUser;

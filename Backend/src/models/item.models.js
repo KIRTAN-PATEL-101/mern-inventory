@@ -39,7 +39,7 @@ const itemSchema = new mongoose.Schema({
   },
   itemImageurl: {
     type: String,
-    required: true,
+    // required: true,
   },
   lastNotification: {
     type: Date,
