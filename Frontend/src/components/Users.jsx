@@ -11,7 +11,7 @@ const Users = () => {
 
   const handleViewItem = (item) => {
     const id = item.id;
-    navigate(`/superAdmin/users/${id}/inventory`);
+    navigate(`/superAdmin/users/${id}/inventory`, { state: {item} });
   }
   useEffect(() => {
     // Fetch user data from the backend

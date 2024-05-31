@@ -1,12 +1,14 @@
 import React from 'react'
-import Header from './HeaderUser'
+import Geo from './Geo'
+import TestMap from './TestMap'
 
 const Test = () => {
   return (
     <div>
-      <Header />
+      <TestMap />
     </div>
   )
 }
 
 export default Test
+

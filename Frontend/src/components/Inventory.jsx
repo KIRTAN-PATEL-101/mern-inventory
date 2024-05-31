@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SidePanel from './SidePanel';
 import Header from './Header';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const Inventory = () => {
+const Inventory = ({user}) => {
 
     
     const [showForm, setShowForm] = useState(false);
@@ -62,6 +63,20 @@ const Inventory = () => {
         setSelectedItemId('');
         setShowRemoveOptions(false);
     };
+
+    const [userEmail, setUserEmail] = useState(user.email);
+
+    // useEffect(() => {
+        
+    //     axios
+    //         .get('http://localhost:8000/superadmin/inventory')
+    //         .then((response) => {
+    //             setInventoryItems(response.data.data);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    // });
 
     return (
         <div className="flex">
