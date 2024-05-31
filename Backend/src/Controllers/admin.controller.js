@@ -24,6 +24,8 @@ const showAllInventories = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, inventories, "Inventory list retrieved."));
 });
+
+
 const fetchInventoryByUserId = asyncHandler(async (req, res) => {
   const { email } = req.body;
   try {
@@ -31,9 +33,9 @@ const fetchInventoryByUserId = asyncHandler(async (req, res) => {
     if (!user) {
       throw new ApiError(404, "User not found");
     }
-    const users = req.params._id;
+    // const users = req.params._id;
 
-    const inventory = await Inventory.find({ userId: users });
+    const inventory = await Inventory.find({ UserID: user._id });
     if (!inventory.length) {
       throw new ApiResponse(404, "Inventory not found");
     }
@@ -42,8 +44,7 @@ const fetchInventoryByUserId = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, inventory, "Inventories retrieved."));
   } catch (error) {
     console.error("Error fetching the existing Inventory:", error);
-
-  }
+ }
 });
 
 const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
@@ -51,7 +52,7 @@ const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
     const { inventoryId } = req.body; // Assuming inventoryId is passed as a URL parameter
     try {
       // Fetch items from the database by inventoryId
-      const items = await Item.find({ inventoryId:inventoryId });
+      const items = await Item.find({ inventoryId: inventoryId });
 
       // Check if items are found
       if (!items.length) {
@@ -70,38 +71,38 @@ const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Bad Request.");
   }
 });
-const showItemDetailsById = asyncHandler (async (req, res) => {
+const showItemDetailsById = asyncHandler(async (req, res) => {
   try {
-     const {itemId} = req.body;
-     try{
-       const item = await Item.find({itemId:itemId}).select();
-       // Check if items are found
-       if (!item) {
-         return res
-           .status(404)
-           .json({ message: "Error while fetching the Item Details." });
-       }
-  
-       // Return the items
-       res.status(200).json(item);
-      } catch (error) {
-        // Handle any errors that occur
-        res.status(500).json({ message: error.message });
-      }
-     
-  } catch(error) {
-    throw new ApiError(500, "Bad Request.");
-    }
-});
-const fetchCoordinatesofInventories = asyncHandler (async (req, res) => {
+    const { itemId } = req.body;
     try {
-      const inventories = await Inventory.find().select("inventoryName latCoordinates longCoordinates")
-      if (!inventories) {
-        return res.status(404).json({ message: "Error while fetching the Inventory Coordinates" });
+      const item = await Item.find({ itemId: itemId }).select();
+      // Check if items are found
+      if (!item) {
+        return res
+          .status(404)
+          .json({ message: "Error while fetching the Item Details." });
       }
-      res.status(200).json(inventories);
-    } catch(error) {
-      throw new ApiError(500, "Bad Request.");
+
+      // Return the items
+      res.status(200).json(item);
+    } catch (error) {
+      // Handle any errors that occur
+      res.status(500).json({ message: error.message });
     }
+
+  } catch (error) {
+    throw new ApiError(500, "Bad Request.");
+  }
 });
-export {showAllInventories,  showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories}
+const fetchCoordinatesofInventories = asyncHandler(async (req, res) => {
+  try {
+    const inventories = await Inventory.find().select("inventoryName latCoordinates longCoordinates")
+    if (!inventories) {
+      return res.status(404).json({ message: "Error while fetching the Inventory Coordinates" });
+    }
+    res.status(200).json(inventories);
+  } catch (error) {
+    throw new ApiError(500, "Bad Request.");
+  }
+});
+export { showAllInventories, showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories }

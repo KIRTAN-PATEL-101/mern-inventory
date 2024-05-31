@@ -7,8 +7,8 @@ const sendWp = asyncHandler(async (req, res) => {
   console.log(req.body);
   const { triggerAmount } = req.body;
   try {
-    const accountSid = "AC09585b781f76496b65605b7b02c0c3e9";
-    const authToken = "af6c4947bdd5877f94788a6d14f1eba1";
+    const accountSid = 'AC09585b781f76496b65605b7b02c0c3e9';
+    const authToken = 'af6c4947bdd5877f94788a6d14f1eba1';
     const client = twilio(accountSid, authToken);
 
     await client.messages.create({

@@ -9,6 +9,9 @@ const ItemDetailPage = () => {
 
   const location = useLocation();
   const item = location.state?.item;
+  const [itemData, setItemData] = useState(item);
+  console.log("Item Data: ",itemData)
+  const inventoryld=itemData.inventoryld;
 
   const [showForm, setShowForm] = useState(false);
   const [showRemoveOptions, setShowRemoveOptions] = useState(false);
@@ -72,7 +75,7 @@ const ItemDetailPage = () => {
 
   useEffect(() => {
     // Fetch user data from the backend
-    axios.get('http://localhost:8000/items/showall',{ withCredentials: true })
+    axios.post('http://localhost:8000/items/inventoryItems',inventoryld,{ withCredentials: true })
       .then(response => {
         console.log(response.data);  // Debug the response
         if (Array.isArray(response.data.data)) {
@@ -160,6 +163,7 @@ const ItemDetailPage = () => {
   };
 
   return (
+    
     <div className="flex">
       <SidePanel />
       <section id="content" className="relative w-full ml-72 transition-all">
