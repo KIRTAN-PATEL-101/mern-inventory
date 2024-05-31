@@ -14,6 +14,8 @@ const InventorySchema = new mongoose.Schema(
     inventoryName: {
       type: "String",
       required: true,
+      maxlength: 50,
+      minlength: 5,
       maxlength: 20,
       minlength: 4,
     },
