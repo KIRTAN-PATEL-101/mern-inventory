@@ -19,10 +19,7 @@ const addItem = asyncHandler(async (req, res) => {
     } = req.body;
     const id = req.user._id;
 
-    const itemPicLocalPath =
-      req.files && req.files.itemimage && req.files.itemimage[0]
-        ? req.files.itemimage[0].path
-        : null;
+    const itemPicLocalPath =req.files?.itemimage?.[0]?.path || null;
 
     let itemUrl = null;
     try {

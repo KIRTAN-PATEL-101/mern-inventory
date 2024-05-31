@@ -8,11 +8,11 @@ const sendWp = asyncHandler(async (req, res) => {
   const { triggerAmount } = req.body;
   try {
     const accountSid = 'AC09585b781f76496b65605b7b02c0c3e9';
-    const authToken = 'af6c4947bdd5877f94788a6d14f1eba1';
+    const authToken = 'f6f67f3d941aa19ce45f1aa661b3862f';
     const client = twilio(accountSid, authToken);
 
     await client.messages.create({
-      body: `Stock of x is below ${triggerAmount}`,
+      body: `Stock of Cheese is below ${triggerAmount}`,
       from: "whatsapp:+14155238886",
       to: "whatsapp:+919624670574",
     });
