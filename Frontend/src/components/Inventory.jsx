@@ -1,11 +1,14 @@
-import React, { useState,useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SidePanel from './SidePanel';
 import Header from './Header';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {useLocation} from 'react-router-dom';
 
-const Inventory = () => {
+const Inventory = ({user}) => {
 
+    const location = useLocation();
+    const data = location.state;
     
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([]);
@@ -60,6 +63,21 @@ const Inventory = () => {
         setSelectedItemId('');
         setShowRemoveOptions(false);
     };
+
+    const [userEmail, setUserEmail] = useState(data.email);
+
+    useEffect(() => {
+        
+        axios
+            .post('http://localhost:8000/superadmin/fetchinventory', {email: userEmail}, { withCredentials: true })
+            .then((response) => {
+                setInventoryItems(response.data.data);
+                console.log(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    });
 
     return (
         <div className="flex">

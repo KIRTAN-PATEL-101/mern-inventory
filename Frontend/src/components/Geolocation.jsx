@@ -58,6 +58,14 @@ const Geolocation = () => {
     setActiveMarker(marker);
   };
 
+  const handleMapClick = (e) => {
+    console.log("map clicked");
+    const loc = e.latLng.toJSON();
+    console.log(loc);
+    console.log(typeof loc);
+    setActiveMarker(null);
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <Header />
@@ -73,7 +81,7 @@ const Geolocation = () => {
             <GoogleMap
               center={{ lat: -1.8312, lng: -78.1834 }}
               zoom={7}
-              onClick={() => setActiveMarker(null)}
+              onClick={(e) => handleMapClick(e)}
               mapContainerStyle={{ width: "100%", height: "100vh" }}
             >
               {markers.map(({ id, name, position }) => (
