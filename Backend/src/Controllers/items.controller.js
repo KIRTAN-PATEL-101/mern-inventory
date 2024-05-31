@@ -145,8 +145,9 @@ const showallItems = asyncHandler(async (req, res) => {
 
     // Fetch items for the user
     const items = await Item.find({ userId: id });
+    console.log(items);
     if (!items.length) {
-      return res.status(400).json(new ApiResponse(400, null,"No items available"));
+      return res.status(400).json(new ApiResponse(400, null, "No items available"));
     }
 
     const inventoryIds = items.map(item => item.inventoryId);
