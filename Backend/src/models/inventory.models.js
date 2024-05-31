@@ -14,8 +14,10 @@ const InventorySchema = new mongoose.Schema(
     inventoryName: {
       type: "String",
       required: true,
-      maxlength: 20,
+      maxlength: 50,
       minlength: 5,
+      maxlength: 20,
+      minlength: 4,
     },
     address: {
       type: "String",
@@ -45,10 +47,18 @@ const InventorySchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    category:{
+    category: {
       type: String,
       required: true,
-    }
+    },
+    latCoordinates:{
+      type: String,
+      // required: true,
+    },
+    longCoordinates:{
+      type: String,
+      // required: true,
+    },
   },
   {
     timestamps: true,

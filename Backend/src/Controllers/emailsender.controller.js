@@ -10,7 +10,7 @@ async function sendEmail(recipient, subject, message) {
             pass: process.env.Sender_Pass
         }
     });
-    
+
     let mailOptions = {
         from: `"Om Desai" ${process.env.Sender_Email}`,
         to: recipient,

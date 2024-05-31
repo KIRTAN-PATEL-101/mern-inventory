@@ -1,23 +1,23 @@
 import { Router } from 'express'
 import { verifyJWT } from '../Middlewares/auth.middleware.js'
-import {addItem,inventoryItems,itemDetails,addTriggeramount,adjustQuantity,showallItems} from '../Controllers/items.controller.js'
+import { addItem, inventoryItems, itemDetails, addTriggeramount, adjustQuantity, showallItems } from '../Controllers/items.controller.js'
 import { upload } from "../Middlewares/multer.middleware.js";
-import {checkStockLevels} from '../Middlewares/checkStocklevel.middleware.js'
+import { checkStockLevels } from '../Middlewares/checkStocklevel.middleware.js'
 
-const router=Router();
+const router = Router();
 
 router.route('/add').post(verifyJWT,
-    upload.fields([
+  upload.fields([
     {
       name: "itemimage",
       maxCount: 1,
     },
-  ]),addItem);
+  ]), addItem);
 
-  router.route('/inventoryItems').post(verifyJWT,inventoryItems)
-  router.route('/itemdetails').get(verifyJWT,itemDetails)
-  router.route('/settrigger').post(verifyJWT,addTriggeramount,checkStockLevels)
-  router.route('/adjustqty').post(verifyJWT,adjustQuantity,checkStockLevels)
-  router.route('/showall').get(verifyJWT,showallItems)
+router.route('/inventoryItems').post(verifyJWT, inventoryItems)
+router.route('/itemdetails').get(verifyJWT, itemDetails)
+router.route('/settrigger').post(verifyJWT, addTriggeramount, checkStockLevels)
+router.route('/adjustqty').post(verifyJWT, adjustQuantity, checkStockLevels)
+router.route('/showall').get(verifyJWT, showallItems)
 
 export default router;

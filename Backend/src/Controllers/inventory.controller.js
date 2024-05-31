@@ -6,14 +6,16 @@ import { Item } from "../models/item.models.js";
 import validator from "validator";
 
 const addInventory = asyncHandler(async (req, res) => {
-  const {inventoryId,
+  const { inventoryId,
     inventoryName,
     address,
     country,
     mobileNo,
-    managerName} = req.body;
+    ManagerName,
+    category
+  } = req.body;
   const id = req.user._id;
-  console.log(id);
+  // console.log(id);
   console.log(req.body);
   //Checking for existing Inventory by Inventory Id
   const existingInventory = await Inventory.findOne({
@@ -34,8 +36,11 @@ const addInventory = asyncHandler(async (req, res) => {
     address: address,
     country: country,
     mobileNo: mobileNo,
-    ManagerName: managerName,
+    ManagerName: ManagerName,
     UserID: id,
+    category: category,
+    // latCoordinates: latCoordinates,
+    // longCoordinates: longCoordinates,
   });
 
   const createdInventory = await Inventory.findById(inventory._id);
@@ -62,6 +67,9 @@ const updateInventory = asyncHandler(async (req, res) => {
     country,
     mobileNo,
     managerName,
+    category,
+    latCoordinates,
+    longCoordinates,
   } = req.body;
   const id = req.user._id;
 
@@ -83,6 +91,9 @@ const updateInventory = asyncHandler(async (req, res) => {
       mobileNo: mobileNo,
       managerName: managerName,
       UserID: id,
+      category: category,
+      latCoordinates: latCoordinates,
+      longCoordinates: longCoordinates,
     }
   );
   if (!inventory) {
@@ -107,12 +118,14 @@ const showallInventories = asyncHandler(async (req, res) => {
 });
 
 const deleteInventory = asyncHandler(async (req, res) => {
-  const { inventoryId } = req.body;
+  const { inventoryId } = req.params;
   const UserID = req.user._id;
   const existingInventory = await Inventory.findOne({
     inventoryId: inventoryId,
     UserID: UserID,
   });
+  console.log(inventoryId, UserID);
+  console.log(existingInventory);
   try {
     if (!existingInventory) {
       throw new ApiResponse(
@@ -121,11 +134,9 @@ const deleteInventory = asyncHandler(async (req, res) => {
       );
     }
 
-    // Delete Items
     await Item.deleteMany({ inventoryId: inventoryId });
 
-    // Delete inventory
-    await Inventory.deleteOne({ _id: inventoryId });
+    await Inventory.deleteOne({ inventoryId: inventoryId });
 
     return res
       .status(200)
@@ -135,4 +146,4 @@ const deleteInventory = asyncHandler(async (req, res) => {
   }
 });
 
-export { addInventory, updateInventory, showallInventories, deleteInventory};
+export { addInventory, updateInventory, showallInventories, deleteInventory };

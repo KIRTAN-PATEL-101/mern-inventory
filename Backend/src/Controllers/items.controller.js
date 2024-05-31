@@ -3,7 +3,7 @@ import { ApiError } from "../Utils/ApiError.js";
 import { Item } from "../models/item.models.js";
 import { uploadOnCloudinary } from "../Utils/cloudinary.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
-import {Inventory} from '../models/inventory.models.js'
+import { Inventory } from '../models/inventory.models.js'
 
 const addItem = asyncHandler(async (req, res) => {
   try {
@@ -59,10 +59,10 @@ const addItem = asyncHandler(async (req, res) => {
 const inventoryItems = asyncHandler(async (req, res) => {
   try {
     const { inventoryId } = req.body; // Assuming inventoryId is passed as a URL parameter
-    const id=req.user._id;
+    const id = req.user._id;
     try {
       // Fetch items from the database by inventoryId
-      const items = await Item.find({ inventoryId:inventoryId,userId:id });
+      const items = await Item.find({ inventoryId: inventoryId, userId: id });
 
       // Check if items are found
       if (!items.length) {
@@ -86,7 +86,7 @@ const itemDetails = asyncHandler(async (req, res) => {
   try {
     const { itemId } = req.body;
     try {
-      const items = await Item.find({ itemId:itemId });
+      const items = await Item.find({ itemId: itemId });
 
       if (!items.length) {
         throw new ApiError(400, "Error in fetching data try again");
@@ -103,39 +103,39 @@ const itemDetails = asyncHandler(async (req, res) => {
   }
 });
 
-const addTriggeramount = asyncHandler(async(req,res,next)=>{
+const addTriggeramount = asyncHandler(async (req, res, next) => {
   try {
-    const {itemId,triggerAmount} = req.body;
-    const item=await Item.findOne({itemId:itemId})
-    if(!item){
-      throw new ApiError(400,"Item not found")
-      }
-      item.triggerAmount=triggerAmount;
-      await item.save();
-      res.status(200).json({message:"Trigger amount updated successfully"})
-      next();
+    const { itemId, triggerAmount } = req.body;
+    const item = await Item.findOne({ itemId: itemId })
+    if (!item) {
+      throw new ApiError(400, "Item not found")
+    }
+    item.triggerAmount = triggerAmount;
+    await item.save();
+    res.status(200).json({ message: "Trigger amount updated successfully" })
+    next();
   } catch (error) {
-    throw new ApiError(500,error)
+    throw new ApiError(500, error)
   }
 })
 
-const adjustQuantity=asyncHandler(async(req,res,next)=>{
+const adjustQuantity = asyncHandler(async (req, res, next) => {
   try {
-    const {itemId,stock,operation} = req.body;
-    const item=await Item.findOne({itemId:itemId})
-    if(!item){
-      throw new ApiError(400,"Item not found")
-      }
-      if(operation==="add"){
-        item.stock=item.stock+stock;
-        }else{
-          item.stock=item.stock-stock;
-          }
-          await item.save();
-          res.status(200).json({message:"Quantity updated successfully"})
-          next();
+    const { itemId, stock, operation } = req.body;
+    const item = await Item.findOne({ itemId: itemId })
+    if (!item) {
+      throw new ApiError(400, "Item not found")
+    }
+    if (operation === "add") {
+      item.stock = item.stock + stock;
+    } else {
+      item.stock = item.stock - stock;
+    }
+    await item.save();
+    res.status(200).json({ message: "Quantity updated successfully" })
+    next();
   } catch (error) {
-     throw new ApiError(500,'Bad Request.')
+    throw new ApiError(500, 'Bad Request.')
   }
 })
 
@@ -145,8 +145,9 @@ const showallItems = asyncHandler(async (req, res) => {
 
     // Fetch items for the user
     const items = await Item.find({ userId: id });
+    console.log(items);
     if (!items.length) {
-      return res.status(400).json(new ApiResponse(400, "No items available"));
+      return res.status(400).json(new ApiResponse(400, null, "No items available"));
     }
 
     const inventoryIds = items.map(item => item.inventoryId);
@@ -178,4 +179,4 @@ const showallItems = asyncHandler(async (req, res) => {
   }
 });
 
-export { addItem, inventoryItems,itemDetails,addTriggeramount,adjustQuantity,showallItems};
+export { addItem, inventoryItems, itemDetails, addTriggeramount, adjustQuantity, showallItems };
