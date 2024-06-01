@@ -115,13 +115,15 @@ const InventoryItemsUser = () => {
   };
 
   const handleCheckboxChange = (e) => {
-    const { value } = e.target;
+    const value = e.target.value;
+    console.log(value);
     if (selectedItemId.includes(value)) {
       setSelectedItemId(selectedItemId.filter((id) => id !== value));
     } else {
       setSelectedItemId([...selectedItemId, value]);
     }
-  }
+    console.log(selectedItemId);
+  };
 
   useEffect(() => {
     axios
@@ -143,10 +145,12 @@ const InventoryItemsUser = () => {
       });
   }, [
     showForm,
+    showRemoveOptions,
     setShowRemoveOptions,
     setShowNotifyForm,
     setItems,
     item.inventoryId,
+    selectedItemId,
   ]);
 
   // const handleSubmit = async (e) => {
@@ -197,16 +201,23 @@ const InventoryItemsUser = () => {
   //   };
 
   const handleRemoveItem = () => {
-    setItems(items.filter((item) => !selectedItemId.includes(item.itemld)));
-    axios.post("http://localhost:8000/items/remove", { Ids: selectedItemId }, { withCredentials: true })
+    setItems(items.filter((item) => !selectedItemId.includes(item.itemId)));
+    console.log(selectedItemId);
+    axios
+      .post(
+        "http://localhost:8000/items/deletemany",
+        { ids: selectedItemId },
+        { withCredentials: true }
+      )
       .then((response) => {
         console.log("Items removed successfully", response.data);
       })
       .catch((error) => {
         console.error("Error removing items", error);
-      })
+      });
     setSelectedItemId([]);
     setShowRemoveOptions(false);
+    window.location.reload();
   };
 
   const handleViewItem = (item) => {
@@ -296,7 +307,7 @@ const InventoryItemsUser = () => {
                     </div>
                     <div className="mb-4">
                       <label
-                        htmlFor="itemld"
+                        htmlFor="itemId"
                         className="block font-bold text-gray-700 mb-2"
                       >
                         Item Id
@@ -449,7 +460,7 @@ const InventoryItemsUser = () => {
                       className={`text-center ${
                         index % 2 === 0 ? "bg-gray-50" : "bg-white"
                       } hover:bg-gray-200`}
-                      key={item.itemld}
+                      key={item._id}
                     >
                       <td className="px-4 py-2">{index + 1}</td>
                       <td className="px-4 py-2">{item.itemName}</td>
@@ -474,12 +485,12 @@ const InventoryItemsUser = () => {
                       </td>
                       <td className="px-4 py-2">
                         <button
-                          onClick={() => handleNotifyClick(item.itemld)}
+                          onClick={() => handleNotifyClick(item.itemId)}
                           className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
                         >
                           Notify Me
                         </button>
-                        {showNotifyForm === item.itemld && (
+                        {showNotifyForm === item.itemId && (
                           <div
                             className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                             style={{ width: "600px", margin: "150px 0 0" }}
@@ -546,7 +557,7 @@ const InventoryItemsUser = () => {
                           <input
                             type="checkbox"
                             name="removeItem"
-                            value={item.itemld}
+                            value={item._id}
                             onChange={handleCheckboxChange}
                           />
                         </td>
@@ -560,7 +571,7 @@ const InventoryItemsUser = () => {
                   <button
                     className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
                     onClick={handleRemoveItem}
-                    disabled={!selectedItemId}
+                    // disabled={!selectedItemId}
                   >
                     Confirm Remove
                   </button>

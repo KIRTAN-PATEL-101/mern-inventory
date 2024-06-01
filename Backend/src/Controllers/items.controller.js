@@ -179,8 +179,10 @@ const showallItems = asyncHandler(async (req, res) => {
 
 const deleteMultipleItems = asyncHandler(async (req, res) => {
   try {
+    console.log("Hello");
     const id = req.user._id;
     const { ids } = req.body;
+    console.log(req.body);
     const items = await Item.find({ userId: id, _id: { $in: ids } })
     if (!items.length) {
       return res.status(400).json(new ApiResponse(400, null, "No items available"));
