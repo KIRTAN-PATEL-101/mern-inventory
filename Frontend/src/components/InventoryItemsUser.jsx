@@ -89,6 +89,7 @@ const InventoryItemsUser = () => {
 
       setItems([...items, response.data]);
 
+
       setNewItem({
         itemName: "",
         itemId: "",
@@ -98,7 +99,12 @@ const InventoryItemsUser = () => {
         category: "",
         itemimage: null,
       });
+
+      // reload the items page
+      return window.location.reload();
+      
       setShowForm(false);
+
     } catch (error) {
       console.error("Error posting data to backend:", error);
     }
@@ -365,7 +371,7 @@ const InventoryItemsUser = () => {
                         type="file"
                         id="itemimage"
                         name="itemimage"
-                        value={newItem.itemimage}
+                        //value={newItem.itemimage}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         style={{ backgroundColor: "#edf5f3" }}
