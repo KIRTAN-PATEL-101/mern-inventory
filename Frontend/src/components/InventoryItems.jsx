@@ -68,7 +68,7 @@ import React, { useState } from 'react';
               <section className="Item">
                 <div id="item-box-1" className="item-view-box hidden"></div>
                 <div id="Item-list" className="text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4">
-                  <h1 className="text-2xl font-bold mb-4">{item.name}</h1>
+                  <h1 className="text-2xl font-bold mb-4">{item.inventoryName}</h1>
                   <table className="w-full table-auto">
                     <thead>
                       <tr>

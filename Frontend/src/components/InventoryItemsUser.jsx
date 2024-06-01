@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import SidePanel from './SidePanelUser';
 import Header from './HeaderUser';
@@ -52,8 +52,8 @@ const InventoryItemsUser = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewItem({
-        ...newItem,
-        [name]: value
+      ...newItem,
+      [name]: value
     });
   };
 
@@ -65,68 +65,77 @@ const InventoryItemsUser = () => {
     }));
   };
 
-useEffect(() => {
-    axios.post('http://localhost:8000/items/inventoryItems',{ inventoryId: item.inventoryId }, { withCredentials: true })
-        .then(response => {
-            console.log(response.data);  // Debug the response
-            if (Array.isArray(response.data)) {
-                setItems(response.data);
-            } else {
-                console.error('Expected an array of Items, but got:', response.data);
-            }
-        })
-        .catch(error => {
-            console.error('There was an error fetching the items!', error);
-        });
-}, [item.inventoryId]);
+  useEffect(() => {
+    axios.post('http://localhost:8000/items/inventoryItems', { inventoryId: item.inventoryId }, { withCredentials: true })
+      .then(response => {
+        console.log(response.data);  // Debug the response
+        if (Array.isArray(response.data)) {
+          setItems(response.data);
+        } else {
+          console.error('Expected an array of Items, but got:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('There was an error fetching the items!', error);
+      });
+  }, [item.inventoryId]);
 
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const itemData = {
-        itemName: newItem.itemName,
-        itemId: newItem.itemId,
-        pricePerUnit: newItem.pricePerUnit,
-        stock: newItem.stock,
-        inventoryId: item.inventoryId,
-        category: newItem.category,
-        itemimage: newItem.itemimage,
+      itemName: newItem.itemName,
+      itemId: newItem.itemId,
+      pricePerUnit: newItem.pricePerUnit,
+      stock: newItem.stock,
+      inventoryId: item.inventoryId,
+      category: newItem.category,
+      itemimage: newItem.itemimage,
     };
     try {
-        // Post the new item data to the backend
-        console.log('Item Data:', itemData);
-        const response = await axios.post('http://localhost:8000/items/add', itemData, { withCredentials: true });
-        //  console.log('done');
-        console.log('Response from backend:', response.data);
+      // Post the new item data to the backend
+      console.log('Item Data:', itemData);
+      const response = await axios.post('http://localhost:8000/items/add', itemData, { withCredentials: true });
+      //  console.log('done');
+      console.log('Response from backend:', response.data);
 
-        // Update the local state with the new item
-        setItems([...items, response.data]);
+      // Update the local state with the new item
+      setItems([...items, response.data]);
 
-        setNewItem({
-            itemName: '',
-            itemId: '',
-            pricePerUnit: '',
-            stock: '',
-            inventoryId: '',
-            category: '',
-            itemimage: null,
-        });
-        setShowForm(false);
+
+      setNewItem({
+        itemName: '',
+        itemId: '',
+        pricePerUnit: '',
+        stock: '',
+        inventoryId: '',
+        category: '',
+        itemimage: null,
+      });
+      setShowForm(false);
+      //refresahing the page
+      window.location.reload();
+
     } catch (error) {
-        console.error('Error posting data to backend:', error);
+      console.error('Error posting data to backend:', error);
     }
-};
+  };
 
-//   const handleNotificationSubmit = (e) => {
-//     e.preventDefault();
-//     // Implement notification logic here
-//     alert(`Notification set for ${notificationInfo.name}`);
-//     setShowNotifyForm(false);
-//   };
+  //   const handleNotificationSubmit = (e) => {
+  //     e.preventDefault();
+  //     // Implement notification logic here
+  //     alert(`Notification set for ${notificationInfo.name}`);
+  //     setShowNotifyForm(false);
+  //   };
 
-  const handleRemoveItem = () => {
-    setItems(items.filter(item => item.itemld !== selectedItemId));
-    setSelectedItemId('');
-    setShowRemoveOptions(false);
+  const handleRemoveItem = async () => {
+    try {
+      await axios.delete('http://localhost:8000/items/delete', { data: selectedItemId }, { withCredentials: true });
+      setItems(items.filter(item => item.itemId !== selectedItemId));
+      setSelectedItemId('');
+      setShowRemoveOptions(false);
+    } catch (error) {
+      console.error('Error removing item:', error);
+    }
   };
 
   const handleViewItem = (item) => {
@@ -160,10 +169,10 @@ const handleSubmit = async (e) => {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
-};
+  };
 
   return (
-    
+
     <div className="flex">
       <SidePanel />
       <section id="content" className="relative w-full ml-72 transition-all">
@@ -172,7 +181,7 @@ const handleSubmit = async (e) => {
           <section className="Item">
             <div id="item-box-1" className="item-view-box hidden"></div>
             <div id="Item-list" className="text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4">
-              <h1 className="text-2xl font-bold mb-4">{item.inventoryName }</h1>
+              <h1 className="text-2xl font-bold mb-4">{item.inventoryName}</h1>
               <div className="flex justify-end mb-4">
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-700"
@@ -186,7 +195,7 @@ const handleSubmit = async (e) => {
                 >
                   {showRemoveOptions ? 'Cancel' : 'Remove'}
                 </button>
-                
+
               </div>
               {showForm && (
                 <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: "250px 0 0 0" }}>
@@ -275,6 +284,7 @@ const handleSubmit = async (e) => {
                         type="file"
                         id="itemimage"
                         name="itemimage"
+                        value={newItem.itemimage}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         style={{ backgroundColor: "#edf5f3" }}
@@ -329,44 +339,45 @@ const handleSubmit = async (e) => {
                         </button>
                       </td>
                       <td className="px-4 py-2">
-                            <button
-                              onClick={() => handleNotifyClick(item.itemld)}
-                              className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
-                            >
-                              Notify Me
+                        <button
+                          onClick={() => handleNotifyClick(item.itemld)}
+                          className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
+                        >
+                          Notify Me
+                        </button>
+                        {showNotifyForm === item.itemld && (
+                          <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: '150px 0 0' }}>
+                            <button onClick={() => setShowNotifyForm(false)} className="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-900">
+                              <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
                             </button>
-                            {showNotifyForm === item.itemld && (
-                            <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: '150px 0 0' }}>
-                              <button onClick={() => setShowNotifyForm(false)} className="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-900">
-                                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                              </button>
-                              <form onSubmit={handleSubmitButton}>
-                                <div className="mb-4">
-                                  <label htmlFor="triggerAmount" className="block font-bold text-gray-700 mb-2 inline pr-2">Notify via WhatsApp</label><img src="https://res.cloudinary.com/dgvslio7u/image/upload/v1716985215/jsafdt2rcafx6sl4xsdn.svg" className='mb-2' style={{height: "50px", width: "50px", display: "inline"}}/>
-                                  <input
-                                    type="number"
-                                    id="triggerAmount"
-                                    name="triggerAmount"
-                                    placeholder='Trigger Amount'
-                                    value={notificationInfo.triggerAmount}
-                                    onChange={handleNotificationChange}
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                    required
-                                  />
-                                </div>
-                                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded font-bold hover:bg-blue-700">Submit</button>
-                              </form>
-                            </div>
-                          )}
-                        </td>
+                            <form onSubmit={handleSubmitButton}>
+                              <div className="mb-4">
+                                <label htmlFor="triggerAmount" className="block font-bold text-gray-700 mb-2 inline pr-2">Notify via WhatsApp</label><img src="https://res.cloudinary.com/dgvslio7u/image/upload/v1716985215/jsafdt2rcafx6sl4xsdn.svg" className='mb-2' style={{ height: "50px", width: "50px", display: "inline" }} />
+                                <input
+                                  type="number"
+                                  id="triggerAmount"
+                                  name="triggerAmount"
+                                  placeholder='Trigger Amount'
+                                  value={notificationInfo.triggerAmount}
+                                  onChange={handleNotificationChange}
+                                  className="w-full p-2 border border-gray-300 rounded"
+                                  required
+                                />
+                              </div>
+                              <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded font-bold hover:bg-blue-700">Submit</button>
+                            </form>
+                          </div>
+                        )}
+                      </td>
                       {showRemoveOptions && (
                         <td className="px-4 py-2">
                           <input
                             type="radio"
                             name="removeItem"
                             value={item.itemld}
+                            
                             onChange={() => setSelectedItemId(item.itemld)}
                           />
                         </td>
