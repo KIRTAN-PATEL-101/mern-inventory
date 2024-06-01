@@ -1,6 +1,7 @@
 import { Item } from '../models/item.models.js'; // Adjust the path as necessary
 import { sendEmail } from '../Controllers/emailsender.controller.js'; // Adjust the path as necessary
 import { User } from '../models/users.models.js';
+import { sendWp } from '../Controllers/whatsapp.controller.js';
 
 async function checkStockLevels(req, res, next) {
     try {
@@ -21,10 +22,10 @@ async function checkStockLevels(req, res, next) {
                 await sendEmail(userMail, 'Stock Alert', message); // Assuming userId is the email or use an appropriate field
 
                 console.log(`Notification sent for ${item.itemName}`);
-
                 // Update the last notification time
                 item.lastNotification = now;
                 await item.save();
+                sendWp();
             }
         }
         next(); // Proceed to the next middleware or route handler
