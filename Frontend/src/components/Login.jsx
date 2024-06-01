@@ -91,6 +91,14 @@ const Login = () => {
             <div className="flex rounded-xl bg-black opacity-70" style={{ width: "900px", height: "500px", boxShadow: "0px 3px 3px -2px rgb(0 0 0 / 20%),0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)" }}>
                 <div className="flex flex-col items-center justify-center bg-white rounded-tl-xl rounded-bl-xl" style={{ flex: "2" }}>
                     <form className="flex flex-col items-center" onSubmit={handleSubmit}>
+                        <div className=''>
+                            <img 
+                                height='177px'
+                                width={'177px'}
+                                src='https://res.cloudinary.com/dgvslio7u/image/upload/v1717157804/b15f2kqi7qi2hxx54e6i.png'
+                                style={{opacity:'70'}}
+                                />
+                        </div>
                         <h1 className="text-4xl mt-0 m-5">Login to Your Account</h1>
                         <input
                             type="email"

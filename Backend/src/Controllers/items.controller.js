@@ -18,10 +18,9 @@ const addItem = asyncHandler(async (req, res) => {
       category,
     } = req.body;
     const id = req.user._id;
-
-    const itemPicLocalPath =req.files?.itemimage?.[0]?.path || null;
-    
-
+    console.log("itemimage",req.files)
+    const itemPicLocalPath =req.files?.itemimage?.[0]?.path ;
+    console.log(itemPicLocalPath);
     let itemUrl = null;
     try {
       itemUrl = await uploadOnCloudinary(itemPicLocalPath);

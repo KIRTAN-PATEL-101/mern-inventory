@@ -27,13 +27,13 @@ const ItemViewBox = ({ item, onClose }) => {
               <span>Name:</span>
               <span>Quantity Left:</span>
               <span>Category:</span>
-              <span>Stock</span>
+              <span>Stock:</span>
             </div>
             <div className="flex flex-col justify-between ml-4">
               <span>{item.itemName}</span>
               <span>{item.stock}</span>
               <span>{item.category}</span>
-              <span className={` px-4 py-2 ${item.stock > 0 ? 'text-green-500' : 'text-red-500'}`}>
+              <span className={` px-4   ${item.stock > 0 ? 'text-green-500' : 'text-red-500'}`}>
                 {item.stock > 0 ? 'Yes' : 'No'}
               </span>
             </div>

@@ -6,13 +6,11 @@ import { checkStockLevels } from '../Middlewares/checkStocklevel.middleware.js'
 
 const router = Router();
 
-router.route('/add').post(verifyJWT,
-  upload.fields([
-    {
-      name: "itemimage",
-      maxCount: 1,
-    },
-  ]), addItem);
+router.route('/add').post(
+  verifyJWT,
+  upload.fields([{ name: 'itemimage', maxCount: 1 }]),
+  addItem
+);
 
 router.route('/inventoryItems').post(verifyJWT, inventoryItems)
 router.route('/itemdetails').get(verifyJWT, itemDetails)
