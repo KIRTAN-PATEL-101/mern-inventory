@@ -71,7 +71,7 @@ const Geolocation = () => {
 
   return (
    <Fragment>
-   <div className="container">
+   <div className="" style={{height: "50%", width: "50%"}}>
      
      <div style={{ height: "100vh", width: "100%" }}>
        {isLoaded ? (

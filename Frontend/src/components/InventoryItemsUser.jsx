@@ -198,6 +198,13 @@ const InventoryItemsUser = () => {
 
   const handleRemoveItem = () => {
     setItems(items.filter((item) => !selectedItemId.includes(item.itemld)));
+    axios.post("http://localhost:8000/items/remove", { Ids: selectedItemId }, { withCredentials: true })
+      .then((response) => {
+        console.log("Items removed successfully", response.data);
+      })
+      .catch((error) => {
+        console.error("Error removing items", error);
+      })
     setSelectedItemId([]);
     setShowRemoveOptions(false);
   };
