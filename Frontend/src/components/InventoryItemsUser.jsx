@@ -136,7 +136,13 @@ const InventoryItemsUser = () => {
       .catch((error) => {
         console.error("There was an error fetching the items!", error);
       });
-  }, [item.inventoryId]);
+  }, [
+    showForm,
+    setShowRemoveOptions,
+    setShowNotifyForm,
+    setItems,
+    item.inventoryId,
+  ]);
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -201,18 +207,19 @@ const InventoryItemsUser = () => {
   const handleSubmitButton = (e) => {
     // Handle form submission, for example, by making an API call
     e.preventDefault();
-    axios.post('http://localhost:8000/whatsapp/send', {
-      itemId: showNotifyForm,
-      triggerAmount: notificationInfo.triggerAmount,
-    })
-      .then((response) => {
-        console.log('Notification set successfully', response.data);
-        setShowNotifyForm(null);
-        alert('Message sent on Whatapp Successfully')
+    axios
+      .post("http://localhost:8000/whatsapp/send", {
+        itemId: showNotifyForm,
+        triggerAmount: notificationInfo.triggerAmount,
       })
-      .catch(error => {
-        console.error('Error setting notification', error);
-        alert('Message has not been sent on Whatapp')
+      .then((response) => {
+        console.log("Notification set successfully", response.data);
+        setShowNotifyForm(null);
+        alert("Message sent on Whatapp Successfully");
+      })
+      .catch((error) => {
+        console.error("Error setting notification", error);
+        alert("Message has not been sent on Whatapp");
         setShowNotifyForm(null);
       });
   };
