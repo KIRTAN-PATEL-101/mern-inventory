@@ -18,8 +18,8 @@ const addItem = asyncHandler(async (req, res) => {
       category,
     } = req.body;
     const id = req.user._id;
-    console.log("itemimage",req.files)
-    const itemPicLocalPath =req.files?.itemimage?.[0]?.path ;
+    console.log("itemimage", req.files)
+    const itemPicLocalPath = req.files?.itemimage?.[0]?.path;
     console.log(itemPicLocalPath);
     let itemUrl = null;
     try {
@@ -57,7 +57,7 @@ const inventoryItems = asyncHandler(async (req, res) => {
   try {
     const { inventoryId } = req.body; // Assuming inventoryId is passed as a URL parameter
     const id = req.user._id;
-    //console.log("Inventory Id:",inventoryId);
+    console.log("Inventory Id:", inventoryId);
     try {
       // Fetch items from the database by inventoryId
       const items = await Item.find({ inventoryId: inventoryId, userId: id });
@@ -177,4 +177,32 @@ const showallItems = asyncHandler(async (req, res) => {
   }
 });
 
-export { addItem, inventoryItems, itemDetails, addTriggeramount, adjustQuantity, showallItems };
+const deleteMultipleItems = asyncHandler(async (req, res) => {
+  try {
+    console.log("Hello");
+    const id = req.user._id;
+    const { ids } = req.body;
+    console.log(req.body);
+    const items = await Item.find({ userId: id, _id: { $in: ids } })
+    if (!items.length) {
+      return res.status(400).json(new ApiResponse(400, null, "No items available"));
+    }
+    const inventoryIds = items.map(item => item.inventoryId);
+    const inventories = await Inventory.find({ inventoryId: { $in: inventoryIds } });
+    const inventoryMap = {};
+    inventories.forEach(inventory => {
+      inventoryMap[inventory.inventoryId] = inventory;
+    });
+    const itemsWithInventoryDetails = items.map(item => ({
+      ...item.toObject(), // Convert Mongoose document to plain JavaScript object
+      inventoryDetails: inventoryMap[item.inventoryId] || null
+    }));
+    await Item.deleteMany({ userId: id, _id: { $in: ids } });
+    return res.status(200).json(new ApiResponse(200, null, "Items deleted successfully"));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(new ApiResponse(500, "Internal Server Error"));
+  }
+})
+
+export { addItem, inventoryItems, itemDetails, addTriggeramount, adjustQuantity, showallItems, deleteMultipleItems };
