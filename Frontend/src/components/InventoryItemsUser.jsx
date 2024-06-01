@@ -9,9 +9,11 @@ const InventoryItemsUser = () => {
   const location = useLocation();
   const item = location.state?.item;
 
+  const [checked, setChecked] = useState(false);
+
   const [showForm, setShowForm] = useState(false);
   const [showRemoveOptions, setShowRemoveOptions] = useState(false);
-  const [selectedItemId, setSelectedItemId] = useState("");
+  const [selectedItemId, setSelectedItemId] = useState([]);
   const [showNotifyForm, setShowNotifyForm] = useState(false);
   const [notificationInfo, setNotificationInfo] = useState({
     triggerAmount: "",
@@ -112,6 +114,15 @@ const InventoryItemsUser = () => {
     }));
   };
 
+  const handleCheckboxChange = (e) => {
+    const { value } = e.target;
+    if (selectedItemId.includes(value)) {
+      setSelectedItemId(selectedItemId.filter((id) => id !== value));
+    } else {
+      setSelectedItemId([...selectedItemId, value]);
+    }
+  }
+
   useEffect(() => {
     axios
       .post(
@@ -130,7 +141,7 @@ const InventoryItemsUser = () => {
       .catch((error) => {
         console.error("There was an error fetching the items!", error);
       });
-  }, [item.inventoryId]);
+  }, [showForm, setShowRemoveOptions, setShowNotifyForm,setItems, item.inventoryId]);
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -180,8 +191,8 @@ const InventoryItemsUser = () => {
   //   };
 
   const handleRemoveItem = () => {
-    setItems(items.filter((item) => item.itemld !== selectedItemId));
-    setSelectedItemId("");
+    setItems(items.filter((item) => !selectedItemId.includes(item.itemld)));
+    setSelectedItemId([]);
     setShowRemoveOptions(false);
   };
 
@@ -519,10 +530,10 @@ const InventoryItemsUser = () => {
                       {showRemoveOptions && (
                         <td className="px-4 py-2">
                           <input
-                            type="radio"
+                            type="checkbox"
                             name="removeItem"
                             value={item.itemld}
-                            onChange={() => setSelectedItemId(item.itemld)}
+                            onChange={handleCheckboxChange}
                           />
                         </td>
                       )}
