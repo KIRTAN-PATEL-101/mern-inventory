@@ -1,5 +1,5 @@
-import { Item } from '../models/item.models.js'; // Adjust the path as necessary
-import { sendEmail } from '../Controllers/emailsender.controller.js'; // Adjust the path as necessary
+import { Item } from '../models/item.models.js'; 
+import { sendEmail } from '../Controllers/emailsender.controller.js'; 
 import { User } from '../models/users.models.js';
 import { sendWp } from '../Controllers/whatsapp.controller.js';
 
@@ -14,7 +14,7 @@ async function checkStockLevels(req, res, next) {
         // console.log(user);
 
         for (const item of items) {
-            const shouldNotify = !item.lastNotification || (now - item.lastNotification > 86400000); // 24 hours
+            const shouldNotify = !item.lastNotification || (now - item.lastNotification > 86400000); 
 
             if (item.stock < item.triggerAmount && shouldNotify) {
                 const message = `Stock alert for ${item.itemName}: Available stock (${item.stock}) is below the threshold (${item.triggerAmount}).`;
@@ -33,5 +33,4 @@ async function checkStockLevels(req, res, next) {
         res.status(500).send('Failed to check stock levels.');
     }
 }
-
 export { checkStockLevels };

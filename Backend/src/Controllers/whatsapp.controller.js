@@ -2,7 +2,7 @@
 import twilio from 'twilio';
 
 const accountSid = 'AC09585b781f76496b65605b7b02c0c3e9';
-const authToken = 'f6f67f3d941aa19ce45f1aa661b3862f';
+const authToken = '32cfe972d4945708d6d2f6cab49b218a';
 const client = twilio(accountSid, authToken);
 
 export const sendWp = async (message, recipient = 'whatsapp:+919624670574') => {
