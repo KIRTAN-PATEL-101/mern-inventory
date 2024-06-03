@@ -48,14 +48,16 @@ const fetchInventoryByUserId = asyncHandler(async (req, res) => {
 });
 
 const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
+  console.log("Request Done");
   try {
     const {ID}  = req.body;
     const inv=await Inventory.findById(ID).select();
     if(!inv){
         throw new ApiError(404, "Inventory not found");
     }
+    console.log(inv.inventoryId);
     try {
-    const items=await Item.find({ InventoryID: inv.inventoryId }).select();
+    const items=await Item.find({ inventoryId: inv.inventoryId }).select();
     // Check if items are found
       if (!items.length) {
         return res
@@ -70,6 +72,7 @@ const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   } catch (error) {
+    console.log("Done");
     throw new ApiError(500, "Bad Request.");
   }
 });
@@ -107,4 +110,8 @@ const fetchCoordinatesofInventories = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Bad Request.");
   }
 });
+
+const sendLatLong = asyncHandler(async(req,res)=>{
+  
+})
 export { showAllInventories, showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories }
