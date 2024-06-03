@@ -7,15 +7,16 @@ const SidePanel = ({ children }) => {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+  
 
   const menuItems = [
     { path: '/superAdmin/dashboard', name: 'Dashboard', icon: 'bx bxs-dashboard' },
     { path: '/superAdmin/users', name: 'Users', icon: 'bx bxs-receipt' },
     { path: '/superAdmin/inventory', name: 'All Inventory', icon: 'bx bxs-store' },
-    { path: '/superAdmin/geolocation', name: 'Geolocation', icon: 'bx bxs-map'},
+    { path: '/superAdmin/geolocation', name: 'Geolocation', icon: 'bx bxs-map' },
     // Add more menu items as needed
     {path: '/payment', name: 'Payment', icon: 'bx bx-credit-card'},
-    { path: '/login', name: 'Logout', icon: 'bx bxs-log-out-circle' }
+    { path: '/login', name: 'Logout', icon: 'bx bxs-log-out-circle',onclick: 'handleLogout'}
   ];
 
   return (

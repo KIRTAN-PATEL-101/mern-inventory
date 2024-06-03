@@ -8,6 +8,8 @@ import {
   MarkerF,
   useLoadScript,
 } from "@react-google-maps/api";
+import axios from 'axios';
+
 
 const markers = [
   {
@@ -23,22 +25,22 @@ const markers = [
   {
     id: 3,
     name: "Supermarket Tia",
-    position: { lat: -1.550256390538846, lng: -79.86209645541977 }, 
+    position: { lat: -1.550256390538846, lng: -79.86209645541977 },
   },
   {
     id: 4,
     name: "Supermarket Santa Maria",
-    position: { lat: -1.1459977902023128, lng: -78.60225731084184 },  
+    position: { lat: -1.1459977902023128, lng: -78.60225731084184 },
   },
   {
     id: 5,
     name: "Supermaxi Riboamba",
-    position: { lat: -1.5221124942235291, lng: -78.35757981816752 }, 
+    position: { lat: -1.5221124942235291, lng: -78.35757981816752 },
   },
   {
     id: 6,
     name: "SAN JUAN SUPERMARKET",
-    position: { lat: -0.4399100204653157, lng: -78.4978879570266 }, 
+    position: { lat: -0.4399100204653157, lng: -78.4978879570266 },
   },
 ];
 
@@ -50,6 +52,20 @@ const Geolocation = () => {
   });
 
   const [activeMarker, setActiveMarker] = useState(null);
+
+
+  useEffect(() => {
+    const fetchMarkers = async () => {
+      try {
+        const response = await axios.get('/api/markers'); // Adjust the URL to your backend endpoint
+        setMarkers(response.data);
+      } catch (error) {
+        console.error('Error fetching markers data:', error);
+      }
+    };
+
+    fetchMarkers();
+  }, []);
 
   const handleActiveMarker = (marker) => {
     if (marker === activeMarker) {
@@ -74,40 +90,40 @@ const Geolocation = () => {
           <SidePanel />
         </div>
         <Fragment>
-      <div className="container">
-        
-        <div style={{ height: "100vh", width: "100%" }}>
-          {isLoaded ? (
-            <GoogleMap
-              center={{ lat: -1.8312, lng: -78.1834 }}
-              zoom={7}
-              onClick={(e) => handleMapClick(e)}
-              mapContainerStyle={{ width: "100%", height: "100vh" }}
-            >
-              {markers.map(({ id, name, position }) => (
-                <MarkerF
-                  key={id}
-                  position={position}
-                  onClick={() => handleActiveMarker(id)}
-                  icon={{
-                    url:"https://res.cloudinary.com/deyfwd4ge/image/upload/v1716969589/final_marker_image_etqkm4.png",
-                    scaledSize: { width: 100, height: 100 }
-                  }}
+          <div className="container">
+
+            <div style={{ height: "100vh", width: "100%" }}>
+              {isLoaded ? (
+                <GoogleMap
+                  center={{ lat: -1.8312, lng: -78.1834 }}
+                  zoom={7}
+                  onClick={(e) => handleMapClick(e)}
+                  mapContainerStyle={{ width: "100%", height: "100vh" }}
                 >
-                  {activeMarker === id ? (
-                    <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                      <div>
-                        <p>{name}</p>
-                      </div>
-                    </InfoWindowF>
-                  ) : null}
-                </MarkerF>
-              ))}
-            </GoogleMap>
-          ) : null}
-        </div>
-      </div>
-    </Fragment>
+                  {markers.map(({ id, name, position }) => (
+                    <MarkerF
+                      key={id}
+                      position={position}
+                      onClick={() => handleActiveMarker(id)}
+                      icon={{
+                        url: "https://res.cloudinary.com/deyfwd4ge/image/upload/v1716969589/final_marker_image_etqkm4.png",
+                        scaledSize: { width: 100, height: 100 }
+                      }}
+                    >
+                      {activeMarker === id ? (
+                        <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                          <div>
+                            <p>{name}</p>
+                          </div>
+                        </InfoWindowF>
+                      ) : null}
+                    </MarkerF>
+                  ))}
+                </GoogleMap>
+              ) : null}
+            </div>
+          </div>
+        </Fragment>
 
       </div>
     </div>
