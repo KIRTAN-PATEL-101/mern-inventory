@@ -62,16 +62,17 @@ const Inventory = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Kirtan', kirtan);
+        console.log('location', location);
         const inventoryData = {
             inventoryName: newItem.inventoryName,
             inventoryId: newItem.inventoryId,
             address: newItem.address,
             country: newItem.country,
             mobileNo: newItem.mobileNo,
-            managerName: newItem.managerName,
+            ManagerName: newItem.managerName,
             category: newItem.category,
-            location: kirtan, // Include location in data
+            latitude: location.lat,
+            longitude: location.lng, // Include location in data
         };
         try {
             // Post the new item data to the backend
@@ -127,6 +128,7 @@ const Inventory = () => {
     };
 
     const closeMapModal = () => {
+        setLocation(kirtan);
         setIsMapModalOpen(false);
     };
 
@@ -336,7 +338,8 @@ const Inventory = () => {
                 </div>
                 <Modal
                     isOpen={isMapModalOpen}
-                    
+                    onAfterOpen={handleLocationSelect}
+                    onRequestClose={closeMapModal}
                     contentLabel="Map Modal"
                     className="modal-content flex justify-center items-center h-1/6"
                     overlayClassName="modal-overlay"
