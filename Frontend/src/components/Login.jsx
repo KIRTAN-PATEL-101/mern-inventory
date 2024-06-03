@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
 import axios from 'axios';
+import {toast, ToastContainer, Bounce} from 'react-toastify';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -43,6 +44,23 @@ const Login = () => {
                     body: JSON.stringify(formData),
                 });
 
+                // const response = await toast.promise(
+                //     fetch('http://localhost:8000/users/login', {
+                //         method: 'POST',
+                //         headers: {
+                //             'Content-Type': 'application/json',
+                //         },
+                //         credentials: 'include',
+                //         body: JSON.stringify(formData),
+                //     }),
+                //     {
+                //       pending: 'logging in... 🕒',
+                //       success: 'Promise resolved 👌',
+                //       error: 'Promise rejected 🤯'
+                //     }
+                // );
+                // console.log(response)
+
                 if (response.ok) {
                     const result = await response.json();
                     setMessage('Login successful!');
@@ -60,9 +78,31 @@ const Login = () => {
                 }
             } catch (error) {
                 setMessage(`An error occurred: ${error.message}`);
+                toast(error.message , {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                    });
             }
         } else {
             setErrors(newErrors);
+            toast(JSON.stringify(newErrors) , {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+                });
         }
     };
 
@@ -71,8 +111,9 @@ const Login = () => {
         .then((response) => {
             const data = response.data;
             console.log(data);
-            if(data.status === 'success'){
-                if(data.data.user.role === 'admin'){
+            if(data.success){
+                console.log(data.data.role);
+                if(data.data.role === 'admin'){
                     navigate("/superAdmin/dashboard");
                 }
                 else{
@@ -82,7 +123,7 @@ const Login = () => {
         
         })
         .catch((error) => {
-
+            console.log(error);
         })
     })
 
@@ -137,6 +178,18 @@ const Login = () => {
                     </Link>
                 </div>
             </div>
+            <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
         </div>
     );
 }

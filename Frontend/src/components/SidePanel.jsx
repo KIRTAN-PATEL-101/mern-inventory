@@ -19,6 +19,10 @@ const SidePanel = ({ children }) => {
     { path: '/login', name: 'Logout', icon: 'bx bxs-log-out-circle',onclick: 'handleLogout'}
   ];
 
+  const onLogut = () => {
+    localStorage.clear();
+  }
+
   return (
     <div className="fixed top-0 left-0 w-72 h-full bg-gray-100 z-50 transition-all overflow-hidden scrollbar-hide">
       <NavLink to="/" className="brand flex pl-12 items-center h-14  text-2xl font-bold text-blue-500 bg-white sticky top-0">
@@ -40,6 +44,7 @@ const SidePanel = ({ children }) => {
             >
               <i className={`${item.icon} flex-shrink-0 text-2xl`} aria-label={`${item.name} Icon`}></i>
               <span className="ml-4">{item.name}</span>
+              {item.name === 'Logout' ?  onLogut() : null}
             </NavLink>
           </li>
         ))}
