@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'boxicons/css/boxicons.min.css';
 import SidePanel from './SidePanel';
 import Header from './Header';
 import Order from './Order';
+import { useEffect } from 'react';
 
 const Dashboard = () => {
+
+  const [statData, setStatData] = useState({});
+
+  useEffect(() => {
+    axios.get(
+      'http://localhost:8000/superadmin/dashboard',
+      { withCredentials: true }
+    )
+    .then((response) => {
+      const data = response.data;
+      console.log(data);
+      setStatData(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  });
+
   return (
     <div className="flex">
       <SidePanel />
@@ -25,29 +44,29 @@ const Dashboard = () => {
           <ul className="box-info grid grid-cols-1 md:grid-cols-3 gap-6 mt-9">
             <li className="p-6 bg-white rounded-2xl flex items-center gap-6">
               <div className="w-20 h-20 bg-blue-100 rounded-lg flex items-center justify-center">
-                <i className='bx bxs-calendar-check text-blue-500 text-4xl'></i>
+                <i className='bx bxs-group text-blue-500 text-4xl'></i>
               </div>
               <div className="text">
-                <h3 className="text-2xl font-semibold text-gray-800">24</h3>
-                <p className="text-gray-800">New Order</p>
+                <h3 className="text-2xl font-semibold text-gray-800">{statData.userLength}</h3>
+                <p className="text-gray-800">Total Users</p>
               </div>
             </li>
             <li className="p-6 bg-white rounded-2xl flex items-center gap-6">
               <div className="w-20 h-20 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <i className='bx bxs-group text-yellow-500 text-4xl'></i>
+                <i className='bx bxs-box text-yellow-500 text-4xl'></i>
               </div>
               <div className="text">
-                <h3 className="text-2xl font-semibold text-gray-800">9</h3>
-                <p className="text-gray-800">Visitors</p>
+                <h3 className="text-2xl font-semibold text-gray-800">{statData.itemsLength}</h3>
+                <p className="text-gray-800">Total Items</p>
               </div>
             </li>
             <li className="p-6 bg-white rounded-2xl flex items-center gap-6">
               <div className="w-20 h-20 bg-orange-100 rounded-lg flex items-center justify-center">
-                <i className='bx bxs-dollar-circle text-orange-500 text-4xl'></i>
+                <i className='bx bxs-store text-orange-500 text-4xl'></i>
               </div>
               <div className="text">
-                <h3 className="text-2xl font-semibold text-gray-800">₹874</h3>
-                <p className="text-gray-800">Total Sales</p>
+                <h3 className="text-2xl font-semibold text-gray-800">{statData.inventoriesLength}</h3>
+                <p className="text-gray-800">Total Inventories</p>
               </div>
             </li>
           </ul>
