@@ -71,15 +71,16 @@ const Geolocation = () => {
 
   return (
    <Fragment>
+   <div className='bg-black' style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
    <div className="" style={{height: "50%", width: "50%"}}>
      
-     <div style={{ height: "100vh", width: "100%" }}>
+     <div style={{ height: "100vh", width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
        {isLoaded ? (
          <GoogleMap
            center={{ lat: -1.8312, lng: -78.1834 }}
            zoom={7}
            onClick={(e) => handleMapClick(e)}
-           mapContainerStyle={{ width: "100%", height: "100vh" }}
+           mapContainerStyle={{ width: "100%", height: "50%" }}
          >
            {markers.map(({ id, name, position }) => (
              <MarkerF
@@ -96,6 +97,7 @@ const Geolocation = () => {
          </GoogleMap>
        ) : null}
      </div>
+   </div>
    </div>
  </Fragment>
   );
