@@ -29,7 +29,7 @@ const addItem = asyncHandler(async (req, res) => {
       console.error("Error uploading image to Cloudinary:", error);
     }
     console.log("Item image Local Path: ", itemPicLocalPath);
-    // console.log("Profile Url: ",itemUrl);
+    //  console.log("Profile Url: ",itemUrl);
     // Create a new item
     const newItem = new Item({
       userId: id,

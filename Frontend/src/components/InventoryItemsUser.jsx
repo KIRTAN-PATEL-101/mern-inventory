@@ -243,9 +243,10 @@ const InventoryItemsUser = () => {
     // Handle form submission, for example, by making an API call
     e.preventDefault();
     axios
-      .post("http://localhost:8000/whatsapp/send", {
+      .post("http://localhost:8000/items/settrigger", {
         itemId: showNotifyForm,
         triggerAmount: notificationInfo.triggerAmount,
+        id: item._id,
       })
       .then((response) => {
         console.log("Notification set successfully", response.data);
