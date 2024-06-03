@@ -12,7 +12,9 @@ const addInventory = asyncHandler(async (req, res) => {
     country,
     mobileNo,
     ManagerName,
-    category
+    category,
+    latitude,
+    longitude,
   } = req.body;
   const id = req.user._id;
   // console.log(id);
@@ -39,8 +41,8 @@ const addInventory = asyncHandler(async (req, res) => {
     ManagerName: ManagerName,
     UserID: id,
     category: category,
-    // latCoordinates: latCoordinates,
-    // longCoordinates: longCoordinates,
+    latCoordinates: latitude,
+    longCoordinates: longitude,
   });
 
   const createdInventory = await Inventory.findById(inventory._id);
