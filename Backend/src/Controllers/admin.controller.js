@@ -48,13 +48,17 @@ const fetchInventoryByUserId = asyncHandler(async (req, res) => {
 });
 
 const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
+  console.log("Request Done");
   try {
-    const { inventoryId } = req.body; // Assuming inventoryId is passed as a URL parameter
+    const {ID}  = req.body;
+    const inv=await Inventory.findById(ID).select();
+    if(!inv){
+        throw new ApiError(404, "Inventory not found");
+    }
+    console.log(inv.inventoryId);
     try {
-      // Fetch items from the database by inventoryId
-      const items = await Item.find({ inventoryId: inventoryId });
-
-      // Check if items are found
+    const items=await Item.find({ inventoryId: inv.inventoryId }).select();
+    // Check if items are found
       if (!items.length) {
         return res
           .status(404)
@@ -68,6 +72,7 @@ const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   } catch (error) {
+    console.log("Done");
     throw new ApiError(500, "Bad Request.");
   }
 });
@@ -105,4 +110,6 @@ const fetchCoordinatesofInventories = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Bad Request.");
   }
 });
+
+
 export { showAllInventories, showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories }

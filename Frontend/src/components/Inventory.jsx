@@ -23,40 +23,40 @@ const Inventory = ({user}) => {
     const [showRemoveOptions, setShowRemoveOptions] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState('');
 
-    const handleAddClick = () => {
-        setShowForm(!showForm);
-        setShowRemoveOptions(false);
-    };
+    // const handleAddClick = () => {
+    //     setShowForm(!showForm);
+    //     setShowRemoveOptions(false);
+    // };
 
-    const handleRemoveClick = () => {
-        setShowRemoveOptions(!showRemoveOptions);
-        setShowForm(false);
-    };
+    // const handleRemoveClick = () => {
+    //     setShowRemoveOptions(!showRemoveOptions);
+    //     setShowForm(false);
+    // };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewItem({
-            ...newItem,
-            [name]: value
-        });
-    };
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setNewItem({
+    //         ...newItem,
+    //         [name]: value
+    //     });
+    // };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setInventoryItems([
-            ...inventoryItems,
-            { name: newItem.name, id: newItem.id, createdOn: newItem.createdOn }
-        ]);
-        setNewItem({
-            name: '',
-            ownerName: '',
-            id: '',
-            createdOn: '',
-            category: '',
-            description: ''
-        });
-        setShowForm(false);
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     setInventoryItems([
+    //         ...inventoryItems,
+    //         { name: newItem.name, id: newItem.id, createdOn: newItem.createdOn }
+    //     ]);
+    //     setNewItem({
+    //         name: '',
+    //         ownerName: '',
+    //         id: '',
+    //         createdOn: '',
+    //         category: '',
+    //         description: ''
+    //     });
+    //     setShowForm(false);
+    // };
 
     const handleRemoveItem = () => {
         setInventoryItems(inventoryItems.filter(item => item.id !== selectedItemId));
@@ -76,8 +76,7 @@ const Inventory = ({user}) => {
 
     useEffect(() => {
         
-        axios
-            .post('http://localhost:8000/superadmin/fetchinventory', {email: userEmail}, { withCredentials: true })
+        axios.post('http://localhost:8000/superadmin/fetchinventory', {email: userEmail}, { withCredentials: true })
             .then((response) => {
                 setInventoryItems(response.data.data);
                 console.log(response.data.data);
@@ -85,7 +84,9 @@ const Inventory = ({user}) => {
             .catch((error) => {
                 console.log(error);
             });
-    });
+    }, [
+        userEmail
+    ]);
 
     return (
         <div className="flex">
@@ -93,7 +94,7 @@ const Inventory = ({user}) => {
             <section id="content" className="relative w-full ml-72 transition-all">
                 <Header />
                 <div id="Item-list" className="text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4">
-                    <h1 className="text-2xl font-bold mb-4">Inventory</h1>
+                    <h1 className="text-2xl font-bold mb-4">{data.userName}</h1>
                     
                     <table className="table-auto w-full mt-4">
                         <thead className="bg-blue-500 text-white">
@@ -118,7 +119,7 @@ const Inventory = ({user}) => {
                                     <td className="p-2">{item.address}</td>
                                     <td className="p-2">{formatDate(item.createdAt)}</td>
                                     <td className="p-2">
-                                        <Link to={`/superAdmin/users/${item.id}/inventory/${item.id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
+                                        <Link to={`/superAdmin/users/${data._id}/inventory/${item._id}`}  state={{ item }}  className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                             View
                                         </Link>
                                     </td>

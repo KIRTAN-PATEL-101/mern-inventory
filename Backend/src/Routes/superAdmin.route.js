@@ -9,7 +9,7 @@ const router = Router();
 router.route('/inventory').get(verifyJWT, checkAdmin, showAllInventories);
 router.route('/users').get(verifyJWT, checkAdmin, showAllUsers);
 router.route('/fetchinventory').post(verifyJWT, checkAdmin, fetchInventoryByUserId);
-router.route('/fetchinventory/fetchitems').get(verifyJWT, checkAdmin, fetchInventoryByUserId, fetchItemsByInventoryId);
+router.route('/fetchinventoryitems').post(verifyJWT, checkAdmin, fetchItemsByInventoryId);
 router.route('/fetchcoordinates').get(verifyJWT, checkAdmin, fetchCoordinatesofInventories);
 
 export default router;

@@ -112,7 +112,7 @@ const showallInventories = asyncHandler(async (req, res) => {
   const id = req.user._id;
   const inventories = await Inventory.find({ UserID: id });
   if (!inventories.length) {
-    throw new ApiResponse(404,null, "Inventory not found");
+    throw new ApiResponse(404, null, "Inventory not found");
   }
   return res
     .status(200)
@@ -148,4 +148,13 @@ const deleteInventory = asyncHandler(async (req, res) => {
   }
 });
 
-export { addInventory, updateInventory, showallInventories, deleteInventory };
+const sendCoordinates = asyncHandler(async (req, res) => {
+  const id = req.user._id;
+  const coordinates = await Inventory.find({ UserID: id }).select('inventoryName latCoordinates longCoordinates -_id');
+  if (!coordinates) {
+    throw new ApiResponse(404, null, "Inventory not found");
+  }
+  return res.status(200).json(new ApiResponse(200, coordinates, "Coordinates retrieved"));
+});
+
+export { addInventory, updateInventory, showallInventories, deleteInventory,sendCoordinates };
