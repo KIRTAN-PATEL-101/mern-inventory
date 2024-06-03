@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import SidePanelUser from './SidePanelUser';
-import HeaderUser from './HeaderUser';
-import Geolocation from './Geolocation'; // Import the Geolocation component
+import HeaderUser from './HeaderUser';// Import the Geolocation component
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import TestMap from './TestMap'
 
 const Inventory = () => {
+    const [location, setLocation] = useState({});
+    let kirtan = {}// Add location state
     const [showForm, setShowForm] = useState(false);
     const [inventoryItems, setInventoryItems] = useState([]);
     const [newItem, setNewItem] = useState({
@@ -60,6 +62,7 @@ const Inventory = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('Kirtan', kirtan);
         const inventoryData = {
             inventoryName: newItem.inventoryName,
             inventoryId: newItem.inventoryId,
@@ -68,10 +71,11 @@ const Inventory = () => {
             mobileNo: newItem.mobileNo,
             managerName: newItem.managerName,
             category: newItem.category,
-            location: newItem.location, // Include location in data
+            location: kirtan, // Include location in data
         };
         try {
             // Post the new item data to the backend
+            console.log('Posting data to backend:', inventoryData);
             const response = await axios.post('http://localhost:8000/inventory/add', inventoryData, { withCredentials: true });
             console.log('Response from backend:', response.data);
 
@@ -126,12 +130,11 @@ const Inventory = () => {
         setIsMapModalOpen(false);
     };
 
-    const handleLocationSelect = (loc) => {
-        setNewItem({
-            ...newItem,
-            location: loc,
-        });
-        closeMapModal();
+    const handleLocationSelect = async (loc) => {
+        console.log('Location selected:', loc);
+        kirtan = loc
+        console.log('Location selected:', loc);
+        console.log(kirtan);
     };
 
     return (
@@ -255,6 +258,10 @@ const Inventory = () => {
                                             height={'30px'}
                                             width={'30px'}
                                         />
+
+                                        <button onClick={() => openMapModal(false)} className="flex justify-end text-gray-600 hover:text-gray-900">
+                                            
+                                        </button>
                                     </button>
                                 </div>
                                 <div className="mb-4">
@@ -329,12 +336,15 @@ const Inventory = () => {
                 </div>
                 <Modal
                     isOpen={isMapModalOpen}
-                    onRequestClose={closeMapModal}
+                    
                     contentLabel="Map Modal"
-                    className="modal-content"
+                    className="modal-content flex justify-center items-center h-1/6"
                     overlayClassName="modal-overlay"
                 >
-                    <Geolocation onLocationSelect={handleLocationSelect} />
+                    <div onClick={closeMapModal}>
+                        X
+                    </div>
+                    <TestMap handleLocationSelect={handleLocationSelect}/>
                 </Modal>
             </section>
         </div>
