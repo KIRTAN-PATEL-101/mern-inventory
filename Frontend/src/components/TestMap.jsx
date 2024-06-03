@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
-import SidePanel from './SidePanel';
-import Header from './Header';
-import { Fragment, useState } from "react";
+// MapTest.jsx
+import React, { useState, Fragment } from 'react';
 import {
   GoogleMap,
-  InfoWindowF,
   MarkerF,
   useLoadScript,
 } from "@react-google-maps/api";
@@ -42,65 +39,44 @@ const markers = [
   },
 ];
 
-
-
-const Geolocation = () => {
+const MapTest = ({ onLocationSelect }) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_MAP_API_KEY,
   });
 
-//   const [activeMarker, setActiveMarker] = useState(null);
-
   const [marker, setMarker] = useState(null);
 
-//   const handleActiveMarker = (marker) => {
-//     if (marker === activeMarker) {
-//       return;
-//     }
-//     setActiveMarker(marker);
-//   };
-
   const handleMapClick = (e) => {
-    console.log("map clicked");
     const loc = e.latLng.toJSON();
     setMarker(loc);
-    console.log(e.latLng.toJSON());
-
-    setActiveMarker(null);
+    onLocationSelect(loc);
   };
 
   return (
-   <Fragment>
-   <div className='bg-black' style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-   <div className="" style={{height: "50%", width: "50%"}}>
-     
-     <div style={{ height: "100vh", width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-       {isLoaded ? (
+
+     <div style={{ height: "50%", width: "50%" }}>
+      <div style={{height:'100vh',width:'100%'}}>
+      {isLoaded ? (
          <GoogleMap
            center={{ lat: -1.8312, lng: -78.1834 }}
            zoom={7}
-           onClick={(e) => handleMapClick(e)}
-           mapContainerStyle={{ width: "100%", height: "50%" }}
+           onClick={handleMapClick}
+           mapContainerStyle={{ width: "100%", height: "100vh" }}
          >
-           {markers.map(({ id, name, position }) => (
-             <MarkerF
-               key={id}
-               position={marker}
-               // onClick={() => handleActiveMarker(id)}
-               icon={{
-                 url:"https://res.cloudinary.com/deyfwd4ge/image/upload/v1716969589/final_marker_image_etqkm4.png",
-                 scaledSize: { width: 100, height: 100 }
-               }}
-             >
-             </MarkerF>
-           ))}
+           <MarkerF
+             position={marker}
+             icon={{
+               url:"https://res.cloudinary.com/deyfwd4ge/image/upload/v1716969589/final_marker_image_etqkm4.png",
+               scaledSize: { width: 100, height: 100 }
+             }}
+           />
          </GoogleMap>
        ) : null}
+      </div>
+       
      </div>
-   </div>
-   </div>
- </Fragment>
+
   );
 }
 
-export default Geolocation;
+export default MapTest;
