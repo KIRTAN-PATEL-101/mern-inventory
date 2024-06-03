@@ -111,7 +111,5 @@ const fetchCoordinatesofInventories = asyncHandler(async (req, res) => {
   }
 });
 
-const sendLatLong = asyncHandler(async(req,res)=>{
-  
-})
+
 export { showAllInventories, showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories }
