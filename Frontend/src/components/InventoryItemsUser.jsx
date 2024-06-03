@@ -142,7 +142,7 @@ const InventoryItemsUser = () => {
       .post(
         "http://localhost:8000/items/inventoryItems",
         { inventoryId: item.inventoryId },
-        { withCredentials: true }
+        { withCredentials: true } 
       )
       .then((response) => {
         console.log(response.data); // Debug the response

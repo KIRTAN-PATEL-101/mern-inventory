@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
   import SidePanel from './SidePanel';
   import Header from './Header';
   import ItemViewBox from './ItemViewBox';
@@ -26,9 +26,9 @@ import React, { useState } from 'react';
     setViewItem(null);
   };
 
-  const handleNotifyClick = (itemId) => {
-    setShowNotifyForm(itemId);
-  };
+  // const handleNotifyClick = (itemId) => {
+  //   setShowNotifyForm(itemId);
+  // };
 
   const handleNotificationChange = (e) => {
     const { name, value } = e.target;
@@ -38,25 +38,38 @@ import React, { useState } from 'react';
     }));
   };
 
-  const handleSubmitButton = (e) => {
-    e.preventDefault();
-    // Handle form submission, for example, by making an API call
-    e.preventDefault();
-    axios.post('http://localhost:8000/whatsapp/send', {
-      itemId: showNotifyForm,
-      triggerAmount: notificationInfo.triggerAmount,
-    })
-      .then((response) => {
-        console.log('Notification set successfully', response.data);
-        setShowNotifyForm(null);
-        alert('Message sent on Whatapp Successfully')
-      })
-      .catch(error => {
-        console.error('Error setting notification', error);
-        alert('Message has not been sent on Whatapp')
-        setShowNotifyForm(null);
-      });
-  };
+    // const handleSubmitButton = (e) => {
+    //   e.preventDefault();
+    //   // Handle form submission, for example, by making an API call
+    //   e.preventDefault();
+    //   axios.post('http://localhost:8000/whatsapp/send', {
+    //     itemId: showNotifyForm,
+    //     triggerAmount: notificationInfo.triggerAmount,
+    //   })
+    //     .then((response) => {
+    //       console.log('Notification set successfully', response.data);
+    //       setShowNotifyForm(null);
+    //       alert('Message sent on Whatapp Successfully')
+    //     })
+    //     .catch(error => {
+    //       console.error('Error setting notification', error);
+    //       alert('Message has not been sent on Whatapp')
+    //       setShowNotifyForm(null);
+    //     });
+    // };
+
+    useEffect(() => {
+        console.log(item._id);
+      axios.post('http://localhost:8000/', {ID:item._id}, { withCredentials: true })
+          .then((response) => {
+              setItems(response.data.data);
+              console.log(response.data.data);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+  }, [item._id]);
+
 
     return (
       <div>
@@ -78,7 +91,7 @@ import React, { useState } from 'react';
                         <th className="px-4 py-2 bg-blue-500 text-white">Quantity left</th>
                         <th className="px-4 py-2 bg-blue-500 text-white">In stock</th>
                         <th className="px-4 py-2 bg-blue-500 text-white">View</th>
-                        <th className="px-4 py-2 bg-blue-500 text-white">Notify me</th>
+                  
                       </tr>
                     </thead>
                     <tbody>
@@ -99,39 +112,6 @@ import React, { useState } from 'react';
                               View
                             </button>
                           </td>
-                          <td className="px-4 py-2">
-                            <button
-                              onClick={() => handleNotifyClick(item.itemld)}
-                              className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
-                            >
-                              Notify Me
-                            </button>
-                            {showNotifyForm === item.itemld && (
-                            <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: '150px 0 0' }}>
-                              <button onClick={() => setShowNotifyForm(false)} className="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-900">
-                                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                              </button>
-                              <form onSubmit={handleSubmitButton}>
-                                <div className="mb-4">
-                                  <label htmlFor="triggerAmount" className="block font-bold text-gray-700 mb-2 inline pr-2">Notify via WhatsApp</label><img src="https://res.cloudinary.com/dgvslio7u/image/upload/v1716985215/jsafdt2rcafx6sl4xsdn.svg" className='mb-2' style={{height: "50px", width: "50px", display: "inline"}}/>
-                                  <input
-                                    type="number"
-                                    id="triggerAmount"
-                                    name="triggerAmount"
-                                    placeholder='Trigger Amount'
-                                    value={notificationInfo.triggerAmount}
-                                    onChange={handleNotificationChange}
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                    required
-                                  />
-                                </div>
-                                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded font-bold hover:bg-blue-700">Submit</button>
-                              </form>
-                            </div>
-                          )}
-                        </td>
                       </tr>
                     ))}
                   </tbody>
