@@ -6,7 +6,7 @@ import {
   useLoadScript,
 } from "@react-google-maps/api";
 
-const MapTest = ({ onLocationSelect, closeMapModal }) => {
+const MapTest = ({handleLocationSelect}) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_MAP_API_KEY,
   });
@@ -16,15 +16,13 @@ const MapTest = ({ onLocationSelect, closeMapModal }) => {
   const handleMapClick = (e) => {
     const loc = e.latLng.toJSON();
     setMarker(loc);
-    onLocationSelect(loc);
+    console.log(loc);
+    handleLocationSelect(loc);
   };
 
   return (
 
      <div style={{ height: "50%", width: "50%",justifyContent:"center",display:"flex" }}>
-      <div >
-        <button onClick={closeMapModal}>X</button>
-      </div>
       <div style={{height:'100vh',width:'100%',justifyContent:"center",display:"flex",}}> 
 
         {isLoaded ? (
