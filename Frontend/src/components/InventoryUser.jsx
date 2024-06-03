@@ -5,6 +5,7 @@ import HeaderUser from './HeaderUser';
 import Geolocation from './Geolocation'; // Import the Geolocation component
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import TestMap from './TestMap'
 
 const Inventory = () => {
     const [showForm, setShowForm] = useState(false);
@@ -255,6 +256,10 @@ const Inventory = () => {
                                             height={'30px'}
                                             width={'30px'}
                                         />
+
+                                        <button onClick={() => openMapModal(false)} className="flex justify-end text-gray-600 hover:text-gray-900">
+                                            
+                                        </button>
                                     </button>
                                 </div>
                                 <div className="mb-4">
@@ -329,12 +334,12 @@ const Inventory = () => {
                 </div>
                 <Modal
                     isOpen={isMapModalOpen}
-                    onRequestClose={closeMapModal}
+                    
                     contentLabel="Map Modal"
-                    className="modal-content"
+                    className="modal-content flex justify-center items-center h-1/6"
                     overlayClassName="modal-overlay"
                 >
-                    <Geolocation onLocationSelect={handleLocationSelect} />
+                    <TestMap onLocationSelect={handleLocationSelect} />
                 </Modal>
             </section>
         </div>
