@@ -103,7 +103,8 @@ const itemDetails = asyncHandler(async (req, res) => {
 
 const addTriggeramount = asyncHandler(async (req, res, next) => {
   try {
-    const { itemId, triggerAmount } = req.body;
+    const { itemId, triggerAmount,id } = req.body;
+    console.log(req.body);
     const item = await Item.findOne({ itemId: itemId })
     if (!item) {
       throw new ApiError(400, "Item not found")

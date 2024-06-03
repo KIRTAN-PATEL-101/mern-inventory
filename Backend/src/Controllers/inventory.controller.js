@@ -110,7 +110,7 @@ const showallInventories = asyncHandler(async (req, res) => {
   const id = req.user._id;
   const inventories = await Inventory.find({ UserID: id });
   if (!inventories.length) {
-    throw new ApiResponse(404, "Inventory not found");
+    throw new ApiResponse(404,null, "Inventory not found");
   }
   return res
     .status(200)
