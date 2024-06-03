@@ -29,7 +29,7 @@ const addItem = asyncHandler(async (req, res) => {
       console.error("Error uploading image to Cloudinary:", error);
     }
     console.log("Item image Local Path: ", itemPicLocalPath);
-    // console.log("Profile Url: ",itemUrl);
+    //  console.log("Profile Url: ",itemUrl);
     // Create a new item
     const newItem = new Item({
       userId: id,
@@ -103,7 +103,8 @@ const itemDetails = asyncHandler(async (req, res) => {
 
 const addTriggeramount = asyncHandler(async (req, res, next) => {
   try {
-    const { itemId, triggerAmount } = req.body;
+    const { itemId, triggerAmount,id } = req.body;
+    console.log(req.body);
     const item = await Item.findOne({ itemId: itemId })
     if (!item) {
       throw new ApiError(400, "Item not found")
