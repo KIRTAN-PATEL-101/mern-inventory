@@ -1,6 +1,8 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Modal from 'react-modal';
 import SidePanelUser from './SidePanelUser';
 import HeaderUser from './HeaderUser';
+import Geolocation from './Geolocation'; // Import the Geolocation component
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,31 +16,34 @@ const Inventory = () => {
         country: '',
         mobileNo: '',
         managerName: '',
-        category: ''
+        category: '',
+        location: null, // Add location state
     });
     const [showRemoveOptions, setShowRemoveOptions] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState('');
+    const [isMapModalOpen, setIsMapModalOpen] = useState(false); // State for map modal
 
     const handleAddClick = () => {
         setShowForm(!showForm);
         setShowRemoveOptions(false);
     };
+    
 
     useEffect(() => {
         // Fetch user data from the backend
-        axios.get('http://localhost:8000/inventory/show',{ withCredentials: true })
-          .then(response => {
-            console.log(response.data);  // Debug the response
-            if (Array.isArray(response.data.data)) {
-                setInventoryItems(response.data.data);
-            } else {
-              console.error('Expected an array of users, but got:', response.data);
-            }
-          })
-          .catch(error => {
-            console.error('There was an error fetching the users!', error);
-          });
-      }, []);
+        axios.get('http://localhost:8000/inventory/show', { withCredentials: true })
+            .then(response => {
+                console.log(response.data); // Debug the response
+                if (Array.isArray(response.data.data)) {
+                    setInventoryItems(response.data.data);
+                } else {
+                    console.error('Expected an array of users, but got:', response.data);
+                }
+            })
+            .catch(error => {
+                console.error('There was an error fetching the users!', error);
+            });
+    }, []);
 
     const handleRemoveClick = () => {
         setShowRemoveOptions(!showRemoveOptions);
@@ -55,63 +60,79 @@ const Inventory = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const inventoryData ={
-                inventoryName: newItem.inventoryName, 
-                inventoryId: newItem.inventoryId, 
-                address: newItem.address, country: 
-                newItem.country, 
-                mobileNo: newItem.mobileNo, 
-                ManagerName: newItem.managerName, 
-                category: newItem.category
-            }
-            try {
-                // Post the new item data to the backend
-                const response = await axios.post('http://localhost:8000/inventory/add', inventoryData, { withCredentials: true });
-                console.log('Response from backend:', response.data);
-        
-                // Update the local state with the new item
-                setInventoryItems([...inventoryItems, inventoryData]);
-        
-
-                setNewItem({
-                    inventoryName: '',
-                    inventoryId: '',
-                    address: '',
-                    country: '',
-                    mobileNo: '',
-                    managerName: '',
-                    category: ''
-                });
-                setShowForm(false);
-            } catch (error) {
-                console.error('Error posting data to backend:', error);
-            }
+        const inventoryData = {
+            inventoryName: newItem.inventoryName,
+            inventoryId: newItem.inventoryId,
+            address: newItem.address,
+            country: newItem.country,
+            mobileNo: newItem.mobileNo,
+            managerName: newItem.managerName,
+            category: newItem.category,
+            location: newItem.location, // Include location in data
         };
+        try {
+            // Post the new item data to the backend
+            const response = await axios.post('http://localhost:8000/inventory/add', inventoryData, { withCredentials: true });
+            console.log('Response from backend:', response.data);
 
-        const handleRemoveItem = async () => {
-            try {
+            // Update the local state with the new item
+            setInventoryItems([...inventoryItems, inventoryData]);
 
-                const response = await axios.delete(`http://localhost:8000/inventory/delete/${selectedItemId}`, { withCredentials: true });
-                console.log('Response from backend:', response.data);
-        
-                setInventoryItems(inventoryItems.filter(item => item.inventoryId !== selectedItemId));
-        
-                // Clear the selected item ID and hide remove options
-                setSelectedItemId('');
-                setShowRemoveOptions(false);
-            } catch (error) {
-                console.error('Error deleting item from backend:', error);
-                // Handle error (optional)
-            }
-        };
+            setNewItem({
+                inventoryName: '',
+                inventoryId: '',
+                address: '',
+                country: '',
+                mobileNo: '',
+                managerName: '',
+                category: '',
+                location: null,
+            });
+            setShowForm(false);
+        } catch (error) {
+            console.error('Error posting data to backend:', error);
+        }
+    };
 
-        const formatDate = (dateString) => {
-            const date = new Date(dateString);
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        };  
+    const handleRemoveItem = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:8000/inventory/delete/${selectedItemId}`, { withCredentials: true });
+            console.log('Response from backend:', response.data);
+
+            setInventoryItems(inventoryItems.filter(item => item.inventoryId !== selectedItemId));
+
+            // Clear the selected item ID and hide remove options
+            setSelectedItemId('');
+            setShowRemoveOptions(false);
+        } catch (error) {
+            console.error('Error deleting item from backend:', error);
+            // Handle error (optional)
+        }
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    const openMapModal = () => {
+        setIsMapModalOpen(true);
+    };
+
+    const closeMapModal = () => {
+        setIsMapModalOpen(false);
+    };
+
+    const handleLocationSelect = (loc) => {
+        setNewItem({
+            ...newItem,
+            location: loc,
+        });
+        closeMapModal();
+    };
 
     return (
         <div className="flex">
@@ -141,14 +162,15 @@ const Inventory = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
+                            <h2 className="text-2xl font-bold mb-4">Add Inventory</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-4">
-                                    <label htmlFor="inventoryName" className="block font-bold text-gray-700 mb-2">Inventory Name</label>
+                                    <label htmlFor="inventoryName" className="block font-bold text-gray-700 mb-2">Name</label>
                                     <input
                                         type="text"
                                         id="inventoryName"
-                                        placeholder='Inventory Name...'
                                         name="inventoryName"
+                                        placeholder='Name...'
                                         value={newItem.inventoryName}
                                         onChange={handleInputChange}
                                         className="w-full p-2 border border-gray-300 rounded"
@@ -156,12 +178,12 @@ const Inventory = () => {
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label htmlFor="inventoryId" className="block font-bold text-gray-700 mb-2">Inventory Id</label>
+                                    <label htmlFor="inventoryId" className="block font-bold text-gray-700 mb-2">ID</label>
                                     <input
                                         type="text"
                                         id="inventoryId"
-                                        placeholder='Inventory Id...'
                                         name="inventoryId"
+                                        placeholder='ID...'
                                         value={newItem.inventoryId}
                                         onChange={handleInputChange}
                                         className="w-full p-2 border border-gray-300 rounded"
@@ -219,6 +241,21 @@ const Inventory = () => {
                                         className="w-full p-2 border border-gray-300 rounded"
                                         required
                                     />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="location" className="block font-bold text-gray-700 mb-2">Location</label>
+                                    <button
+                                        type='button'
+                                        className='justify-between border-2 w-full border-black color-white rounded-2xl inline'
+                                        onClick={openMapModal}
+                                    >
+                                        <span className='pl-2'>Click here to add your Location</span>
+                                        <img className='inline pl-1'
+                                            src='https://res.cloudinary.com/deyfwd4ge/image/upload/v1717233009/pngegg_nni7mq.png'
+                                            height={'30px'}
+                                            width={'30px'}
+                                        />
+                                    </button>
                                 </div>
                                 <div className="mb-4">
                                     <label htmlFor="country" className="block font-bold text-gray-700 mb-2">Country</label>
@@ -290,6 +327,15 @@ const Inventory = () => {
                         </div>
                     )}
                 </div>
+                <Modal
+                    isOpen={isMapModalOpen}
+                    onRequestClose={closeMapModal}
+                    contentLabel="Map Modal"
+                    className="modal-content"
+                    overlayClassName="modal-overlay"
+                >
+                    <Geolocation onLocationSelect={handleLocationSelect} />
+                </Modal>
             </section>
         </div>
     );

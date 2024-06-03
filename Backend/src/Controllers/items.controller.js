@@ -57,7 +57,7 @@ const inventoryItems = asyncHandler(async (req, res) => {
   try {
     const { inventoryId } = req.body; // Assuming inventoryId is passed as a URL parameter
     const id = req.user._id;
-    console.log("Inventory Id:", inventoryId);
+    //console.log("Inventory Id:", inventoryId);
     try {
       // Fetch items from the database by inventoryId
       const items = await Item.find({ inventoryId: inventoryId, userId: id });
