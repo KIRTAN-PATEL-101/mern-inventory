@@ -22,16 +22,15 @@ const SidePanel = ({ children }) => {
   ];
 
   const onLogut = () => {
-    axios.get('http://localhost:8000/users/logout', {withCredentials: true})
-  .then((response) => {
-    console.log(response);
-     localStorage.clear();
-    navigate("/login");
-  })
-  .catch((error) => {
-    console.log(error);
-  })
-}
+    axios.get('http://localhost:8000//logout', {withCredentials: true})
+    .then((response) => {
+      // localStorage.clear();
+      navigate("/login");
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
 
   return (
     <div className="fixed top-0 left-0 w-72 h-full bg-gray-100 z-50 transition-all overflow-hidden scrollbar-hide">
@@ -51,10 +50,10 @@ const SidePanel = ({ children }) => {
                   isActive ? 'text-gray-800 bg-gray-200' : 'text-gray-800 hover:bg-gray-100'
                 } rounded-r-full transition-all`
               }
+              onClick={item.name === 'Logout' ? onLogut : null}
             >
               <i className={`${item.icon} flex-shrink-0 text-2xl`} aria-label={`${item.name} Icon`}></i>
               <span className="ml-4">{item.name}</span>
-              {/* {item.name === 'Logout' ?  onLogut() : null} */}
             </NavLink>
           </li>
         ))}
