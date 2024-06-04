@@ -15,7 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     axios.get('http://localhost:8000/users/dashboard', { withCredentials: true })
       .then(response => {
-        const data = response.data;
+        const data = response.data.data;
         setStatData(data);
         console.log(data);
         setItems(data.items);
@@ -24,7 +24,7 @@ const Dashboard = () => {
       .catch(error => {
         console.log(error);
       });
-  });
+  }, []);
 
   return (
     <div className="flex">
