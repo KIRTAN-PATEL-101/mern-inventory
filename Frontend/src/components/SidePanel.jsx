@@ -10,6 +10,7 @@ const SidePanel = ({ children }) => {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+  const navigate = useNavigate();
 
   const menuItems = [
     { path: '/superAdmin/dashboard', name: 'Dashboard', icon: 'bx bxs-dashboard' },
@@ -22,9 +23,9 @@ const SidePanel = ({ children }) => {
   ];
 
   const onLogut = () => {
-    axios.get('http://localhost:8000/user/logout', {withCredentials: true})
+    axios.get('http://localhost:8000/superAdmin/adminlogout', {withCredentials: true})
     .then((response) => {
-      // localStorage.clear();
+      console.log(response);
       navigate("/login");
     })
     .catch((error) => {

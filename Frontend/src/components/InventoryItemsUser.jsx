@@ -142,7 +142,7 @@ const InventoryItemsUser = () => {
       .post(
         "http://localhost:8000/items/inventoryItems",
         { inventoryId: item.inventoryId },
-        { withCredentials: true } 
+        { withCredentials: true }
       )
       .then((response) => {
         console.log(response.data); // Debug the response
@@ -155,15 +155,7 @@ const InventoryItemsUser = () => {
       .catch((error) => {
         console.error("There was an error fetching the items!", error);
       });
-  }, [
-    showForm,
-    showRemoveOptions,
-    setShowRemoveOptions,
-    setShowNotifyForm,
-    setItems,
-    item.inventoryId,
-    selectedItemId,
-  ]);
+  }, [item.inventoryId]);
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -243,11 +235,11 @@ const InventoryItemsUser = () => {
     // Handle form submission, for example, by making an API call
     e.preventDefault();
     axios
-    .post("http://localhost:8000/items/settrigger", {
-      itemId: showNotifyForm,
-      triggerAmount: notificationInfo.triggerAmount,
-      id: item._id,
-    },{ withCredentials: true })
+      .post("http://localhost:8000/items/settrigger", {
+        itemId: showNotifyForm,
+        triggerAmount: notificationInfo.triggerAmount,
+        id: item._id,
+      }, { withCredentials: true })
       .then((response) => {
         console.log("Notification set successfully", response.data);
         setShowNotifyForm(null);
@@ -291,13 +283,13 @@ const InventoryItemsUser = () => {
     //     )
     //   );
 
-        setAdjustQuantity({
-          itemId: "",
-          adjustment: "",
-          type: "add",
-      });   
+    setAdjustQuantity({
+      itemId: "",
+      adjustment: "",
+      type: "add",
+    });
 
-      setShowAdjustQuantityForm(false);
+    setShowAdjustQuantityForm(false);
     // } catch (error) {
     //   console.error("Error adjusting quantity:", error);
     // }
@@ -330,12 +322,6 @@ const InventoryItemsUser = () => {
                   onClick={handleAddClick}
                 >
                   {showForm ? "Close" : "Add"}
-                </button>
-                <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-700"
-                  onClick={handleAdjustQuantityClick}
-                >
-                  {showAdjustQuantityForm ? "Close" : "Adjust Quantity"}
                 </button>
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -529,9 +515,8 @@ const InventoryItemsUser = () => {
                 <tbody>
                   {items.map((item, index) => (
                     <tr
-                      className={`text-center ${
-                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                      } hover:bg-gray-200`}
+                      className={`text-center ${index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                        } hover:bg-gray-200`}
                       key={item._id}
                     >
                       <td className="px-4 py-2">{index + 1}</td>
@@ -546,7 +531,14 @@ const InventoryItemsUser = () => {
                       >
                         {item.stock > 0 ? "Yes" : "No"}
                       </td>
-                      <td className="px-4 py-2">{index + 1}</td>
+                      <td className="px-4 py-2">
+                        <button
+                          className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
+                          onClick={handleAdjustQuantityClick}
+                        >
+                          Change
+                        </button>
+                      </td>
                       <td className="px-4 py-2">
                         <button
                           onClick={() => handleViewItem(item)}
@@ -643,7 +635,7 @@ const InventoryItemsUser = () => {
                   <div className="bg-white p-4 rounded-lg shadow-lg" style={{ width: "40%" }}>
                     <h2 className="text-xl font-bold mb-4">Adjust Quantity</h2>
                     <form onSubmit={handleAdjustQuantitySubmit}>
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label className="block mb-2">Item ID</label>
                         <input
                           type="text"
@@ -652,7 +644,7 @@ const InventoryItemsUser = () => {
                           onChange={handleAdjustQuantityInputChange}
                           className="w-full px-4 py-2 border rounded"
                         />
-                      </div>
+                      </div> */}
                       <div className="mb-4">
                         <label className="block mb-2">Type</label>
                         <div className="flex justify-center items-center">
@@ -687,10 +679,10 @@ const InventoryItemsUser = () => {
                           name="adjustment"
                           value={adjustQuantity.adjustment}
                           onChange={handleAdjustQuantityInputChange}
-                          className="w-full px-4 py-2 border rounded"
+                          className="w-full px-4 py-2 border rounded border-solid"
                         />
                       </div>
-                      
+
                       <div className="flex justify-end">
                         <button
                           type="button"
@@ -715,7 +707,7 @@ const InventoryItemsUser = () => {
                   <button
                     className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
                     onClick={handleRemoveItem}
-                    // disabled={!selectedItemId}
+                  // disabled={!selectedItemId}
                   >
                     Confirm Remove
                   </button>
