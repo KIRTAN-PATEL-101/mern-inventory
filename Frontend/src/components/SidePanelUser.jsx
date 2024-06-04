@@ -24,7 +24,7 @@ const SidePanel = ({ children }) => {
   const onLogut = () => {
     axios.get('http://localhost:8000/users/logout', {withCredentials: true})
     .then((response) => {
-      // localStorage.clear();
+       localStorage.clear();
       navigate("/login");
     })
     .catch((error) => {

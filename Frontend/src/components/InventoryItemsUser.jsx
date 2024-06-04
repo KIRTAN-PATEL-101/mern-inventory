@@ -514,6 +514,7 @@ const InventoryItemsUser = () => {
                     <th className="px-4 py-2 bg-blue-500 text-white">
                       In stock
                     </th>
+                    <th className="px-4 py-2 bg-blue-500 text-white"> Adjust Quantity</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">View</th>
                     <th className="px-4 py-2 bg-blue-500 text-white">
                       Notify me
@@ -545,6 +546,7 @@ const InventoryItemsUser = () => {
                       >
                         {item.stock > 0 ? "Yes" : "No"}
                       </td>
+                      <td className="px-4 py-2">{index + 1}</td>
                       <td className="px-4 py-2">
                         <button
                           onClick={() => handleViewItem(item)}

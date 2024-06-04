@@ -4,6 +4,8 @@ import { User } from "../models/users.models.js";
 import { uploadOnCloudinary } from "../Utils/cloudinary.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import validator from "validator";
+import { Inventory } from '../models/inventory.models.js'
+import { Item } from '../models/item.models.js'
 
 const generateAccessandRefreshToken = async (userId) => {
   try {
@@ -196,4 +198,25 @@ const userDetail = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, user, "User found"))
 })
 
-export { registerUser, validateuser, logoutUser, refreshAccessToken, userDetail };
+const dashboardElement = asyncHandler(async (req, res) => {
+  try {
+    const id = req.user._id;
+    const inventoryCount = await Inventory.countDocuments({ UserID: id })
+    // let inventoryCount = inventory.length;
+    const itemsCount = await Item.countDocuments({ userId: id })
+    // let itemsCount = items.length;
+    const items = await Item.find({ triggerAmount: { $exists: true, $ne: null }, userId:id }).select("itemName stock triggerAmount");
+    const itemsTriggerCount = await Item.countDocuments({ triggerAmount: { $exists: true, $ne: null }, userId:id });
+    console.log("Inventory Count: ",inventoryCount);
+    console.log("Items Count: ",itemsCount);
+    console.log("Triggered Amounts: ",items);
+  
+    return res.status(200)
+    .json(new ApiResponse(200,{inventoryCount,itemsCount,itemsTriggerCount,items},"Data fetched Successfully"))
+  } catch (error) {
+    return res.status(500)
+    .json(new ApiResponse(500,null,error))
+  }
+})
+
+export { registerUser, validateuser, logoutUser, refreshAccessToken, userDetail,dashboardElement};

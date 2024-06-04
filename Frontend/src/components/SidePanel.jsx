@@ -1,5 +1,8 @@
+
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SidePanel = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +22,14 @@ const SidePanel = ({ children }) => {
   ];
 
   const onLogut = () => {
-    localStorage.clear();
+    axios.get('http://localhost:8000/user/logout', {withCredentials: true})
+    .then((response) => {
+      // localStorage.clear();
+      navigate("/login");
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   return (
@@ -40,10 +50,10 @@ const SidePanel = ({ children }) => {
                   isActive ? 'text-gray-800 bg-gray-200' : 'text-gray-800 hover:bg-gray-100'
                 } rounded-r-full transition-all`
               }
+              onClick={item.name === 'Logout' ? onLogut : null}
             >
               <i className={`${item.icon} flex-shrink-0 text-2xl`} aria-label={`${item.name} Icon`}></i>
               <span className="ml-4">{item.name}</span>
-              {item.name === 'Logout' ?  onLogut() : null}
             </NavLink>
           </li>
         ))}
