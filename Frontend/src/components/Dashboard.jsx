@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'boxicons/css/boxicons.min.css';
 import SidePanel from './SidePanel';
 import Header from './Header';
 import Order from './Order';
+import axios from 'axios';
 
 const Dashboard = () => {
 
@@ -14,14 +15,14 @@ const Dashboard = () => {
       { withCredentials: true }
     )
     .then((response) => {
-      const data = response.data;
+      const data = response.data.data;
       console.log(data);
       setStatData(data);
     })
     .catch((error) => {
       console.log(error);
     });
-  });
+  }, []);
 
   return (
     <div className="flex">
@@ -69,6 +70,7 @@ const Dashboard = () => {
               </div>
             </li>
           </ul>
+          
           <div className="flex flex-wrap gap-6 mt-9">
             <Order />
           </div>
