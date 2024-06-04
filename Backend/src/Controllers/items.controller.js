@@ -121,22 +121,46 @@ const addTriggeramount = asyncHandler(async (req, res, next) => {
 const adjustQuantity = asyncHandler(async (req, res, next) => {
   try {
     const { itemId, stock, operation } = req.body;
-    const item = await Item.findOne({ itemId: itemId })
+    console.log(itemId, stock, operation);
+    
+    if (!itemId || !stock || !operation) {
+      throw new ApiError(400, "Missing required fields");
+    }
+    
+    const item = await Item.findOne({ _id: itemId });
     if (!item) {
-      throw new ApiError(400, "Item not found")
+      throw new ApiError(400, "Item not found");
     }
+    
+    const stockValue = parseInt(stock, 10);
+    if (isNaN(stockValue)) {
+      throw new ApiError(400, "Invalid stock value");
+    }
+
     if (operation === "add") {
-      item.stock = item.stock + stock;
+      item.stock = item.stock + stockValue;
+    } else if (operation === "remove") {
+      item.stock = item.stock - stockValue;
+      if (item.stock < 0) {
+        throw new ApiError(400, "Stock cannot be negative");
+      }
     } else {
-      item.stock = item.stock - stock;
+      throw new ApiError(400, "Invalid operation");
     }
+    
     await item.save();
-    res.status(200).json({ message: "Quantity updated successfully" })
+    res.status(200).json({ message: "Quantity updated successfully", stock: item.stock });
     next();
   } catch (error) {
-    throw new ApiError(500, 'Bad Request.')
+    console.error("Error adjusting quantity:", error.message);
+    if (error instanceof ApiError) {
+      res.status(error.statusCode).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
-})
+});
+
 
 const showallItems = asyncHandler(async (req, res) => {
   try {

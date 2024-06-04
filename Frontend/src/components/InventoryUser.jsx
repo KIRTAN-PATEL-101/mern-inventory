@@ -348,11 +348,11 @@ const Inventory = () => {
                     overlayClassName="modal-overlay"
                 >
                     <div /* onClick={closeMapModal}*/>
-                        <button onClick={closeMapModal} className=" mt-2 mr-2 text-gray-600 hover:text-gray-900">
+                        <button onClick={() => closeMapModal(false)} className="absolute mt-2 mr-2 text-gray-600 hover:text-gray-900" style={{top:"46%", right:"28%"}}>
                                 <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
-                        </button>
+                            </button>
                     </div>
                     <TestMap handleLocationSelect={handleLocationSelect}/>
                 </Modal>

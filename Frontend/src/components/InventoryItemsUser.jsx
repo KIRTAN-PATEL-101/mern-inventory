@@ -11,6 +11,7 @@ const InventoryItemsUser = () => {
 
   const [checked, setChecked] = useState(false);
   const [showAdjustQuantityForm, setShowAdjustQuantityForm] = useState(false);
+  const [currentItemId, setCurrentItemId] = useState(null);
 
   const [showForm, setShowForm] = useState(false);
   const [showRemoveOptions, setShowRemoveOptions] = useState(false);
@@ -20,9 +21,9 @@ const InventoryItemsUser = () => {
     triggerAmount: "",
   });
   const [adjustQuantity, setAdjustQuantity] = useState({
-    // itemId: "",
-    adjustment: "",
-    type: "add", // or 'remove'
+    itemId: "",
+    stock: "",
+    operation: "", // or 'remove'
   });
   const [viewItem, setViewItem] = useState(null);
 
@@ -155,8 +156,62 @@ const InventoryItemsUser = () => {
       .catch((error) => {
         console.error("There was an error fetching the items!", error);
       });
-  }, [item.inventoryId]);
+  }, [
+    showForm,
+    showRemoveOptions,
+    setShowRemoveOptions,
+    setShowNotifyForm,
+    setItems,
+    item.inventoryId,
+    selectedItemId,
+  ]);
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const itemData = {
+  //     itemName: newItem.itemName,
+  //     itemId: newItem.itemId,
+  //     pricePerUnit: newItem.pricePerUnit,
+  //     stock: newItem.stock,
+  //     inventoryId: item.inventoryId,
+  //     category: newItem.category,
+  //     itemimage: newItem.itemimage,
+  //   };
+  //   try {
+  //     // Post the new item data to the backend
+  //     console.log("Item Data:", itemData);
+  //     const response = await axios.post(
+  //       "http://localhost:8000/items/add",
+  //       itemData,
+  //       { withCredentials: true }
+  //     );
+  //     //  console.log('done');
+  //     console.log("Response from backend:", response.data);
+
+  //     // Update the local state with the new item
+  //     setItems([...items, response.data]);
+
+  //     setNewItem({
+  //       itemName: "",
+  //       itemId: "",
+  //       pricePerUnit: "",
+  //       stock: "",
+  //       inventoryId: "",
+  //       category: "",
+  //       itemimage: null,
+  //     });
+  //     setShowForm(false);
+  //   } catch (error) {
+  //     console.error("Error posting data to backend:", error);
+  //   }
+  // };
+
+  //   const handleNotificationSubmit = (e) => {
+  //     e.preventDefault();
+  //     // Implement notification logic here
+  //     alert(`Notification set for ${notificationInfo.name}`);
+  //     setShowNotifyForm(false);
+  //   };
 
   const handleRemoveItem = () => {
     setItems(items.filter((item) => !selectedItemId.includes(item.itemId)));
@@ -206,7 +261,8 @@ const InventoryItemsUser = () => {
       });
   };
 
-  const handleAdjustQuantityClick = () => {
+  const handleAdjustQuantityClick = (itemId) => {
+    setCurrentItemId(itemId);
     setShowAdjustQuantityForm(!showAdjustQuantityForm);
     setShowForm(false);
     setShowRemoveOptions(false);
@@ -223,37 +279,32 @@ const InventoryItemsUser = () => {
 
   const handleAdjustQuantitySubmit = async (e) => {
     e.preventDefault();
-    console.log("Adjust Quantity:", adjustQuantity);
-    //Item id console.log _id
-    console.log("Items:", items);
-    //console.log("Item ID:", itemId);
-    // const formData = new FormData();
-    // formData.append("itemId", adjustQuantity.itemId);
-    // formData.append("Type", adjustQuantity.type);
-    // formData.append("adjustment", adjustQuantity.adjustment);
+    const data = { ...adjustQuantity, itemId: currentItemId };
+    console.log(data);
     try {
-      // const response = await axios.post(
-      //   "http://localhost:8000/items/adjustQuantity",
-      //   adjustQuantity,
-      //   { withCredentials: true }
-      // );
+      const response = await axios.post(
+        "http://localhost:8000/items/adjustqty",
+        data,
+        { withCredentials: true }
+      );
 
-      // console.log("Response from backend:", response.data);
-      // setItems((prevItems) =>
-      //   prevItems.map((item) =>
-      //     item.itemId === response.data.itemId ? response.data : item
-      //   )
-      // );
+      console.log("Response from backend:", response.data);
+      setItems((prevItems) =>
+        prevItems.map((item) =>
+          item._id === response.data._id ? response.data : item
+        )
+      );
 
       setAdjustQuantity({
         itemId: "",
         adjustment: "",
-        type: "add",
+        type: "",
       });
 
       setShowAdjustQuantityForm(false);
     } catch (error) {
       console.error("Error adjusting quantity:", error);
+
     }
   };
 
@@ -496,83 +547,10 @@ const InventoryItemsUser = () => {
                       <td className="px-4 py-2">
                         <button
                           className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
-                          onClick={handleAdjustQuantityClick}
+                          onClick={() => handleAdjustQuantityClick(item._id)}
                         >
-                          Change {item._id}
+                          Change
                         </button>
-                        {showAdjustQuantityForm && (
-                          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" style={{ margin: "0 0 0 20%" }}>
-                            <div className="bg-white p-4 rounded-lg shadow-lg" style={{ width: "40%" }}>
-                              <h2 className="text-xl font-bold mb-4">Adjust Quantity</h2>
-                              <form>
-                                {/* <div className="mb-4">
-                                  <label className="block mb-2">Item ID</label>
-                                  <input
-                                    type="text"
-                                    name="itemId"
-                                    value={adjustQuantity.itemId}
-                                    onChange={handleAdjustQuantityInputChange}
-                                    className="w-full px-4 py-2 border rounded"
-                                  />
-                                </div> */}
-                                <div className="mb-4">
-                                  <label className="block mb-2">Type</label>
-                                  <div className="flex justify-center items-center">
-                                    <label className="mr-4">
-                                      <input
-                                        type="radio"
-                                        name="type"
-                                        value="add"
-                                        checked={adjustQuantity.type === "add"}
-                                        onChange={handleAdjustQuantityInputChange}
-                                        className="mr-2"
-                                      />
-                                      Add
-                                    </label>
-                                    <label>
-                                      <input
-                                        type="radio"
-                                        name="type"
-                                        value="remove"
-                                        checked={adjustQuantity.type === "remove"}
-                                        onChange={handleAdjustQuantityInputChange}
-                                        className="mr-2"
-                                      />
-                                      Remove
-                                    </label>
-                                  </div>
-                                </div>
-                                <div className="mb-4">
-                                  <label className="block mb-2">Adjustment</label>
-                                  <input
-                                    type="number"
-                                    name="adjustment"
-                                    value={adjustQuantity.adjustment}
-                                    onChange={handleAdjustQuantityInputChange}
-                                    className="w-full px-4 py-2 border rounded border-solid"
-                                  />
-                                </div>
-
-                                <div className="flex justify-end">
-                                  <button
-                                    type="button"
-                                    className="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-700"
-                                    onClick={() => setShowAdjustQuantityForm(false)}
-                                  >
-                                    Cancel
-                                  </button>
-                                  <button
-                                    type="submit"
-                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-                                    onClick={handleAdjustQuantitySubmit}
-                                  >
-                                    Adjust
-                                  </button>
-                                </div>
-                              </form>
-                            </div>
-                          </div>
-                        )}
                       </td>
                       <td className="px-4 py-2">
                         <button
@@ -665,7 +643,79 @@ const InventoryItemsUser = () => {
                   ))}
                 </tbody>
               </table>
+              {showAdjustQuantityForm && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" style={{ margin: "0 0 0 20%" }}>
+                  <div className="bg-white p-4 rounded-lg shadow-lg" style={{ width: "40%" }}>
+                    <h2 className="text-xl font-bold mb-4">Adjust Quantity</h2>
+                    <form onSubmit={handleAdjustQuantitySubmit}>
+                      {/* <div className="mb-4">
+                        <label className="block mb-2">Item ID</label>
+                        <input
+                          type="text"
+                          name="itemId"
+                          value={adjustQuantity.itemId}
+                          onChange={handleAdjustQuantityInputChange}
+                          className="w-full px-4 py-2 border rounded"
+                        />
+                      </div> */}
+                      <div className="mb-4">
+                        <label className="block mb-2">Type</label>
+                        <div className="flex justify-center items-center">
+                          <label className="mr-4">
+                            <input
+                              type="radio"
+                              name="operation"
+                              value="add"
+                              checked={adjustQuantity.operation === "add"}
+                              onChange={handleAdjustQuantityInputChange}
+                              className="mr-2"
+                            />
+                            Add
+                          </label>
+                          <label>
+                            <input
+                              type="radio"
+                              name="operation"
+                              value="remove"
+                              checked={adjustQuantity.operation === "remove"}
+                              onChange={handleAdjustQuantityInputChange}
+                              className="mr-2"
+                            />
+                            Remove
+                          </label>
+                        </div>
+                      </div>
+                      <div className="mb-4">
+                        <label className="block mb-2">Adjustment</label>
+                        <input
+                          type="number"
+                          name="stock"
+                          value={adjustQuantity.stock}
+                          onChange={handleAdjustQuantityInputChange}
+                          className="w-full px-4 py-2 border rounded border-solid"
+                        />
+                      </div>
 
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          className="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-700"
+                          onClick={() => setShowAdjustQuantityForm(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+
+                        >
+                          Adjust
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
               {showRemoveOptions && (
                 <div className="flex justify-end mt-4">
                   <button
