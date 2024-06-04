@@ -44,21 +44,21 @@ const fetchInventoryByUserId = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, inventory, "Inventories retrieved."));
   } catch (error) {
     console.error("Error fetching the existing Inventory:", error);
- }
+  }
 });
 
 const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
   console.log("Request Done");
   try {
-    const {ID}  = req.body;
-    const inv=await Inventory.findById(ID).select();
-    if(!inv){
-        throw new ApiError(404, "Inventory not found");
+    const { ID } = req.body;
+    const inv = await Inventory.findById(ID).select();
+    if (!inv) {
+      throw new ApiError(404, "Inventory not found");
     }
     console.log(inv.inventoryId);
     try {
-    const items=await Item.find({ inventoryId: inv.inventoryId }).select();
-    // Check if items are found
+      const items = await Item.find({ inventoryId: inv.inventoryId }).select();
+      // Check if items are found
       if (!items.length) {
         return res
           .status(404)
@@ -111,5 +111,16 @@ const fetchCoordinatesofInventories = asyncHandler(async (req, res) => {
   }
 });
 
+const dashboardElements = asyncHandler(async (req, res) => {
+  const users = await User.find();
+  let userLength = users.length;
+  const items = await Item.find();
+  let itemsLength = items.length;
+  const inventories = await Inventory.find();
+  let inventoriesLength = inventories.length;
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { userLength, itemsLength, inventoriesLength }, "Dashboard data retrived."));
+})
 
-export { showAllInventories, showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories }
+export { showAllInventories, showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories, dashboardElements }

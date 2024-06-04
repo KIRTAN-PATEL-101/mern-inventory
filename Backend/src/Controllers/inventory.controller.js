@@ -4,6 +4,7 @@ import { ApiResponse } from "../Utils/ApiResponse.js";
 import { Inventory } from "../models/inventory.models.js";
 import { Item } from "../models/item.models.js";
 import validator from "validator";
+import {randomUUID} from 'node:crypto'
 
 const addInventory = asyncHandler(async (req, res) => {
   const { inventoryId,
@@ -26,6 +27,8 @@ const addInventory = asyncHandler(async (req, res) => {
   if (existingInventory) {
     throw new ApiResponse(409, "Inventory already exists.");
   }
+
+  randomUUID()
 
   // Validate mobile number
   if (!validator.isMobilePhone(mobileNo, "any")) {
