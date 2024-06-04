@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'boxicons/css/boxicons.min.css';
 import SidePanel from './SidePanel';
 import Header from './Header';
 import Order from './Order';
-import { useEffect } from 'react';
+import axios from 'axios';
+// import { useEffect } from 'react';
 
 const Dashboard = () => {
 
   const [statData, setStatData] = useState({});
 
   useEffect(() => {
+    console.log('useEffect');
     axios.get(
       'http://localhost:8000/superadmin/dashboard',
       { withCredentials: true }
