@@ -3,7 +3,6 @@ import 'boxicons/css/boxicons.min.css';
 import SidePanel from './SidePanel';
 import Header from './Header';
 import Order from './Order';
-import { useEffect } from 'react';
 
 const Dashboard = () => {
 

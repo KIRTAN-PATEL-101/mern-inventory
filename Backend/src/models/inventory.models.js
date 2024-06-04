@@ -51,16 +51,17 @@ const InventorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    latCoordinates:{
+    latCoordinates: {
       type: String,
       // required: true,
     },
-    longCoordinates:{
+    longCoordinates: {
       type: String,
       // required: true,
     },
   },
   {
+    versionKey: false,
     timestamps: true,
   }
 );
