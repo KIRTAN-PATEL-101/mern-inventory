@@ -23,7 +23,7 @@ const SidePanel = ({ children }) => {
   ];
 
   const onLogut = () => {
-    axios.get('http://localhost:8000/superAdmin/adminlogout', {withCredentials: true})
+    axios.get('http://localhost:8000/superadmin/adminlogout', {withCredentials: true})
     .then((response) => {
       console.log(response);
       navigate("/login");
