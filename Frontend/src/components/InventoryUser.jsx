@@ -161,7 +161,8 @@ const Inventory = () => {
                         </button>
                     </div>
                     {showForm && (
-                        <div className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ width: '600px', margin: '25% 0 0 0' }}>
+                        <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
+                            <div className="relative bg-gray-100 p-5 rounded shadow-lg w-full max-w-lg max-h-screen overflow-auto">
                             <button onClick={() => setShowForm(false)} className="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-900">
                                 <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -281,6 +282,8 @@ const Inventory = () => {
                                 </div>
                                 <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded font-bold hover:bg-blue-700">Submit</button>
                             </form>
+                            </div>
+                            
                         </div>
                     )}
                     <table className="table-auto w-full mt-4">
@@ -341,11 +344,15 @@ const Inventory = () => {
                     onAfterOpen={handleLocationSelect}
                     onRequestClose={closeMapModal}
                     contentLabel="Map Modal"
-                    className="modal-content flex justify-center items-center h-1/6"
+                    className="modal-content flex justify-center items-center h-1/6 z-51"
                     overlayClassName="modal-overlay"
                 >
-                    <div onClick={closeMapModal}>
-                        X
+                    <div /* onClick={closeMapModal}*/>
+                        <button onClick={closeMapModal} className=" mt-2 mr-2 text-gray-600 hover:text-gray-900">
+                                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                        </button>
                     </div>
                     <TestMap handleLocationSelect={handleLocationSelect}/>
                 </Modal>

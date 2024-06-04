@@ -207,9 +207,9 @@ const dashboardElement = asyncHandler(async (req, res) => {
     // let itemsCount = items.length;
     const items = await Item.find({ triggerAmount: { $exists: true, $ne: null }, userId:id }).select("itemName stock triggerAmount");
     const itemsTriggerCount = await Item.countDocuments({ triggerAmount: { $exists: true, $ne: null }, userId:id });
-    console.log("Inventory Count: ",inventoryCount);
-    console.log("Items Count: ",itemsCount);
-    console.log("Triggered Amounts: ",items);
+    // console.log("Inventory Count: ",inventoryCount);
+    // console.log("Items Count: ",itemsCount);
+    // console.log("Triggered Amounts: ",items);
   
     return res.status(200)
     .json(new ApiResponse(200,{inventoryCount,itemsCount,itemsTriggerCount,items},"Data fetched Successfully"))
