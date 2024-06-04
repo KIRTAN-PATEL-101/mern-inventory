@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { verifyJWT } from '../Middlewares/auth.middleware.js'
 import { checkAdmin } from '../Middlewares/checkAdmin.middleware.js';
-import { fetchCoordinatesofInventories, fetchInventoryByUserId, fetchItemsByInventoryId, showAllInventories, showAllUsers,dashboardElements } from '../Controllers/admin.controller.js';
+import { fetchCoordinatesofInventories, fetchInventoryByUserId, fetchItemsByInventoryId, showAllInventories, showAllUsers,dashboardElements, logoutAdmin } from '../Controllers/admin.controller.js';
 
 const router = Router();
 
@@ -12,5 +12,6 @@ router.route('/fetchinventory').post(verifyJWT, checkAdmin, fetchInventoryByUser
 router.route('/dashboard').get(verifyJWT, checkAdmin, dashboardElements);
 router.route('/fetchinventoryitems').post(verifyJWT, checkAdmin, fetchItemsByInventoryId);
 router.route('/fetchcoordinates').get(verifyJWT, checkAdmin, fetchCoordinatesofInventories);
+router.route('/adminlogout').get(verifyJWT, checkAdmin, logoutAdmin)
 
 export default router;

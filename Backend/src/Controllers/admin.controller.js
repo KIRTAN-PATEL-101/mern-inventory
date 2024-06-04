@@ -123,4 +123,27 @@ const dashboardElements = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { userLength, itemsLength, inventoriesLength }, "Dashboard data retrived."));
 })
 
-export { showAllInventories, showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories, dashboardElements }
+const logoutAdmin = asyncHandler(asyncHandler(async (req, res) => {
+  await User.findByIdAndUpdate(req.user._id,
+    {
+      $set: {
+        refreshToken: undefined
+      }
+    },
+    {
+      new: true
+    }
+  )
+  const options = {
+    httpOnly: true,
+    secured: true
+  }
+
+  return res
+    .status(200)
+    .clearCookie("AccessToken", options)
+    .clearCookie("RefreshToken", options)
+    .json(new ApiResponse(200, {}, "User Logged Out Successfully."))
+
+}))
+export { showAllInventories, showAllUsers, fetchInventoryByUserId, fetchItemsByInventoryId, showItemDetailsById, fetchCoordinatesofInventories, dashboardElements, logoutAdmin}
