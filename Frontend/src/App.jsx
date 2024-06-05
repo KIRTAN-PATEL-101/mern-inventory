@@ -26,6 +26,8 @@ import Test from "./components/Test";
 import UserDashboard from "./components/UserDashboard";
 import InventoryUser from "./components/InventoryUser";
 import InventoryItemsUser from "./components/InventoryItemsUser";
+import Landing from "./components/Landing";
+import NotFound from "./components/NotFound";
 
 const App = () => {
   return (
@@ -53,7 +55,7 @@ const App = () => {
             element={<InventoryItems />}
           />
           <Route path="/payment" element={<Payment />} />
-          <Route path="/" element={<h1>Hello</h1>} />
+          <Route path="/" element={<Landing />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
@@ -65,7 +67,7 @@ const App = () => {
           />
         
         <Route path="/test" element={<Test />} />
-        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

@@ -37,9 +37,6 @@ const Geolocation = () => {
     fetchMarkers();
   }, []);
 
-  useEffect(() => {
-    console.log("Markers updated:", markers);
-  }, [markers]);
 
   const handleActiveMarker = (marker) => {
     if (marker === activeMarker) {
