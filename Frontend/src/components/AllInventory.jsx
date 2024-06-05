@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import { useState,useEffect } from 'react';
 import SidePanel from './SidePanel';
 import Header from './Header';
 import { Link } from 'react-router-dom';
@@ -32,15 +32,15 @@ const InventoryComponent = () => {
     const [showRemoveOptions, setShowRemoveOptions] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState('');
 
-    const handleAddClick = () => {
-        setShowForm(!showForm);
-        setShowRemoveOptions(false);
-    };
+    // const handleAddClick = () => {
+    //     setShowForm(!showForm);
+    //     setShowRemoveOptions(false);
+    // };
 
-    const handleRemoveClick = () => {
-        setShowRemoveOptions(!showRemoveOptions);
-        setShowForm(false);
-    };
+    // const handleRemoveClick = () => {
+    //     setShowRemoveOptions(!showRemoveOptions);
+    //     setShowForm(false);
+    // };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
