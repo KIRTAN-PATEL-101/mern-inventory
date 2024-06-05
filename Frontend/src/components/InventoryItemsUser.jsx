@@ -53,7 +53,12 @@ const InventoryItemsUser = () => {
   };
 
   const handleNotifyClick = (itemId) => {
-    setShowNotifyForm(itemId);
+    console.log("Notify clicked for item:", itemId);
+    setShowNotifyForm(!showNotifyForm);
+    setCurrentItemId([itemId]);
+    setShowForm(false);
+    setShowRemoveOptions(false);
+
   };
 
   const handleInputChange = (e) => {
@@ -247,9 +252,11 @@ const InventoryItemsUser = () => {
       .post("http://localhost:8000/items/settrigger", {
         itemId: showNotifyForm,
         triggerAmount: notificationInfo.triggerAmount,
-        id: item._id,
+        id: currentItemId,
+        
       }, { withCredentials: true })
       .then((response) => {
+        console.log(id);
         console.log("Notification set successfully", response.data);
         setShowNotifyForm(null);
         alert("Message sent on Whatapp Successfully");
@@ -562,12 +569,13 @@ const InventoryItemsUser = () => {
                       </td>
                       <td className="px-4 py-2">
                         <button
-                          onClick={() => handleNotifyClick(item.itemId)}
+                          onClick={() => handleNotifyClick(item._id)}
+                          
                           className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white"
                         >
                           Notify Me
                         </button>
-                        {showNotifyForm === item.itemId && (
+                        {showNotifyForm && (
                           <div
                             className="bg-gray-100 p-5 rounded shadow-lg  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                             style={{ width: "600px", margin: "150px 0 0" }}
