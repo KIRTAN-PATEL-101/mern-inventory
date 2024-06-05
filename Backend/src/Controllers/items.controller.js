@@ -4,6 +4,7 @@ import { Item } from "../models/item.models.js";
 import { uploadOnCloudinary } from "../Utils/cloudinary.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import { Inventory } from '../models/inventory.models.js'
+import mongoose from "mongoose";
 
 const addItem = asyncHandler(async (req, res) => {
   try {
@@ -103,64 +104,42 @@ const itemDetails = asyncHandler(async (req, res) => {
 
 const addTriggeramount = asyncHandler(async (req, res, next) => {
   try {
-    const { itemId, triggerAmount,id } = req.body;
+    const {triggerAmount, id } = req.body;
     console.log(req.body);
-    const item = await Item.findOne({ itemId: itemId })
+    const item = await Item.findByIdAndUpdate(id, { triggerAmount });
     if (!item) {
-      throw new ApiError(400, "Item not found")
+      return res.status(404).json({ message: "Item not found" });
     }
-    item.triggerAmount = triggerAmount;
-    await item.save();
-    res.status(200).json({ message: "Trigger amount updated successfully" })
+    req.changedItem=[item]
+    res.status(200).json({ message: "Trigger amount updated successfully" });
     next();
   } catch (error) {
-    throw new ApiError(500, error)
+    res.status(500).json({ message: "Internal server error" });
   }
-})
+});
+
 
 const adjustQuantity = asyncHandler(async (req, res, next) => {
   try {
     const { itemId, stock, operation } = req.body;
-    console.log(itemId, stock, operation);
-    
-    if (!itemId || !stock || !operation) {
-      throw new ApiError(400, "Missing required fields");
-    }
-    
-    const item = await Item.findOne({ _id: itemId });
+    const item = await Item.findOne({ _id: itemId })
     if (!item) {
-      throw new ApiError(400, "Item not found");
+      throw new ApiError(400, "Item not found")
     }
-    
-    const stockValue = parseInt(stock, 10);
-    if (isNaN(stockValue)) {
-      throw new ApiError(400, "Invalid stock value");
-    }
-
+    const stockValue=parseInt(stock,10);
     if (operation === "add") {
       item.stock = item.stock + stockValue;
-    } else if (operation === "remove") {
-      item.stock = item.stock - stockValue;
-      if (item.stock < 0) {
-        throw new ApiError(400, "Stock cannot be negative");
-      }
     } else {
-      throw new ApiError(400, "Invalid operation");
+      item.stock = item.stock - stockValue;
     }
-    
     await item.save();
-    res.status(200).json({ message: "Quantity updated successfully", stock: item.stock });
+    req.changedItem=[item]
+    res.status(200).json({ message: "Quantity updated successfully" })
     next();
   } catch (error) {
-    console.error("Error adjusting quantity:", error.message);
-    if (error instanceof ApiError) {
-      res.status(error.statusCode).json({ message: error.message });
-    } else {
-      res.status(500).json({ message: "Internal Server Error" });
-    }
+    throw new ApiError(500, 'Bad Request.')
   }
-});
-
+})
 
 const showallItems = asyncHandler(async (req, res) => {
   try {
