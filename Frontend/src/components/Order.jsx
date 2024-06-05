@@ -5,8 +5,8 @@ const Order = () => {
     <div className="order flex-grow bg-white p-6 rounded-2xl">
       <div className="head flex items-center gap-4 mb-6">
         <h3 className="text-2xl font-semibold text-gray-800">Recent Orders</h3>
-        <i className='bx bx-search cursor-pointer text-gray-800'></i>
-        <i className='bx bx-filter cursor-pointer text-gray-800'></i>
+        {/* <i className='bx bx-search cursor-pointer text-gray-800'></i>
+        <i className='bx bx-filter cursor-pointer text-gray-800'></i> */}
       </div>
       <table className="w-full border-collapse">
         <thead>
