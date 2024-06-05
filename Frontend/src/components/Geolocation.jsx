@@ -1,42 +1,47 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import SidePanel from './SidePanel';
-import Header from './Header';
+import React, { useEffect, useState, Fragment } from "react";
+import SidePanel from "./SidePanel";
+import Header from "./Header";
 import {
   GoogleMap,
   InfoWindowF,
   MarkerF,
   useLoadScript,
 } from "@react-google-maps/api";
-import axios from 'axios';
+import axios from "axios";
 
 const Geolocation = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_MAP_API_KEY,
   });
 
-  const [markers, setMarkers] = useState([]); 
+  const [markers, setMarkers] = useState([]);
   const [activeMarker, setActiveMarker] = useState(null);
 
   useEffect(() => {
     const fetchMarkers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/superadmin/fetchcoordinates', { withCredentials: true });
+        const response = await axios.get(
+          "http://localhost:8000/superadmin/fetchcoordinates",
+          { withCredentials: true }
+        );
         console.log("Fetched data:", response.data); // Log the fetched data to check its structure
         // Transform the incoming data to fit the expected marker format
-        const formattedMarkers = response.data.map(marker => ({
+        const formattedMarkers = response.data.map((marker) => ({
           id: marker.id, // Assuming there is an `id` field in the data
           name: marker.inventoryName,
-          position: { lat: parseFloat(marker.latCoordinates), lng: parseFloat(marker.longCoordinates) }
+          position: {
+            lat: parseFloat(marker.latCoordinates),
+            lng: parseFloat(marker.longCoordinates),
+          },
         }));
         setMarkers(formattedMarkers);
       } catch (error) {
-        console.error('Error fetching markers data:', error);
+        console.error("Error fetching markers data:", error);
       }
     };
 
     fetchMarkers();
   }, []);
-
 
   const handleActiveMarker = (marker) => {
     if (marker === activeMarker) {
@@ -99,6 +104,6 @@ const Geolocation = () => {
         </div>
     </div>
   );
-}
+};
 
 export default Geolocation;
