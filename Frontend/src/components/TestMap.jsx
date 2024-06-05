@@ -23,7 +23,7 @@ const MapTest = ({handleLocationSelect}) => {
   return (
 
      <div style={{ height: "50%", width: "50%",justifyContent:"center",display:"flex" }}>
-      <div style={{height:'100vh',width:'100%',justifyContent:"center",display:"flex"}}> 
+      <div style={{height:'100vh',width:'100%',justifyContent:"center",display:"flex",zIndex:"50"}}> 
 
         {isLoaded ? (
           <GoogleMap
