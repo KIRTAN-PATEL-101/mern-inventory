@@ -110,6 +110,7 @@ const addTriggeramount = asyncHandler(async (req, res, next) => {
     if (!item) {
       return res.status(404).json({ message: "Item not found" });
     }
+    req.changedItem=[item]
     res.status(200).json({ message: "Trigger amount updated successfully" });
     next();
   } catch (error) {
@@ -132,6 +133,7 @@ const adjustQuantity = asyncHandler(async (req, res, next) => {
       item.stock = item.stock - stockValue;
     }
     await item.save();
+    req.changedItem=[item]
     res.status(200).json({ message: "Quantity updated successfully" })
     next();
   } catch (error) {
