@@ -83,10 +83,10 @@ const InventoryItemsUser = () => {
     formData.append("itemId", newItem.itemId);
     formData.append("pricePerUnit", newItem.pricePerUnit);
     formData.append("stock", newItem.stock);
-    formData.append("inventoryId", item.inventoryId);
+    formData.append("inventoryId", item._id);
     formData.append("category", newItem.category);
     formData.append("itemimage", newItem.itemimage);
-
+    console.log("Form Data:", formData);
     try {
       const response = await axios.post(
         "http://localhost:8000/items/add",
@@ -115,9 +115,9 @@ const InventoryItemsUser = () => {
       });
 
       // reload the items page
-      return window.location.reload();
+     return window.location.reload();
 
-      setShowForm(false);
+         setShowForm(false);
 
     } catch (error) {
       console.error("Error posting data to backend:", error);
@@ -253,10 +253,8 @@ const InventoryItemsUser = () => {
         itemId: showNotifyForm,
         triggerAmount: notificationInfo.triggerAmount,
         id: currentItemId,
-        
       }, { withCredentials: true })
       .then((response) => {
-        console.log(id);
         console.log("Notification set successfully", response.data);
         setShowNotifyForm(null);
         alert("Message sent on Whatapp Successfully");
