@@ -6,7 +6,7 @@ import {
   useLoadScript,
 } from "@react-google-maps/api";
 
-const MapTest = ({handleLocationSelect}) => {
+const MapTest = ({handleLocationSelect,setIsMapModalOpen}) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_MAP_API_KEY,
   });
@@ -19,11 +19,20 @@ const MapTest = ({handleLocationSelect}) => {
     console.log(loc);
     handleLocationSelect(loc);
   };
+  const closeMapModal = () => {
+    // setLocation(kirtan);
+    setIsMapModalOpen(false);
+};
 
   return (
 
      <div style={{ height: "50%", width: "50%",justifyContent:"center",display:"flex" }}>
-      <div style={{height:'100vh',width:'100%',justifyContent:"center",display:"flex",zIndex:"50"}}> 
+      <div style={{height:'100vh',width:'100%',justifyContent:"center",display:"flex",zIndex:"51"}}> 
+        <button onClick={closeMapModal} className="absolute mt-2 mr-2 text-black hover:text-gray-900 z-9999 cursor-pointer" style={{top:"36%", right:"28%"}}>
+          <svg className="h-6 w-6 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
 
         {isLoaded ? (
           <GoogleMap
