@@ -125,7 +125,7 @@ const Login = () => {
         .catch((error) => {
             console.log(error);
         })
-    })
+    }, [])
 
     return (
         <div className="flex w-full min-h-screen items-center justify-center" style={{ backgroundColor: "#f5f5f5", backgroundImage: `url(https://res.cloudinary.com/dnmxwrqvb/image/upload/v1716367992/lfrebmwhtyour2uctsuv.jpg)`, backgroundSize: "cover", backgroundPosition: 'center' }}>

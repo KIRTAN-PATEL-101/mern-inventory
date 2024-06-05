@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
                 const posts = response.data;
                 this.setState({ posts });
             });
-  })
+  }, [])
 
   return (
     <DataContext.Provider value={{ user, setUser }}>
