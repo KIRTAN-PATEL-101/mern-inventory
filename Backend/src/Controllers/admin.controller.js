@@ -57,7 +57,7 @@ const fetchItemsByInventoryId = asyncHandler(async (req, res) => {
     }
     console.log(inv.inventoryId);
     try {
-      const items = await Item.find({ inventoryId: inv.inventoryId }).select();
+      const items = await Item.find({ inventoryId: inv._id }).select();
       // Check if items are found
       if (!items.length) {
         return res
