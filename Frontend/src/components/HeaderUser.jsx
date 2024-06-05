@@ -21,7 +21,7 @@ const Header = () => {
                .catch((error) => {
                   console.log(error);
                });
-   })
+   }, [])
 
   return (
     <nav className="h-14 bg-gray-300 px-6 flex items-center gap-6 sticky top-0 z-10 justify-between" >
