@@ -167,7 +167,7 @@ const Login = () => {
                         <button type="submit" className="rounded-3xl font-bold text-sm text-white cursor-pointer" style={{ border: "none", outline: "none", padding: "12px 0", width: "180px", backgroundColor: "#3bb19b" }}>
                             Sign In
                         </button>
-                        {message && <p style={{ color: message.includes('successful') ? 'green' : 'red' }}>{message}</p>}
+                        {/* {message && <p style={{ color: message.includes('successful') ? 'green' : 'red' }}>{message}</p>} */}
                     </form>
                 </div>
                 <div className="flex flex-col items-center justify-center rounded-tr-lg rounded-br-lg" style={{ flex: 1, backgroundColor: "#3bb19b" }}>

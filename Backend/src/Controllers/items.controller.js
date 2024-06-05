@@ -151,16 +151,16 @@ const showallItems = asyncHandler(async (req, res) => {
     if (!items.length) {
       return res.status(400).json(new ApiResponse(400, null, "No items available"));
     }
-
+    
     const inventoryIds = items.map(item => item.inventoryId);
-
+    console.log("Inventory IDs: ",inventoryIds);
     // Fetch inventory details based on inventoryId
-    const inventories = await Inventory.find({ inventoryId: { $in: inventoryIds } });
-
+    const inventories = await Inventory.find({ _id: { $in: inventoryIds } });
+    console.log(inventories);
     // Create a map of inventoryId to inventory details for quick lookup
     const inventoryMap = {};
     inventories.forEach(inventory => {
-      inventoryMap[inventory.inventoryId] = inventory;
+      inventoryMap[inventory._id] = inventory;
     });
 
     // Map items to their corresponding inventory details
