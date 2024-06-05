@@ -107,8 +107,10 @@ const Login = () => {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:8000/users/details', { withCredentials: true })
+        setTimeout(() => {
+            axios.get('http://localhost:8000/users/details', { withCredentials: true })
         .then((response) => {
+            
             const data = response.data;
             console.log(data);
             if(data.success){
@@ -124,7 +126,8 @@ const Login = () => {
         })
         .catch((error) => {
             console.log(error);
-        })
+        });
+        }, 1500);
     }, [])
 
     return (
