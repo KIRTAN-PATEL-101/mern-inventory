@@ -36,7 +36,7 @@ const SidePanel = ({ children }) => {
   return (
     <div className="fixed top-0 left-0 w-72 h-full bg-gray-100 z-50 transition-all overflow-hidden scrollbar-hide">
       <NavLink to="/" className="brand flex pl-12 items-center h-14  text-2xl font-bold text-blue-500 bg-white sticky top-0">
-        <span className="p-1 align-middle"><img src='https://res.cloudinary.com/dgvslio7u/image/upload/v1717155610/znded9snmozjlqh2ezha.svg' className="justify-center" style={{height: "100px", width: "100px"}}></img></span>
+        <span className="p-1"><img src='https://res.cloudinary.com/dgwtgr6do/image/upload/v1717418735/ak191a7i0uaq5isra9h4.png' className="justify-center" style={{height:'75px',width:'110px'}}></img></span>
       </NavLink>
       <button onClick={toggle} className="md:hidden text-2xl text-gray-800 bg-white p-4 absolute top-0 right-0 mt-3 mr-3">
         <i class='bx bx-menu'></i>
