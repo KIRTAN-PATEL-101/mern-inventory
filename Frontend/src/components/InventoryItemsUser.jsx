@@ -300,11 +300,11 @@ const InventoryItemsUser = () => {
         adjustment: "",
         type: "",
       });
-
+      window.location.reload();
+      
       setShowAdjustQuantityForm(false);
     } catch (error) {
       console.error("Error adjusting quantity:", error);
-
     }
   };
 
