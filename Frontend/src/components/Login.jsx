@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from "js-cookie";
 import axios from 'axios';
-import {toast, ToastContainer, Bounce} from 'react-toastify';
+import { toast, ToastContainer, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -29,7 +29,7 @@ const Login = () => {
             [name]: value
         });
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = validate();
@@ -44,41 +44,44 @@ const Login = () => {
                     body: JSON.stringify(formData),
                 });
 
-                // const response = await toast.promise(
-                //     fetch('http://localhost:8000/users/login', {
-                //         method: 'POST',
-                //         headers: {
-                //             'Content-Type': 'application/json',
-                //         },
-                //         credentials: 'include',
-                //         body: JSON.stringify(formData),
-                //     }),
-                //     {
-                //       pending: 'logging in... 🕒',
-                //       success: 'Promise resolved 👌',
-                //       error: 'Promise rejected 🤯'
-                //     }
-                // );
-                // console.log(response)
-
                 if (response.ok) {
                     const result = await response.json();
                     setMessage('Login successful!');
+                    toast.success('Login successful!', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });
                     console.log(result.data.user);
                     if(result.data.user.role === 'admin'){
                         navigate("/superAdmin/dashboard");
-                    }
-                    else{
+                    } else {
                         navigate("/dashboard");
                     }
-
                 } else {
                     const errorResult = await response.json();
-                    setMessage(`An error occurred: ${errorResult.message}`)
+                    setMessage(`An error occurred: ${errorResult.message}`);
+                    toast.error(`${errorResult.message}`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });
                 }
             } catch (error) {
                 setMessage(`An error occurred: ${error.message}`);
-                toast(error.message , {
+                toast.error(`An error occurred: ${error.message}`, {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -88,11 +91,11 @@ const Login = () => {
                     progress: undefined,
                     theme: "light",
                     transition: Bounce,
-                    });
+                });
             }
         } else {
             setErrors(newErrors);
-            toast(JSON.stringify(newErrors) , {
+            toast.error(JSON.stringify(newErrors), {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -102,33 +105,28 @@ const Login = () => {
                 progress: undefined,
                 theme: "light",
                 transition: Bounce,
-                });
+            });
         }
     };
 
     useEffect(() => {
-        setTimeout(() => {
-            axios.get('http://localhost:8000/users/details', { withCredentials: true })
-        .then((response) => {
-            
-            const data = response.data;
-            console.log(data);
-            if(data.success){
-                console.log(data.data.role);
-                if(data.data.role === 'admin'){
-                    navigate("/superAdmin/dashboard");
+        axios.get('http://localhost:8000/users/details', { withCredentials: true })
+            .then((response) => {
+                const data = response.data;
+                console.log(data);
+                if(data.success){
+                    console.log(data.data.role);
+                    if(data.data.role === 'admin'){
+                        navigate("/superAdmin/dashboard");
+                    } else {
+                        navigate("/dashboard");
+                    }
                 }
-                else{
-                    navigate("/dashboard");
-                }
-            }
-        
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-        }, 1500);
-    }, [])
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [navigate]);
 
     return (
         <div className="flex w-full min-h-screen items-center justify-center" style={{ backgroundColor: "#f5f5f5", backgroundImage: `url(https://res.cloudinary.com/dnmxwrqvb/image/upload/v1716367992/lfrebmwhtyour2uctsuv.jpg)`, backgroundSize: "cover", backgroundPosition: 'center' }}>
@@ -141,7 +139,7 @@ const Login = () => {
                                 width={'177px'}
                                 src='https://res.cloudinary.com/dgvslio7u/image/upload/v1717157804/b15f2kqi7qi2hxx54e6i.png'
                                 style={{opacity:'70'}}
-                                />
+                            />
                         </div>
                         <h1 className="text-4xl mt-0 m-5">Login to Your Account</h1>
                         <input
@@ -182,17 +180,17 @@ const Login = () => {
                 </div>
             </div>
             <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-/>
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     );
 }
