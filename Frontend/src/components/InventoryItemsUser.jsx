@@ -259,11 +259,11 @@ const InventoryItemsUser = () => {
         console.log(id);
         console.log("Notification set successfully", response.data);
         setShowNotifyForm(null);
-        alert("Message sent on Whatapp Successfully");
+        // alert("Message sent on Whatapp Successfully");
       })
       .catch((error) => {
         console.error("Error setting notification", error);
-        alert("Message has not been sent on Whatapp");
+        // alert("Message has not been sent on Whatapp");
         setShowNotifyForm(null);
       });
   };

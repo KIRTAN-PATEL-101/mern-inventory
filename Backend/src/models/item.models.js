@@ -30,7 +30,8 @@ const itemSchema = new mongoose.Schema({
     type: Number,
   },
   inventoryId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"Inventory",
     required: true,
   },
   category: {
