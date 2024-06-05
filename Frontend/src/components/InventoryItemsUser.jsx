@@ -147,7 +147,7 @@ const InventoryItemsUser = () => {
     axios
       .post(
         "http://localhost:8000/items/inventoryItems",
-        { inventoryId: item.inventoryId },
+        { inventoryId: item._id },
         { withCredentials: true }
       )
       .then((response) => {
