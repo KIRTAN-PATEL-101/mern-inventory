@@ -102,6 +102,7 @@
               <table className="min-w-full bg-white text-center">
                 <thead>
                   <tr>
+                  <th className="py-2 px-4 border-b">Inventory</th>
                     <th className="py-2 px-4 border-b">Item</th>
                     <th className="py-2 px-4 border-b">Stock</th>
                     <th className="py-2 px-4 border-b">Trigger Amount</th>
@@ -110,6 +111,7 @@
                 <tbody>
                   {items.map(item => (
                     <tr key={item.id} onClick={() => handleItemClick(item)}>
+                      <td className="py-2 px-4 border-b">-</td>
                       <td className="py-2 px-4 border-b">{item.itemName}</td>
                       <td className="py-2 px-4 border-b">{item.stock}</td>
                       <td className="py-2 px-4 border-b">{item.triggerAmount}</td>
