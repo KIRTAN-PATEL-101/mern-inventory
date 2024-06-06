@@ -356,7 +356,7 @@
                                     </svg>
                                 </button> */}
                         </div>
-                        <TestMap handleLocationSelect={handleLocationSelect} setIsMapModalOpen={setIsMapModalOpen}/>
+                        <TestMap handleLocationSelect={handleLocationSelect} setIsMapModalOpen={setIsMapModalOpen} location={location}/>
                     </Modal> 
                 </section>
             </div>

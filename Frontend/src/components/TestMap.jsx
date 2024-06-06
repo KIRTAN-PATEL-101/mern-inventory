@@ -1,12 +1,12 @@
 // MapTest.jsx
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import {
   GoogleMap,
   MarkerF,
   useLoadScript,
 } from "@react-google-maps/api";
 
-const MapTest = ({handleLocationSelect,setIsMapModalOpen}) => {
+const MapTest = ({handleLocationSelect,setIsMapModalOpen, location}) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_MAP_API_KEY,
   });
@@ -23,6 +23,12 @@ const MapTest = ({handleLocationSelect,setIsMapModalOpen}) => {
     // setLocation(kirtan);
     setIsMapModalOpen(false);
 };
+
+useEffect(() => {
+  if(location){
+    setMarker(location);
+  }
+}, [])
 
   return (
 
