@@ -140,13 +140,12 @@
             // handleInputChange(0);
             setLocation(loc);
         };
-
         return (
-            <div className="flex">
+            <div className={isMapModalOpen ? 'fixed w-full ' : '' + 'flex'}>
                 <SidePanelUser />
                 <section id="content" className="relative w-full ml-72 transition-all">
                     <HeaderUser />
-                    <div id="Item-list" className="text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4">
+                    <div id="Item-list" className='text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4'>
                         <h1 className="text-2xl font-bold mb-4">Inventory</h1>
                         <div className="flex justify-end mb-4">
                             <button
