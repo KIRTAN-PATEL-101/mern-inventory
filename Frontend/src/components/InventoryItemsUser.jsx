@@ -272,7 +272,12 @@ const InventoryItemsUser = () => {
     const item = items.find((item) => item._id === itemId);
     setCurrentItemId(itemId);
     setCurrentQuantity(item.stock);
-    console.log("Adjust clicked for item:", item.stock);
+    setMessage("");
+    setAdjustQuantity({ // Reset the form fields
+     // itemId: "",
+      stock: "",
+      operation: "",
+    });
     setShowAdjustQuantityForm(!showAdjustQuantityForm);
     setShowForm(false);
     setShowRemoveOptions(false);
@@ -312,7 +317,7 @@ const InventoryItemsUser = () => {
       );
 
       setAdjustQuantity({
-        itemId: "",
+        // itemId: "",
         adjustment: "",
         type: "",
       });
