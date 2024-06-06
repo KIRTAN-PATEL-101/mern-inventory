@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, validateuser, logoutUser, refreshAccessToken, userDetail,dashboardElement } from "../Controllers/user.controller.js";
+import { registerUser, validateuser, logoutUser, refreshAccessToken, userDetail,dashboardElement, registerAdmin } from "../Controllers/user.controller.js";
 import { upload } from "../Middlewares/multer.middleware.js";
 import { verifyJWT } from "../Middlewares/auth.middleware.js";
 
@@ -20,5 +20,14 @@ router.route('/refresh-token').get(refreshAccessToken)
 router.route('/dashboard').get(verifyJWT,dashboardElement)
 router.route('/details').get(verifyJWT, userDetail)
 
+router.route("/registeradmin").post(
+  upload.fields([
+    {
+      name: "profilepic",
+      maxCount: 1,
+    },
+  ]),
+  registerAdmin
+);
 
 export default router;
