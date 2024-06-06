@@ -219,5 +219,61 @@ const dashboardElement = asyncHandler(async (req, res) => {
     .json(new ApiResponse(500,null,error))
   }
 })
+const registerAdmin = asyncHandler(async (req, res) => {
+  const { userName, email, password, mobileNo, role } = req.body;
 
-export { registerUser, validateuser, logoutUser, refreshAccessToken, userDetail,dashboardElement};
+  // Basic field validation
+  if (!userName || !email || !password || !mobileNo || !role) {
+    throw new ApiError(400, "All fields are required (userName, email, password, mobileNo, role)");
+  }
+
+  // Validate email
+  if (!validator.isEmail(email)) {
+    throw new ApiError(400, "Invalid email format");
+  }
+
+  // Validate mobile number
+  if (!validator.isMobilePhone(mobileNo, "any")) {
+    throw new ApiError(400, "Invalid mobile number format");
+  }
+
+  // Check for existing user by username or email
+  const existingUser = await User.findOne({
+    $or: [{ userName: userName.toLowerCase() }, { email: email }]
+  });
+  if (existingUser) {
+    const field = existingUser.userName === userName.toLowerCase() ? "username" : "email";
+    // throw new ApiError(409, User with this ${field} already exists.);
+    return res.status(409).json(new ApiResponse(409, null, `User with this ${field} already exists.`));
+  }
+
+  // Handle profile picture upload
+  const profilePicLocalPath = req.files?.profilepic?.[0]?.path || null;
+  let profileUrl = null;
+  if (profilePicLocalPath) {
+    try {
+      profileUrl = await uploadOnCloudinary(profilePicLocalPath);
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+      throw new ApiError(500, "Failed to upload profile picture.");
+    }
+  }
+
+  // Create user
+  const user = await User.create({
+    userName: userName.toLowerCase(),
+    email: email,
+    password: password,
+    mobileNo: mobileNo,
+    Imageurl: profileUrl,
+    role : role,
+  });
+
+  const createdUser = await User.findById(user._id).select("-password -refreshToken");
+  if (!createdUser) {
+    throw new ApiError(500, "Something went wrong while creating the user.");
+  }
+  res.status(201).json(new ApiResponse(201, createdUser, "User Registered Successfully."));
+});
+
+export { registerUser, validateuser, logoutUser, refreshAccessToken, userDetail,dashboardElement, registerAdmin};

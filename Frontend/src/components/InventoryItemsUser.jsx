@@ -12,6 +12,8 @@ const InventoryItemsUser = () => {
   const [checked, setChecked] = useState(false);
   const [showAdjustQuantityForm, setShowAdjustQuantityForm] = useState(false);
   const [currentItemId, setCurrentItemId] = useState(null);
+  const [currentQuantity, setCurrentQuantity] = useState(0);
+  const [message, setMessage] = useState('');
 
   const [showForm, setShowForm] = useState(false);
   const [showRemoveOptions, setShowRemoveOptions] = useState(false);
@@ -267,7 +269,15 @@ const InventoryItemsUser = () => {
   };
 
   const handleAdjustQuantityClick = (itemId) => {
+    const item = items.find((item) => item._id === itemId);
     setCurrentItemId(itemId);
+    setCurrentQuantity(item.stock);
+    setMessage("");
+    setAdjustQuantity({ // Reset the form fields
+     // itemId: "",
+      stock: "",
+      operation: "",
+    });
     setShowAdjustQuantityForm(!showAdjustQuantityForm);
     setShowForm(false);
     setShowRemoveOptions(false);
@@ -286,6 +296,12 @@ const InventoryItemsUser = () => {
     e.preventDefault();
     const data = { ...adjustQuantity, itemId: currentItemId };
     console.log(data);
+    if (data.operation === "remove") {
+      if (data.stock > currentQuantity) {
+        setMessage("Cannot remove more than available quantity");
+        return;
+      }
+    }
     try {
       const response = await axios.post(
         "http://localhost:8000/items/adjustqty",
@@ -301,7 +317,7 @@ const InventoryItemsUser = () => {
       );
 
       setAdjustQuantity({
-        itemId: "",
+        // itemId: "",
         adjustment: "",
         type: "",
       });
@@ -349,11 +365,9 @@ const InventoryItemsUser = () => {
                 </button>
               </div>
               {showForm && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                  <div
-                    className="bg-gray-100 p-5 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                    style={{ width: "600px", margin: "25px 0 0 20px" }}
-                  >
+                <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
+                <div className="relative bg-gray-100 p-5 rounded shadow-lg w-full max-w-lg max-h-screen overflow-auto">
+                
                     <form onSubmit={handleSubmit}>
                       <button onClick={() => setShowForm(false)} className="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-900">
                         <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -378,7 +392,7 @@ const InventoryItemsUser = () => {
                           required
                         />
                       </div>
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           htmlFor="itemld"
                           className="block font-bold text-gray-700 mb-2"
@@ -395,7 +409,7 @@ const InventoryItemsUser = () => {
                           className="w-full p-2 border border-gray-300 rounded"
                           required
                         />
-                      </div>
+                      </div> */}
                       <div className="mb-4">
                         <label
                           htmlFor="pricePerUnit"
@@ -653,6 +667,7 @@ const InventoryItemsUser = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" style={{ margin: "0 0 0 20%" }}>
                   <div className="bg-white p-4 rounded-lg shadow-lg" style={{ width: "40%" }}>
                     <h2 className="text-xl font-bold mb-4">Adjust Quantity</h2>
+                    <h2 className="text-xl  mb-4">Current Quantity: {currentQuantity}</h2>
                     <form onSubmit={handleAdjustQuantitySubmit}>
                       {/* <div className="mb-4">
                         <label className="block mb-2">Item ID</label>
@@ -701,7 +716,7 @@ const InventoryItemsUser = () => {
                           className="w-full px-4 py-2 border rounded border-solid"
                         />
                       </div>
-
+                      {message && <p style={{ color: message.includes('successful') ? 'green' : 'red' }}>{message}</p>}
                       <div className="flex justify-end">
                         <button
                           type="button"

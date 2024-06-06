@@ -126,7 +126,7 @@ const deleteInventory = asyncHandler(async (req, res) => {
   const { inventoryId } = req.params;
   const UserID = req.user._id;
   const existingInventory = await Inventory.findOne({
-    inventoryId: inventoryId,
+    _id: inventoryId,
     UserID: UserID,
   });
   console.log(inventoryId, UserID);
@@ -141,7 +141,7 @@ const deleteInventory = asyncHandler(async (req, res) => {
 
     await Item.deleteMany({ inventoryId: inventoryId });
 
-    await Inventory.deleteOne({ inventoryId: inventoryId });
+    await Inventory.deleteOne({ _id: inventoryId });
 
     return res
       .status(200)

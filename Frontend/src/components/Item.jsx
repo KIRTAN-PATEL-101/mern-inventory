@@ -90,7 +90,7 @@ function Item() {
   //   setShowRemoveOptions(false);
   // };
 
-  const [itemList, setitemList] = useState([]);
+  //const [itemList, setitemList] = useState([]);
   useEffect(() => {
 
     axios.get('http://localhost:8000/items/showall', { withCredentials: true })

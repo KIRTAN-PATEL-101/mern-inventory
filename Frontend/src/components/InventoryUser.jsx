@@ -65,7 +65,7 @@
             console.log('location', location);
             const inventoryData = {
                 inventoryName: newItem.inventoryName,
-                inventoryId: newItem.inventoryId,
+                // inventoryId: newItem.inventoryId,
                 address: newItem.address,
                 country: newItem.country,
                 mobileNo: newItem.mobileNo,
@@ -85,7 +85,7 @@
 
                 setNewItem({
                     inventoryName: '',
-                    inventoryId: '',
+                    // inventoryId: '',
                     address: '',
                     country: '',
                     mobileNo: '',
@@ -93,6 +93,7 @@
                     category: '',
                     location: null,
                 });
+                window.location.reload();
                 setShowForm(false);
             } catch (error) {
                 console.error('Error posting data to backend:', error);
@@ -101,6 +102,7 @@
 
         const handleRemoveItem = async () => {
             try {
+                console.log('Removing inventory with ID:', selectedItemId);
                 const response = await axios.delete(`http://localhost:8000/inventory/delete/${selectedItemId}`, { withCredentials: true });
                 console.log('Response from backend:', response.data);
 
@@ -109,6 +111,7 @@
                 // Clear the selected item ID and hide remove options
                 setSelectedItemId('');
                 setShowRemoveOptions(false);
+                window.location.reload();
             } catch (error) {
                 console.error('Error deleting item from backend:', error);
                 // Handle error (optional)
@@ -134,17 +137,15 @@
 
         const handleLocationSelect = async (loc) => {
             console.log('Location selected:', loc);
-            kirtan = loc
-            console.log('Location selected:', loc);
-            console.log(kirtan);
+            // handleInputChange(0);
+            setLocation(loc);
         };
-
         return (
-            <div className="flex">
+            <div className={isMapModalOpen ? 'fixed w-full ' : '' + 'flex'}>
                 <SidePanelUser />
                 <section id="content" className="relative w-full ml-72 transition-all">
                     <HeaderUser />
-                    <div id="Item-list" className="text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4">
+                    <div id="Item-list" className='text-center p-4 bg-white rounded-lg shadow-lg overflow-auto mx-4 my-4'>
                         <h1 className="text-2xl font-bold mb-4">Inventory</h1>
                         <div className="flex justify-end mb-4">
                             <button
@@ -183,7 +184,7 @@
                                             required
                                         />
                                     </div>
-                                    <div className="mb-4">
+                                    {/* <div className="mb-4">
                                         <label htmlFor="inventoryId" className="block font-bold text-gray-700 mb-2">ID</label>
                                         <input
                                             type="text"
@@ -195,7 +196,7 @@
                                             className="w-full p-2 border border-gray-300 rounded"
                                             required
                                         />
-                                    </div>
+                                    </div> */}
                                     <div className="mb-4">
                                         <label htmlFor="managerName" className="block font-bold text-gray-700 mb-2">Manager Name</label>
                                         <input
@@ -289,8 +290,8 @@
                         <table className="table-auto w-full mt-4">
                             <thead className="bg-blue-500 text-white">
                                 <tr className="text-center">
+                                    <th className="p-2">Sr No</th>
                                     <th className="p-2">Name</th>
-                                    <th className="p-2">ID</th>
                                     <th className="p-2">Manager Name</th>
                                     <th className="p-2">Category</th>
                                     <th className="p-2">Address</th>
@@ -302,14 +303,14 @@
                             <tbody>
                                 {inventoryItems.map((item, index) => (
                                     <tr className={`text-center ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200`} key={item.inventoryId}>
+                                        <td className="p-2">{index +1 }</td>
                                         <td className="p-2">{item.inventoryName}</td>
-                                        <td className="p-2">{item.inventoryId}</td>
                                         <td className="p-2">{item.ManagerName}</td>
                                         <td className="p-2">{item.category}</td>
                                         <td className="p-2">{item.address}</td>
                                         <td className="p-2">{formatDate(item.createdAt)}</td>
                                         <td className="p-2">
-                                            <Link to={`/inventory/${item.inventoryId}`} state={{ item }} className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
+                                            <Link to={`/inventory/${index+1}`} state={{ item }} className="bg-transparent border border-blue-500 text-blue-500 px-2 py-1 rounded hover:bg-blue-500 hover:text-white">
                                                 View
                                             </Link>
                                         </td>
@@ -319,7 +320,7 @@
                                                     type="radio"
                                                     name="removeItem"
                                                     value={item.inventoryId}
-                                                    onChange={() => setSelectedItemId(item.inventoryId)}
+                                                    onChange={() => setSelectedItemId(item._id)}
                                                 />
                                             </td>
                                         )}
@@ -329,7 +330,7 @@
                         </table>
                         {showRemoveOptions && (
                             <div className="flex justify-end mt-4">
-                                <button
+                                <button 
                                     className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
                                     onClick={handleRemoveItem}
                                     disabled={!selectedItemId}
@@ -348,13 +349,13 @@
                         overlayClassName="modal-overlay"
                     >
                         <div /* onClick={closeMapModal}*/>
-                            {/* <button onClick={closeMapModal} className="absolute mt-2 mr-2 text-gray-600 hover:text-gray-900 z-51 cursor-pointer" style={{top:"46%", right:"28%"}}>
+                            {/* <button onClick={closeMapModal} className="absolute mt-2 mr-2 text-gray-600 hover:text-gray-900 z-51 cursor-pointer" style={{top:"50%", left:"28%"}}>
                                     <svg className="h-6 w-6 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button> */}
                         </div>
-                        <TestMap handleLocationSelect={handleLocationSelect} setIsMapModalOpen={setIsMapModalOpen}/>
+                        <TestMap handleLocationSelect={handleLocationSelect} setIsMapModalOpen={setIsMapModalOpen} location={location}/>
                     </Modal> 
                 </section>
             </div>

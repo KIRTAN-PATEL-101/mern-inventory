@@ -1,12 +1,12 @@
 // MapTest.jsx
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import {
   GoogleMap,
   MarkerF,
   useLoadScript,
 } from "@react-google-maps/api";
 
-const MapTest = ({handleLocationSelect,setIsMapModalOpen}) => {
+const MapTest = ({handleLocationSelect,setIsMapModalOpen, location}) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_MAP_API_KEY,
   });
@@ -24,17 +24,25 @@ const MapTest = ({handleLocationSelect,setIsMapModalOpen}) => {
     setIsMapModalOpen(false);
 };
 
+useEffect(() => {
+  if(location){
+    setMarker(location);
+  }
+}, [])
+
   return (
 
      <div style={{ height: "50%", width: "50%",justifyContent:"center",display:"flex" }}>
-      <div style={{height:'100vh',width:'100%',justifyContent:"center",display:"flex",zIndex:"51"}}> 
-        <button onClick={closeMapModal} className="absolute mt-2 mr-2 text-black hover:text-gray-900 z-9999 cursor-pointer" style={{top:"36%", right:"28%"}}>
+      <div style={{height:'100vh',width:'100%',justifyContent:"center",display:"flex",zIndex:"51"}} className='flex-col'> 
+        <div>
+        <button onClick={closeMapModal} className="absolute mt-2 mr-2 text-white bg-red-500 hover:text-gray-900 z-9999 cursor-pointer" style={{top:"20%", right:"33%"}}>
           <svg className="h-6 w-6 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
+        </div>
 
-        {isLoaded ? (
+          {isLoaded ? (
           <GoogleMap
             center={{ lat: -1.8312, lng: -78.1834 }}
             zoom={7}

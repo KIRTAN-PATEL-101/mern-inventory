@@ -59,47 +59,49 @@ const Geolocation = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <Header />
-      <div style={{ display: "flex", flex: 1 }}>
-        <div style={{ width: "288px", overflow: "auto" }}>
-          <SidePanel />
-        </div>
-        <Fragment>
-          <div className="container">
-            <div style={{ height: "100vh", width: "100%" }}>
-              {isLoaded ? (
-                <GoogleMap
-                  center={{ lat: -1.8312, lng: -78.1834 }}
-                  zoom={7}
-                  onClick={(e) => handleMapClick(e)}
-                  mapContainerStyle={{ width: "100%", height: "100vh" }}
-                >
-                  {markers.map(({ id, name, position }) => (
-                    <MarkerF
-                      key={id}
-                      position={position}
-                      onClick={() => handleActiveMarker(id)}
-                      icon={{
-                        url: "https://res.cloudinary.com/deyfwd4ge/image/upload/v1716969589/final_marker_image_etqkm4.png",
-                        scaledSize: { width: 100, height: 100 },
-                      }}
-                    >
-                      {activeMarker === id ? (
-                        <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                          <div>
-                            <p>{name}</p>
-                          </div>
-                        </InfoWindowF>
-                      ) : null}
-                    </MarkerF>
-                  ))}
-                </GoogleMap>
-              ) : null}
+    <div className='flex flex-col justify-center '>
+       <SidePanel />
+     
+     
+      <div className='flex flex-col justify-center'>
+        <Header />
+       </div>
+        <div style={{ display: 'flex' }}>
+          <Fragment>
+            <div className="container">
+              <div style={{ height: "100%", width: "100%" }}>
+                {isLoaded ? (
+                  <GoogleMap
+                    center={{ lat: -1.8312, lng: -78.1834 }}
+                    zoom={7}
+                    onClick={(e) => handleMapClick(e)}
+                    mapContainerStyle={{ width: "100%", height: "100vh" }}
+                  >
+                    {markers.map(({ id, name, position }) => (
+                      <MarkerF
+                        key={id}
+                        position={position}
+                        onClick={() => handleActiveMarker(id)}
+                        icon={{
+                          url: "https://res.cloudinary.com/deyfwd4ge/image/upload/v1716969589/final_marker_image_etqkm4.png",
+                          scaledSize: { width: 100, height: 100 }
+                        }}
+                      >
+                        {activeMarker === id ? (
+                          <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                            <div>
+                              <p>{name}</p>
+                            </div>
+                          </InfoWindowF>
+                        ) : null}
+                      </MarkerF>
+                    ))}
+                  </GoogleMap>
+                ) : null}
+              </div>
             </div>
-          </div>
-        </Fragment>
-      </div>
+          </Fragment>
+        </div>
     </div>
   );
 };
