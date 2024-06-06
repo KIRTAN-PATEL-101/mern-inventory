@@ -111,7 +111,7 @@
                 <tbody>
                   {items.map(item => (
                     <tr key={item.id} onClick={() => handleItemClick(item)}>
-                      <td className="py-2 px-4 border-b">-</td>
+                      <td className="py-2 px-4 border-b">{item.inventoryId.inventoryName}</td>
                       <td className="py-2 px-4 border-b">{item.itemName}</td>
                       <td className="py-2 px-4 border-b">{item.stock}</td>
                       <td className="py-2 px-4 border-b">{item.triggerAmount}</td>
