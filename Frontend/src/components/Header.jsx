@@ -81,7 +81,7 @@ const Header = () => {
       formDataToSend.append('profilepic', formData.profilepic);
       console.log(formDataToSend);
       try {
-        const response = await fetch('http://localhost:8000/users/register', {  // Ensure the correct endpoint is used
+        const response = await fetch('http://localhost:8000/users/registeradmin', {  // Ensure the correct endpoint is used
           method: 'POST',
           body: formDataToSend,
         });

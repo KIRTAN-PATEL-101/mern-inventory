@@ -12,6 +12,8 @@ const InventoryItemsUser = () => {
   const [checked, setChecked] = useState(false);
   const [showAdjustQuantityForm, setShowAdjustQuantityForm] = useState(false);
   const [currentItemId, setCurrentItemId] = useState(null);
+  const [currentQuantity, setCurrentQuantity] = useState(0);
+  const [message, setMessage] = useState('');
 
   const [showForm, setShowForm] = useState(false);
   const [showRemoveOptions, setShowRemoveOptions] = useState(false);
@@ -267,7 +269,10 @@ const InventoryItemsUser = () => {
   };
 
   const handleAdjustQuantityClick = (itemId) => {
+    const item = items.find((item) => item._id === itemId);
     setCurrentItemId(itemId);
+    setCurrentQuantity(item.stock);
+    console.log("Adjust clicked for item:", item.stock);
     setShowAdjustQuantityForm(!showAdjustQuantityForm);
     setShowForm(false);
     setShowRemoveOptions(false);
@@ -286,6 +291,12 @@ const InventoryItemsUser = () => {
     e.preventDefault();
     const data = { ...adjustQuantity, itemId: currentItemId };
     console.log(data);
+    if (data.operation === "remove") {
+      if (data.stock > currentQuantity) {
+        setMessage("Cannot remove more than available quantity");
+        return;
+      }
+    }
     try {
       const response = await axios.post(
         "http://localhost:8000/items/adjustqty",
@@ -651,6 +662,7 @@ const InventoryItemsUser = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" style={{ margin: "0 0 0 20%" }}>
                   <div className="bg-white p-4 rounded-lg shadow-lg" style={{ width: "40%" }}>
                     <h2 className="text-xl font-bold mb-4">Adjust Quantity</h2>
+                    <h2 className="text-xl  mb-4">Current Quantity: {currentQuantity}</h2>
                     <form onSubmit={handleAdjustQuantitySubmit}>
                       {/* <div className="mb-4">
                         <label className="block mb-2">Item ID</label>
@@ -699,7 +711,7 @@ const InventoryItemsUser = () => {
                           className="w-full px-4 py-2 border rounded border-solid"
                         />
                       </div>
-
+                      {message && <p style={{ color: message.includes('successful') ? 'green' : 'red' }}>{message}</p>}
                       <div className="flex justify-end">
                         <button
                           type="button"
