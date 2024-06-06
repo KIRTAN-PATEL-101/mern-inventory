@@ -110,7 +110,8 @@ const Login = () => {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:8000/users/details', { withCredentials: true })
+        setTimeout(() => {
+            axios.get('http://localhost:8000/users/details', { withCredentials: true })
             .then((response) => {
                 const data = response.data;
                 console.log(data);
@@ -126,13 +127,14 @@ const Login = () => {
             .catch((error) => {
                 console.log(error);
             })
+        }, 1500);
     }, [navigate]);
 
     return (
-        <div className="flex w-full min-h-screen items-center justify-center" style={{ backgroundColor: "#f5f5f5", backgroundImage: `url(https://res.cloudinary.com/dnmxwrqvb/image/upload/v1716367992/lfrebmwhtyour2uctsuv.jpg)`, backgroundSize: "cover", backgroundPosition: 'center' }}>
-            <div className="flex rounded-xl bg-black opacity-70" style={{ width: "900px", height: "500px", boxShadow: "0px 3px 3px -2px rgb(0 0 0 / 20%),0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)" }}>
-                <div className="flex flex-col items-center justify-center bg-white rounded-tl-xl rounded-bl-xl" style={{ flex: "2" }}>
-                    <form className="flex flex-col items-center" onSubmit={handleSubmit}>
+        <div className="flex w-full min-h-screen items-center justify-center bg-cover bg-center" style={{ backgroundColor: "#f5f5f5", backgroundImage: `url(https://res.cloudinary.com/dnmxwrqvb/image/upload/v1716367992/lfrebmwhtyour2uctsuv.jpg)` }}>
+            <div className="flex flex-col md:flex-row bg-black rounded-xl shadow-lg w-full md:w-3/4 lg:w-2/3 opacity-70">
+                <div className="flex flex-col items-center justify-center bg-white p-8 md:w-2/3 w-full">
+                    <form className="flex flex-col items-center " onSubmit={handleSubmit}>
                         <div className=''>
                             <img 
                                 height='177px'
@@ -141,7 +143,7 @@ const Login = () => {
                                 style={{opacity:'70'}}
                             />
                         </div>
-                        <h1 className="text-4xl mt-0 m-5">Login to Your Account</h1>
+                        <h1 className="text-2xl md:text-4xl mt-4 md:mt-0 mb-5">Login to Your Account</h1>
                         <input
                             type="email"
                             placeholder="Email"
@@ -149,10 +151,9 @@ const Login = () => {
                             value={formData.email}
                             onChange={handleChange}
                             required
-                            className="outline-none border-0 p-4 rounded-xl m-1.5 text-sm"
-                            style={{ width: "370px", backgroundColor: "#edf5f3" }}
+                            className="outline-none border-0 p-4 rounded-xl m-1.5 text-sm w-full md:w-96 bg-gray-100"
                         />
-                        {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+                        {errors.email && <p className="text-red-500">{errors.email}</p>}
                         <input
                             type="password"
                             placeholder="Password"
@@ -160,20 +161,18 @@ const Login = () => {
                             value={formData.password}
                             onChange={handleChange}
                             required
-                            className="outline-none border-0 p-4 rounded-xl m-1.5 text-sm"
-                            style={{ width: "370px", backgroundColor: "#edf5f3" }}
+                            className="outline-none border-0 p-4 rounded-xl m-1.5 text-sm w-full md:w-96 bg-gray-100"
                         />
-                        {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
-                        <button type="submit" className="rounded-3xl font-bold text-sm text-white cursor-pointer" style={{ border: "none", outline: "none", padding: "12px 0", width: "180px", backgroundColor: "#3bb19b" }}>
+                        {errors.password && <p className="text-red-500">{errors.password}</p>}
+                        <button type="submit" className="mt-4 rounded-3xl font-bold text-sm text-white cursor-pointe py-3 px-6 w-48" style={{background:'#3bb19b'}}>
                             Sign In
                         </button>
-                        {/* {message && <p style={{ color: message.includes('successful') ? 'green' : 'red' }}>{message}</p>} */}
                     </form>
                 </div>
-                <div className="flex flex-col items-center justify-center rounded-tr-lg rounded-br-lg" style={{ flex: 1, backgroundColor: "#3bb19b" }}>
-                    <h1 className="mt-0 text-4xl self-center m-5" style={{ color: 'white' }}>New Here ?</h1>
+                <div className="flex flex-col items-center justify-center p-8 md:w-1/3 w-full" style={{background:'#3bb19b'}}>
+                    <h1 className="text-2xl md:text-4xl text-white mb-5">New Here ?</h1>
                     <Link to="/register">
-                        <button type="button" className="bg-white rounded-3xl font-bold text-sm cursor-pointer" style={{ border: "none", outline: "none", padding: "12px 0", width: "180px" }}>
+                        <button type="button" className="bg-white rounded-3xl font-bold text-sm cursor-pointer py-3 px-6 w-48">
                             Register
                         </button>
                     </Link>
