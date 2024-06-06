@@ -205,7 +205,8 @@ const dashboardElement = asyncHandler(async (req, res) => {
     // let inventoryCount = inventory.length;
     const itemsCount = await Item.countDocuments({ userId: id })
     // let itemsCount = items.length;
-    const items = await Item.find({ triggerAmount: { $exists: true, $ne: null }, userId:id }).select("itemName stock triggerAmount");
+    const items = await Item.find({ triggerAmount: { $exists: true, $ne: null }, userId:id }).select("itemName stock triggerAmount inventoryId")
+    .populate('inventoryId', 'inventoryName');
     const itemsTriggerCount = await Item.countDocuments({ triggerAmount: { $exists: true, $ne: null }, userId:id });
     // console.log("Inventory Count: ",inventoryCount);
     // console.log("Items Count: ",itemsCount);

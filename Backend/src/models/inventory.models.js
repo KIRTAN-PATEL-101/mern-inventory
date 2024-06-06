@@ -7,10 +7,10 @@ const InventorySchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    inventoryId: {
-      type: "String",
-      // required: true,
-    },
+    // inventoryId: {
+    //   type: "String",
+    //   // required: true,
+    // },
     inventoryName: {
       type: "String",
       required: true,

@@ -60,7 +60,7 @@ const inventoryItems = asyncHandler(async (req, res) => {
     const id = req.user._id;
     //console.log("Inventory Id:", inventoryId);
     try {
-      // Fetch items from the database by inventoryId
+
       const items = await Item.find({ inventoryId: inventoryId, userId: id });
 
       // Check if items are found
